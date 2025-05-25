@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - VSCode Portfolio</title>
+    <title>package.json - VSCode Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <link rel="stylesheet" href="styles/colors.css">
@@ -67,12 +67,13 @@
                             <i class="bi bi-chevron-down text-[12px]"></i>
                             <span>PORTFOLIO</span>
                         </div>
-                    </div>                    <!-- Root files -->
+                    </div>
+                    <!-- Root files -->
                     <div class="file-tree-item pl-4" data-is-file="true">
                         <i class="bi bi-file-earmark-text text-[#519aba] file-icon"></i>
                         <a href="readme.html"><span>README.md</span></a>
                     </div>
-                    <div class="file-tree-item pl-4" data-is-file="true">
+                    <div class="file-tree-item pl-4 active" data-is-file="true">
                         <i class="bi bi-file-earmark-code text-[#cbcb41] file-icon"></i>
                         <a href="package.html"><span>package.json</span></a>
                     </div>
@@ -86,7 +87,7 @@
                         <i class="bi bi-folder-fill folder-icon"></i>
                         <span>components</span>
                     </div>
-                    <div class="file-tree-item pl-12 active" data-is-file="true">
+                    <div class="file-tree-item pl-12" data-is-file="true">
                         <i class="bi bi-file-earmark-code text-[#e37933] file-icon"></i>
                         <a href="index.html"><span>About.jsx</span></a>
                     </div>
@@ -106,116 +107,45 @@
                         <i class="bi bi-file-earmark-code text-[#e37933] file-icon"></i>
                         <a href="skills.html"><span>Skills.jsx</span></a>
                     </div>
-
-                    <!-- Data folder -->
-                    <div class="file-tree-item pl-8" data-is-folder="true">
-                        <i class="bi bi-folder-fill folder-icon"></i>
-                        <span>data</span>
-                    </div>
-                    <div class="file-tree-item pl-12" data-is-file="true">
-                        <i class="bi bi-file-earmark-code text-[#cbcb41] file-icon"></i>
-                        <span>experience.json</span>
-                    </div>
-                    <div class="file-tree-item pl-12" data-is-file="true">
-                        <i class="bi bi-file-earmark-code text-[#cbcb41] file-icon"></i>
-                        <span>education.json</span>
-                    </div>
-                    <div class="file-tree-item pl-12" data-is-file="true">
-                        <i class="bi bi-file-earmark-code text-[#cbcb41] file-icon"></i>
-                        <span>projects.json</span>
-                    </div>
-                    <div class="file-tree-item pl-12" data-is-file="true">
-                        <i class="bi bi-file-earmark-code text-[#cbcb41] file-icon"></i>
-                        <span>skills.json</span>
-                    </div>
-
-                    <!-- Styles folder -->
-                    <div class="file-tree-item pl-8" data-is-folder="true">
-                        <i class="bi bi-folder-fill folder-icon"></i>
-                        <span>styles</span>
-                    </div>
-                    <div class="file-tree-item pl-12" data-is-file="true">
-                        <i class="bi bi-file-earmark-code text-[#519aba] file-icon"></i>
-                        <span>main.css</span>
-                    </div>
                 </div>
             </div>
 
             <!-- Main Content Area -->
-            <div class="ml-[300px] flex-1 bg-[var(--editor-bg)] min-h-screen">                <!-- Tabs -->
+            <div class="ml-[300px] flex-1 bg-[var(--editor-bg)] min-h-screen">
+                <!-- Tabs -->
                 <div class="flex bg-[#252526] border-b border-[#1e1e1e]">
                     <div class="editor-tab active flex items-center gap-2">
-                        <i class="bi bi-file-earmark-code text-[#e37933]"></i>
-                        <span>About.jsx</span>
+                        <i class="bi bi-file-earmark-code text-[#cbcb41]"></i>
+                        <span>package.json</span>
                         <button class="ml-2 text-[#808080] hover:text-white">×</button>
                     </div>
-                </div>                <!-- Breadcrumbs -->
-                <div class="breadcrumb">
-                    <div class="breadcrumb-item"><span>portfolio</span></div>
-                    <div class="breadcrumb-item"><span>src</span></div>
-                    <div class="breadcrumb-item"><span>components</span></div>
-                    <div class="breadcrumb-item"><span>About.jsx</span></div>
                 </div>
 
-                <!-- Editor Content -->                <div class="flex h-[calc(100vh-85px)]">
-                    <!-- Line Numbers -->
-                    <div class="line-numbers py-4 select-none min-w-[40px] text-right pr-3">
-                        1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>
-                        11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20
-                    </div>                    <!-- Code Content -->
-                    <div class="editor-content py-4 px-6 flex-1 overflow-y-auto">
-                        <div class="about-section fade-in">
-                            <h1 class="text-3xl font-bold mb-2 text-white">Adil AIT EL HOUCINE</h1>
-                            <p class="role text-xl text-[#4dc4ff] mb-2">Full Stack Developer</p>
-                            <p class="location text-[#dcdcaa] mb-4">📍 Morocco</p>
-                            <p class="bio text-lg max-w-2xl leading-relaxed">
-                                Passionate developer with expertise in building modern web applications using React, Laravel, 
-                                and other cutting-edge technologies. I specialize in creating clean, efficient, and scalable solutions
-                                for complex development challenges.
-                            </p>
-                            
-                            <div class="tech-stack mt-6">
-                                <h2 class="text-xl font-semibold mb-3 text-[#569cd6]">Tech Stack</h2>
-                                <div class="flex flex-wrap gap-2">
-                                    <span class="px-3 py-1 bg-[rgba(255,255,255,0.05)] rounded text-[#ce9178]">JavaScript</span>
-                                    <span class="px-3 py-1 bg-[rgba(255,255,255,0.05)] rounded text-[#ce9178]">React</span>
-                                    <span class="px-3 py-1 bg-[rgba(255,255,255,0.05)] rounded text-[#ce9178]">PHP</span>
-                                    <span class="px-3 py-1 bg-[rgba(255,255,255,0.05)] rounded text-[#ce9178]">Laravel</span>
-                                    <span class="px-3 py-1 bg-[rgba(255,255,255,0.05)] rounded text-[#ce9178]">MySQL</span>
-                                    <span class="px-3 py-1 bg-[rgba(255,255,255,0.05)] rounded text-[#ce9178]">TailwindCSS</span>
-                                </div>
-                            </div>
-                            
-                            <div class="social-links mt-8 flex gap-4">
-                                <a href="https://github.com/adilaitelhoucine" target="_blank" class="github-link">
-                                    <i class="bi bi-github"></i> GitHub
-                                </a>
-                                <a href="https://linkedin.com/in/adilaitelhoucine" target="_blank" class="linkedin-link">
-                                    <i class="bi bi-linkedin"></i> LinkedIn
-                                </a>
-                                <a href="mailto:contact@adilaitelhoucine.dev" class="email-link">
-                                    <i class="bi bi-envelope"></i> Email
-                                </a>
-                            </div>
-                            
-                            <div class="call-to-action mt-10">
-                                <a href="projects.html" class="px-5 py-2 bg-[#007acc] text-white rounded hover:bg-[#0098ff] transition-colors">
-                                    View Projects <i class="bi bi-arrow-right ml-1"></i>
-                                </a>
-                            </div>
-                        </div>                    </div>
+                <!-- Breadcrumbs -->
+                <div class="breadcrumb">
+                    <div class="breadcrumb-item"><span>portfolio</span></div>
+                    <div class="breadcrumb-item"><span>package.json</span></div>
+                </div>
 
-                    <!-- Minimap -->
-                    <div class="minimap hidden md:block w-[60px] py-4 bg-[#252526] opacity-70">
-                        <div class="w-full h-full px-2">
-                            <div class="h-4 w-full bg-[rgba(255,255,255,0.05)] mb-1 rounded-sm"></div>
-                            <div class="h-6 w-full bg-[rgba(255,255,255,0.05)] mb-1 rounded-sm"></div>
-                            <div class="h-3 w-full bg-[rgba(255,255,255,0.05)] mb-1 rounded-sm"></div>
-                            <div class="h-5 w-full bg-[rgba(255,255,255,0.05)] mb-1 rounded-sm"></div>
-                            <div class="h-8 w-full bg-[rgba(122,162,247,0.2)] mb-1 rounded-sm"></div>
-                            <div class="h-2 w-full bg-[rgba(255,255,255,0.05)] mb-1 rounded-sm"></div>
-                            <div class="h-4 w-full bg-[rgba(255,255,255,0.05)] mb-1 rounded-sm"></div>
-                        </div>
+                <!-- Editor Content -->
+                <div class="editor-content py-4 px-6">
+                    <div class="code-section font-mono">
+                        <pre class="text-white">
+<span class="syntax-operator">{</span>
+    <span class="syntax-property">"name"</span>: <span class="syntax-string">"vscode-portfolio"</span>,
+    <span class="syntax-property">"version"</span>: <span class="syntax-string">"1.0.0"</span>,
+    <span class="syntax-property">"description"</span>: <span class="syntax-string">"A VS Code-themed portfolio website"</span>,
+    <span class="syntax-property">"author"</span>: <span class="syntax-string">"Adil AIT EL HOUCINE"</span>,
+    <span class="syntax-property">"license"</span>: <span class="syntax-string">"MIT"</span>,
+    <span class="syntax-property">"scripts"</span>: <span class="syntax-operator">{</span>
+        <span class="syntax-property">"start"</span>: <span class="syntax-string">"serve ."</span>,
+        <span class="syntax-property">"build"</span>: <span class="syntax-string">"echo 'No build step required'"</span>
+    <span class="syntax-operator">}</span>,
+    <span class="syntax-property">"devDependencies"</span>: <span class="syntax-operator">{</span>
+        <span class="syntax-property">"serve"</span>: <span class="syntax-string">"^14.0.0"</span>
+    <span class="syntax-operator">}</span>
+<span class="syntax-operator">}</span>
+                        </pre>
                     </div>
                 </div>
             </div>
@@ -231,14 +161,13 @@
                 <div class="flex items-center gap-3">
                     <span>UTF-8</span>
                     <span>LF</span>
-                    <span>JavaScript</span>
+                    <span>JSON</span>
                     <span>Port: 3000</span>
-                </div>            </div>
-        </div>    
-    </div>    <!-- Include the external JavaScript files -->
-    <script src="js/portfolio-script.js"></script>
-    <script src="js/editor-features.js"></script>
-    
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Simple folder toggle functionality
         document.querySelectorAll('.file-tree-item[data-is-folder="true"]').forEach(folder => {
@@ -263,10 +192,10 @@
                     folderIcon.classList.add('bi-folder2-open');
                 } else {
                     folderIcon.classList.remove('bi-folder2-open');
-                    folderIcon.classList.add('bi-folder-fill');
-                }
+                    folderIcon.classList.add('bi-folder-fill');            }
             });
         });
     </script>
+    <script src="js/editor-features.js"></script>
 </body>
 </html>

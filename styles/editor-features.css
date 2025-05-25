@@ -1,0 +1,301 @@
+/* VS Code Editor Features Styling */
+
+/* General Layout */
+.explorer-section-header {
+    padding: 6px 12px;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    color: #e7e7e7;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* File Tree Styling */
+.file-tree-item {
+    display: flex;
+    align-items: center;
+    padding: 3px 0;
+    cursor: pointer;
+    font-size: 13px;
+    color: #cccccc;
+    position: relative;
+    transition: background-color 0.1s ease;
+}
+
+.file-tree-item:hover {
+    background-color: var(--explorer-hover);
+}
+
+.file-tree-item.active {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.file-tree-item a {
+    color: inherit;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.file-icon, .folder-icon {
+    margin-right: 6px;
+    font-size: 14px;
+}
+
+.folder-icon {
+    color: #dcb67a;
+    transition: color 0.2s ease;
+}
+
+/* VS Code Activity Icons */
+.vscode-icon {
+    color: #858585;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: color 0.2s ease;
+}
+
+.vscode-icon:hover, .vscode-icon.active {
+    color: #ffffff;
+}
+
+.vscode-icon.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 25%;
+    height: 50%;
+    width: 2px;
+    background-color: var(--vscode-accent);
+}
+
+/* Editor Tab Styling */
+.editor-tab {
+    padding: 6px 10px;
+    background-color: var(--inactive-tab-bg);
+    border-right: 1px solid #1e1e1e;
+    font-size: 13px;
+    transition: background-color 0.2s ease;
+}
+
+.editor-tab.active {
+    background-color: var(--active-tab-bg);
+    border-bottom: 1px solid var(--vscode-accent);
+}
+
+/* Breadcrumb Styling */
+.breadcrumb {
+    display: flex;
+    padding: 3px 12px;
+    background-color: var(--editor-bg);
+    border-bottom: 1px solid #1e1e1e;
+    font-size: 12px;
+    color: var(--vscode-text-muted);
+}
+
+.breadcrumb-item {
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb-item:not(:last-child)::after {
+    content: '/';
+    margin: 0 6px;
+    color: #6e6e6e;
+}
+
+.breadcrumb-item:last-child span {
+    color: var(--vscode-text);
+}
+
+/* Line Numbers Styling */
+.line-numbers {
+    color: #858585;
+    text-align: right;
+    padding-right: 12px;
+    font-size: 13px;
+    font-family: monospace;
+    user-select: none;
+}
+
+/* Editor Content Styling */
+.editor-content {
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Syntax Highlighting */
+.syntax-keyword { color: var(--syntax-keyword); }
+.syntax-string { color: var(--syntax-string); }
+.syntax-number { color: var(--syntax-number); }
+.syntax-function { color: var(--syntax-function); }
+.syntax-comment { color: var(--syntax-comment); }
+.syntax-class { color: var(--syntax-class); }
+.syntax-variable { color: var(--syntax-variable); }
+.syntax-operator { color: var(--syntax-operator); }
+.syntax-property { color: var(--syntax-property); }
+.syntax-constant { color: var(--syntax-constant); }
+
+/* Animation for cursor and typing */
+.terminal-cursor {
+    width: 2px;
+    height: 18px;
+    background-color: #aeafad;
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Current line highlight */
+.current-line {
+    position: absolute;
+    height: 20px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.04);
+    left: 0;
+    pointer-events: none;
+}
+
+/* Transition effects */
+.fade-in {
+    animation: fadeIn 0.2s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Folder toggle animation */
+.folder-bounce {
+    animation: bounce 0.4s ease;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+/* About page specific styling */
+.about-section {
+    padding: 30px;
+    max-width: 800px;
+}
+
+.about-section h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 12px;
+    color: #ffffff;
+}
+
+.social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    color: #ffffff;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.social-links a:hover {
+    background-color: var(--vscode-accent);
+}
+
+.social-links i {
+    margin-right: 6px;
+}
+
+/* Markdown content styling */
+.markdown-content h1 {
+    color: var(--syntax-function);
+    margin-bottom: 16px;
+}
+
+.markdown-content h2 {
+    color: var(--syntax-keyword);
+    margin-top: 24px;
+    margin-bottom: 12px;
+}
+
+.markdown-content a {
+    color: var(--vscode-accent-light);
+    text-decoration: none;
+}
+
+.markdown-content a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .ml-[300px] {
+        margin-left: 0;
+    }
+    
+    .fixed.left-[50px] {
+        transform: translateX(-100%);
+    }
+    
+    .fixed.left-0 {
+        transform: translateX(-100%);
+    }
+    
+    .about-section {
+        padding: 15px;
+    }
+    
+    .about-section h1 {
+        font-size: 2rem;
+    }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--scrollbar-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-hover);
+}
+
+/* Add subtle hover effects to all interactive elements */
+button:hover, a:hover {
+    transition: all 0.2s ease;
+}
+
+/* Projects card styling */
+.project-card {
+    background-color: rgba(255, 255, 255, 0.03);
+    border-radius: 4px;
+    padding: 16px;
+    margin-bottom: 16px;
+    border-left: 3px solid var(--vscode-accent);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
