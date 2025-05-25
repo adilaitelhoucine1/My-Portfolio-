@@ -87,16 +87,14 @@
                     <div class="file-tree-item pl-8" data-is-folder="true">
                         <i class="bi bi-folder-fill folder-icon"></i>
                         <span>components</span>
-                    </div>
-                    <div class="file-tree-item pl-12" data-is-file="true">
+                    </div>                    <div class="file-tree-item pl-12 active" data-is-file="true">
                         <i class="bi bi-file-earmark-code text-[#e37933] file-icon"></i>
                         <a href="about.html"><span>About.jsx</span></a>
                     </div>
                     <div class="file-tree-item pl-12" data-is-file="true">
                         <i class="bi bi-file-earmark-code text-[#e37933] file-icon"></i>
                         <a href="experience.html"><span>Experience.jsx</span></a>
-                    </div>
-                    <div class="file-tree-item pl-12 active" data-is-file="true">
+                    </div>                    <div class="file-tree-item pl-12" data-is-file="true">
                         <i class="bi bi-file-earmark-code text-[#e37933] file-icon"></i>
                         <a href="education.html"><span>Education.jsx</span></a>
                     </div>
@@ -112,56 +110,124 @@
             </div>
 
             <!-- Main Content Area -->
-            <div class="ml-[300px] flex-1 bg-[var(--editor-bg)] min-h-screen">
+            <div class="ml-[300px] flex-1 bg-[var(--editor-bg)] h-screen flex flex-col overflow-hidden">
                 <!-- Tabs -->
-                <div class="flex bg-[#252526] border-b border-[#1e1e1e]">
-                    <div class="editor-tab active flex items-center gap-2">
+                <div class="flex bg-[#252526] border-b border-[#1e1e1e]">                    <div class="editor-tab active flex items-center gap-2">
                         <i class="bi bi-file-earmark-code text-[#e37933]"></i>
-                        <span>Education.jsx</span>
+                        <span>About.jsx</span>
                         <button class="ml-2 text-[#808080] hover:text-white">×</button>
                     </div>
-                </div>
-
-                <!-- Breadcrumbs -->
+                </div>                <!-- Breadcrumbs -->
                 <div class="breadcrumb">
                     <div class="breadcrumb-item"><span>portfolio</span></div>
                     <div class="breadcrumb-item"><span>src</span></div>
                     <div class="breadcrumb-item"><span>components</span></div>
-                    <div class="breadcrumb-item"><span>Education.jsx</span></div>
-                </div>
-
-                <!-- Editor Content -->
-                <div class="editor-content py-4 px-6">                    <div class="education-section">
-                        <h2 class="text-xl font-bold mb-4">Education</h2>
-                        
-                        <div class="education-card mb-6 p-5 bg-[#2a2d2e] rounded border-l-4 border-[#4dc4ff] shadow-md transition-all duration-300">
-                            <div class="flex justify-between items-start">
-                                <h3 class="text-lg font-bold">Full-Stack Development</h3>
-                                <span class="bg-[rgba(77,196,255,0.2)] text-[#4dc4ff] px-2 py-1 rounded-full text-xs border border-[rgba(77,196,255,0.3)]">In Progress</span>
+                    <div class="breadcrumb-item"><span>About.jsx</span></div>
+                </div><!-- Editor Content -->
+                <div class="editor-content py-4 px-6">
+                    <!-- Code Preview Section -->
+                    <div class="code-content mb-8 bg-[#1e1e1e] rounded-lg overflow-hidden">
+                        <div class="bg-[#2d2d2d] px-4 py-2 flex items-center gap-2">
+                            <div class="flex space-x-2">
+                                <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                                <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                                <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
                             </div>
-                            <p class="institution text-[#9cdcfe] mt-2">YouCode, Fondation OCP / UM6P</p>
-                            <p class="period text-[#dcdcaa]">09/10/2024 - Present</p>
-                            <p class="location text-[#cccccc]">📍 Nador</p>                        </div>
-                        
-                        <div class="education-card mb-6 p-5 bg-[#2a2d2e] rounded border-l-4 border-[#4dc4ff] shadow-md transition-all duration-300">
-                            <div class="flex justify-between items-start">
-                                <h3 class="text-lg font-bold">Higher Technician in Information Systems Development</h3>
-                                <span class="bg-[rgba(77,196,255,0.2)] text-[#4dc4ff] px-2 py-1 rounded-full text-xs border border-[rgba(77,196,255,0.3)]">Completed</span>
-                            </div>
-                            <p class="institution text-[#9cdcfe] mt-2">BTS Ouarzazate</p>
-                            <p class="period text-[#dcdcaa]">05/10/2021 - 24/07/2023</p>
-                            <p class="location text-[#cccccc]">📍 Morocco</p>
+                            <span class="text-[#858585] text-sm">About.jsx</span>
                         </div>
-                          <div class="education-card mb-6 p-5 bg-[#2a2d2e] rounded border-l-4 border-[#4dc4ff] shadow-md transition-all duration-300">
-                            <div class="flex justify-between items-start">
-                                <h3 class="text-lg font-bold">Baccalaureate in Mathematical Sciences A</h3>
-                                <span class="bg-[rgba(77,196,255,0.2)] text-[#4dc4ff] px-2 py-1 rounded-full text-xs border border-[rgba(77,196,255,0.3)]">Completed</span>
+                        <pre class="p-4 text-sm font-mono leading-relaxed">
+<span class="syntax-keyword">import</span> <span class="syntax-variable">React</span> <span class="syntax-keyword">from</span> <span class="syntax-string">'react'</span>;
+<span class="syntax-keyword">import</span> <span class="syntax-string">'../styles/About.css'</span>;
+
+<span class="syntax-keyword">const</span> <span class="syntax-function">About</span> = () => {
+    <span class="syntax-keyword">return</span> (
+        <span class="syntax-tag">&lt;div</span> <span class="syntax-attr">className</span>=<span class="syntax-string">"about-container"</span><span class="syntax-tag">&gt;</span>
+            <span class="syntax-tag">&lt;div</span> <span class="syntax-attr">className</span>=<span class="syntax-string">"profile-section"</span><span class="syntax-tag">&gt;</span>
+                <span class="syntax-tag">&lt;h1&gt;</span>Adil AIT EL HOUCINE<span class="syntax-tag">&lt;/h1&gt;</span>
+                <span class="syntax-tag">&lt;p</span> <span class="syntax-attr">className</span>=<span class="syntax-string">"role"</span><span class="syntax-tag">&gt;</span>Full Stack Developer<span class="syntax-tag">&lt;/p&gt;</span>
+            <span class="syntax-tag">&lt;/div&gt;</span>
+        <span class="syntax-tag">&lt;/div&gt;</span>
+    );
+};
+
+<span class="syntax-keyword">export</span> <span class="syntax-keyword">default</span> About;</pre>
+                    </div>
+
+                    <!-- Profile Section -->
+                    <div class="about-section fade-in bg-[#2d2d2d] rounded-lg p-8 shadow-xl">
+                        <div class="flex items-start justify-between">
+                            <div>
+                                <h1 class="text-4xl font-bold mb-3 text-white bg-gradient-to-r from-[#4dc4ff] to-[#007acc] bg-clip-text text-transparent">
+                                    Adil AIT EL HOUCINE
+                                </h1>
+                                <p class="role text-xl text-[#4dc4ff] mb-2 flex items-center gap-2">
+                                    <i class="bi bi-code-slash"></i>
+                                    Full Stack Developer
+                                </p>
+                                <p class="location text-[#dcdcaa] mb-4 flex items-center gap-2">
+                                    <i class="bi bi-geo-alt"></i>
+                                    Morocco
+                                </p>
                             </div>
-                            <p class="institution text-[#9cdcfe] mt-2">Lycee Boumaln Dades</p>
-                            <p class="period text-[#dcdcaa]">09/10/2020 - 12/07/2021</p>
-                            <p class="location text-[#cccccc]">📍 Boumalne Dades</p>
+                            <div class="px-4 py-2 bg-[rgba(77,196,255,0.1)] rounded-lg border border-[rgba(77,196,255,0.2)] text-[#4dc4ff]">
+                                <i class="bi bi-check-circle-fill mr-2"></i>
+                                Available for hire
+                            </div>
+                        </div>
+
+                        <p class="bio text-lg max-w-3xl leading-relaxed mb-8 text-[#d4d4d4]">
+                            Passionate developer with expertise in building modern web applications using React, Laravel, 
+                            and other cutting-edge technologies. I specialize in creating clean, efficient, and scalable solutions
+                            for complex development challenges.
+                        </p>
+                        
+                        <div class="tech-stack mb-8">
+                            <h2 class="text-xl font-semibold mb-4 text-[#569cd6] flex items-center gap-2">
+                                <i class="bi bi-stack"></i>
+                                Tech Stack
+                            </h2>
+                            <div class="grid grid-cols-3 gap-4">
+                                <div class="tech-card p-4 bg-[#1e1e1e] rounded-lg border border-[#333] hover:border-[#4dc4ff] transition-all">
+                                    <i class="bi bi-braces text-[#e6b422] text-xl mb-2"></i>
+                                    <span class="text-[#ce9178]">JavaScript</span>
+                                </div>
+                                <div class="tech-card p-4 bg-[#1e1e1e] rounded-lg border border-[#333] hover:border-[#4dc4ff] transition-all">
+                                    <i class="bi bi-react text-[#61dafb] text-xl mb-2"></i>
+                                    <span class="text-[#ce9178]">React</span>
+                                </div>
+                                <div class="tech-card p-4 bg-[#1e1e1e] rounded-lg border border-[#333] hover:border-[#4dc4ff] transition-all">
+                                    <i class="bi bi-database text-[#ff69b4] text-xl mb-2"></i>
+                                    <span class="text-[#ce9178]">MySQL</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="social-links flex gap-4 mb-8">
+                            <a href="https://github.com/adilaitelhoucine" target="_blank" 
+                               class="github-link flex items-center gap-2 px-6 py-3 rounded-lg bg-[#1e1e1e] hover:bg-[#24292e] transition-all border border-[#333] hover:border-[#4dc4ff]">
+                                <i class="bi bi-github text-xl"></i>
+                                <span>GitHub</span>
+                            </a>
+                            <a href="https://linkedin.com/in/adilaitelhoucine" target="_blank" 
+                               class="linkedin-link flex items-center gap-2 px-6 py-3 rounded-lg bg-[#1e1e1e] hover:bg-[#0077b5] transition-all border border-[#333] hover:border-[#4dc4ff]">
+                                <i class="bi bi-linkedin text-xl"></i>
+                                <span>LinkedIn</span>
+                            </a>
+                            <a href="mailto:contact@adilaitelhoucine.dev" 
+                               class="email-link flex items-center gap-2 px-6 py-3 rounded-lg bg-[#1e1e1e] hover:bg-[#d44638] transition-all border border-[#333] hover:border-[#4dc4ff]">
+                                <i class="bi bi-envelope text-xl"></i>
+                                <span>Email</span>
+                            </a>
+                        </div>
+                          <div class="call-to-action">
+                            <a href="projects.html" 
+                               class="inline-flex items-center gap-2 px-6 py-3 bg-[#007acc] text-white rounded-lg hover:bg-[#0098ff] transition-all">
+                                View Projects
+                                <i class="bi bi-arrow-right"></i>
+                            </a>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
 

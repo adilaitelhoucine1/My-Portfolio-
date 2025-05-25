@@ -14,14 +14,18 @@
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
     z-index: 1000;
     opacity: 0;
-    transition: opacity 0.2s ease;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
     display: flex;
     flex-direction: column;
     max-height: 500px;
+    transform: translateX(-50%) translateY(-10px);
 }
 
 .command-palette.active {
     opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
 }
 
 .command-palette.hidden {
@@ -32,7 +36,9 @@
 .command-palette-header {
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border-color);
+    background-color: rgba(0, 0, 0, 0.2);
     border-bottom: 1px solid var(--border-color);
 }
 
@@ -71,19 +77,32 @@
 .command-item {
     display: flex;
     align-items: center;
-    padding: 8px 10px;
+    padding: 8px 12px;
     cursor: pointer;
-    transition: background-color 0.1s ease;
+    transition: all 0.2s ease;
+    border-left: 2px solid transparent;
+    position: relative;
 }
 
 .command-item:hover {
-    background-color: var(--explorer-hover);
+    background-color: rgba(255, 255, 255, 0.05);
+    border-left-color: var(--vscode-accent);
+}
+
+.command-item.selected {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-left-color: var(--vscode-accent);
 }
 
 .command-item i {
-    margin-right: 8px;
+    margin-right: 10px;
     font-size: 16px;
     color: var(--vscode-accent-light);
+    transition: transform 0.2s ease;
+}
+
+.command-item:hover i {
+    transform: scale(1.1);
 }
 
 /* Command Overlay */
