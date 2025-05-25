@@ -131,8 +131,20 @@
                 </div>
 
                 <!-- Editor Content -->                
-                <div class="editor-content py-4 px-6 overflow-y-auto" style="height: calc(100vh - 110px);">
-                    <div class="projects-section">
+                <div class="editor-content py-4 px-6 overflow-y-auto relative" style="height: calc(100vh - 110px);">
+                    <!-- Line Numbers -->
+                    <div class="line-numbers absolute left-0 top-0 p-4 select-none text-[#858585] text-right" style="width: 3rem;">
+                        <div>1</div><div>2</div><div>3</div><div>4</div><div>5</div>
+                        <div>6</div><div>7</div><div>8</div><div>9</div><div>10</div>
+                        <div>11</div><div>12</div><div>13</div><div>14</div><div>15</div>
+                    </div>
+
+                    <!-- File Path Hover -->
+                    <div class="file-path-hover hidden absolute bg-[#252526] text-[#cccccc] px-2 py-1 rounded text-xs">
+                        src/components/Projects.jsx
+                    </div>
+
+                    <div class="projects-section ml-12">
                         <h2 class="text-xl font-bold mb-4 text-[#4dc4ff]">Featured Projects</h2>
                         <div class="projects-grid grid grid-cols-1 md:grid-cols-2 gap-8 mt-5">
                             <div class="project-card bg-[#2a2d2e] p-5 rounded border-l-4 border-[#007acc] shadow-md transition-all duration-300">

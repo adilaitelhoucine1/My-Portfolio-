@@ -213,3 +213,123 @@ document.addEventListener('DOMContentLoaded', function() {
 window.addEventListener('beforeunload', function() {
     document.body.classList.add('fade-out');
 });
+
+// VS Code-like editor features
+document.addEventListener('DOMContentLoaded', function() {
+    // Keyboard shortcuts hint
+    const shortcutHint = document.createElement('div');
+    shortcutHint.className = 'shortcut-hint fixed bottom-8 right-8 bg-[#252526] text-[#cccccc] p-4 rounded shadow-lg text-sm hidden';
+    shortcutHint.innerHTML = `
+        <h3 class="font-bold mb-2">Keyboard Shortcuts</h3>
+        <div class="grid grid-cols-2 gap-2">
+            <div>Ctrl/⌘ + P</div><div>Quick Open</div>
+            <div>Ctrl/⌘ + F</div><div>Find</div>
+            <div>Ctrl/⌘ + S</div><div>Save</div>
+            <div>Ctrl/⌘ + W</div><div>Close Tab</div>
+            <div>Ctrl/⌘ + B</div><div>Toggle Sidebar</div>
+        </div>
+    `;
+    document.body.appendChild(shortcutHint);
+
+    // Show shortcuts hint on '?' key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === '?') {
+            shortcutHint.classList.toggle('hidden');
+            setTimeout(() => {
+                shortcutHint.classList.add('hidden');
+            }, 3000);
+        }
+
+        // Toggle sidebar (Ctrl + B)
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'b') {
+            e.preventDefault();
+            document.querySelector('.explorer-section').parentElement.classList.toggle('hidden');
+        }
+
+        // Quick open (Ctrl + P)
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'p' && !e.shiftKey) {
+            e.preventDefault();
+            toggleQuickOpen();
+        }
+    });
+
+    // Quick Open functionality
+    function toggleQuickOpen() {
+        const quickOpen = document.createElement('div');
+        quickOpen.className = 'quick-open fixed top-[20%] left-1/2 -translate-x-1/2 w-[500px] max-w-[90vw] bg-[#252526] rounded shadow-lg z-50';
+        quickOpen.innerHTML = `
+            <input type="text" placeholder="Type to search files..." class="w-full bg-[#3c3c3c] text-[#cccccc] px-4 py-2 rounded-t outline-none">
+            <div class="quick-open-results max-h-[300px] overflow-y-auto">
+                <div class="p-2 text-[#858585]">Type to search for files</div>
+            </div>
+        `;
+        document.body.appendChild(quickOpen);
+
+        const input = quickOpen.querySelector('input');
+        input.focus();
+
+        // Close on escape
+        document.addEventListener('keydown', function closeQuickOpen(e) {
+            if (e.key === 'Escape') {
+                quickOpen.remove();
+                document.removeEventListener('keydown', closeQuickOpen);
+            }
+        });
+
+        // Simple file search
+        const files = [
+            { name: 'index.html', icon: '📄' },
+            { name: 'about.html', icon: '📄' },
+            { name: 'projects.html', icon: '📄' },
+            { name: 'experience.html', icon: '📄' },
+            { name: 'skills.html', icon: '📄' },
+            { name: 'education.html', icon: '📄' }
+        ];
+
+        input.addEventListener('input', () => {
+            const results = files.filter(f => 
+                f.name.toLowerCase().includes(input.value.toLowerCase())
+            );
+            
+            const resultsDiv = quickOpen.querySelector('.quick-open-results');
+            resultsDiv.innerHTML = results.map(f => `
+                <div class="quick-open-item p-2 hover:bg-[#3c3c3c] cursor-pointer flex items-center gap-2">
+                    <span>${f.icon}</span>
+                    <span>${f.name}</span>
+                </div>
+            `).join('') || '<div class="p-2 text-[#858585]">No results found</div>';
+
+            // Handle clicks on results
+            resultsDiv.querySelectorAll('.quick-open-item').forEach((item, i) => {
+                item.addEventListener('click', () => {
+                    window.location.href = results[i].name;
+                });
+            });
+        });
+    }
+
+    // Add VS Code status messages
+    const statusMessages = [
+        'Ready',
+        'Portfolio loaded',
+        'Extensions activated',
+        'Git: main',
+        'Problems: 0'
+    ];
+
+    let messageIndex = 0;
+    const statusBar = document.querySelector('.status-bar') || document.createElement('div');
+    
+    setInterval(() => {
+        const statusText = document.createElement('div');
+        statusText.className = 'status-message fixed bottom-8 left-8 bg-[#007acc] text-white px-3 py-1 rounded text-sm';
+        statusText.textContent = statusMessages[messageIndex];
+        document.body.appendChild(statusText);
+
+        setTimeout(() => {
+            statusText.remove();
+        }, 2000);
+
+        messageIndex = (messageIndex + 1) % statusMessages.length;
+    }, 5000);
+});
