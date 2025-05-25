@@ -1,0 +1,39 @@
+:root {
+    /* VS Code Dark+ Theme Colors */
+    --editor-bg: #1e1e1e;
+    --sidebar-bg: #252526;
+    --activity-bar-bg: #333333;
+    --active-tab-bg: #1e1e1e;
+    --inactive-tab-bg: #2d2d2d;
+    --explorer-hover: #37373d;
+    --titlebar-bg: #323233;
+    --status-bar-bg: #007acc;
+    --menu-bg: #3c3c3c;
+    --menu-hover: #505050;
+    --scrollbar-bg: #1e1e1e;
+    --scrollbar-thumb: #424242;
+    --scrollbar-hover: #4f4f4f;
+    
+    /* VS Code accent colors */
+    --vscode-accent: #007acc;
+    --vscode-accent-light: #0098ff;
+    --vscode-border: #474747;
+    
+    /* Text colors */
+    --vscode-text: #d4d4d4;
+    --vscode-text-muted: #858585;
+    
+    /* Syntax Highlighting Colors - Exact VS Code Dark+ values */
+    --syntax-keyword: #569cd6;
+    --syntax-string: #ce9178;
+    --syntax-number: #b5cea8;
+    --syntax-function: #dcdcaa;
+    --syntax-comment: #6a9955;
+    --syntax-class: #4ec9b0;
+    --syntax-variable: #9cdcfe;
+    --syntax-operator: #d4d4d4;
+    --syntax-property: #9cdcfe;
+    --syntax-constant: #4fc1ff;
+    --syntax-regex: #d16969;
+    --syntax-decorator: #4ec9b0;
+}

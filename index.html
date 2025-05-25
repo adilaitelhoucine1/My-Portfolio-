@@ -1,0 +1,2216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VSCode Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <style>
+        :root {
+            /* VS Code Dark+ Theme Colors - Updated */
+            --editor-bg: #1e1e1e;
+            --sidebar-bg: #252526;
+            --activity-bar-bg: #333333;
+            --active-tab-bg: #1e1e1e;
+            --inactive-tab-bg: #2d2d2d;
+            --explorer-hover: #37373d;
+            --titlebar-bg: #323233;
+            --status-bar-bg: #007acc;
+            --menu-bg: #3c3c3c;
+            --menu-hover: #505050;
+            --scrollbar-bg: #1e1e1e;
+            --scrollbar-thumb: #424242;
+            --scrollbar-hover: #4f4f4f;
+            
+            /* VS Code accent colors */
+            --vscode-accent: #007acc;
+            --vscode-accent-light: #0098ff;
+            --vscode-border: #474747;
+            
+            /* Text colors */
+            --vscode-text: #d4d4d4;
+            --vscode-text-muted: #858585;
+            
+            /* Syntax Highlighting Colors - Exact VS Code Dark+ values */
+            --syntax-keyword: #569cd6;
+            --syntax-string: #ce9178;
+            --syntax-number: #b5cea8;
+            --syntax-function: #dcdcaa;
+            --syntax-comment: #6a9955;
+            --syntax-class: #4ec9b0;
+            --syntax-variable: #9cdcfe;
+            --syntax-operator: #d4d4d4;
+            --syntax-property: #9cdcfe;
+            --syntax-constant: #4fc1ff;
+            --syntax-regex: #d16969;
+            --syntax-decorator: #4ec9b0;
+        }
+
+        /* File type colors */
+        .file-js { color: #e37933; }      /* JavaScript files */
+        .file-css { color: #519aba; }     /* CSS files */
+        .file-html { color: #e37933; }    /* HTML files */
+        .file-json { color: #cbcb41; }    /* JSON files */
+        .file-md { color: #519aba; }      /* Markdown files */
+        .file-img { color: #a074c4; }     /* Image files */
+
+        /* Enhanced syntax highlighting */
+        .syntax-keyword { color: var(--syntax-keyword); }
+        .syntax-string { color: var(--syntax-string); }
+        .syntax-number { color: var(--syntax-number); }
+        .syntax-function { color: var(--syntax-function); }
+        .syntax-comment { color: var(--syntax-comment); }
+        .syntax-class { color: var(--syntax-class); }
+        .syntax-variable { color: var(--syntax-variable); }
+        .syntax-operator { color: var(--syntax-operator); }
+        .syntax-property { color: var(--syntax-property); }
+        .syntax-constant { color: var(--syntax-constant); }
+        .syntax-regex { color: var(--syntax-regex); }
+        .syntax-decorator { color: var(--syntax-decorator); }
+
+        /* Selection styling */
+        ::selection {
+            background-color: var(--selection-bg);
+        }
+
+        /* Active line highlight */
+        .active-line {
+            background-color: var(--active-line);
+        }
+
+        /* Enhanced editor tabs */
+        .editor-tab {
+            background-color: var(--inactive-tab-bg);
+            border-right: 1px solid var(--border-color);
+            color: #969696;
+        }
+
+        .editor-tab.active {
+            background-color: var(--active-tab-bg);
+            color: #ffffff;
+        }
+
+        /* File explorer items */
+        .file-tree-item {
+            color: #cccccc;
+        }
+
+        .file-tree-item:hover {
+            background-color: var(--explorer-hover);
+        }
+
+        /* Status bar items */
+        .status-bar-item {
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .status-bar-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Code block styling */
+        .code-block {
+            background-color: var(--editor-bg);
+            border: 1px solid var(--border-color);
+        }
+
+        /* Line numbers */
+        .line-numbers {
+            color: var(--line-number);
+            border-right: 1px solid var(--border-color);
+        }
+
+        .line-numbers .active {
+            color: var(--line-number-active);
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 14px;
+            height: 14px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--scrollbar-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--scrollbar-thumb);
+            border: 3px solid var(--scrollbar-bg);
+            border-radius: 7px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--scrollbar-hover);
+        }
+
+        body {
+            background-color: var(--editor-bg);
+            color: var(--vscode-text);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* VSCode Sidebar */
+        .vscode-sidebar {
+            background-color: var(--vscode-sidebar);
+            width: 50px;
+            border-right: 1px solid #333;
+        }
+
+        /* VSCode Icon Button */
+        .vscode-icon {
+            padding: 12px;
+            color: #858585;
+            transition: all 0.2s;
+        }
+
+        .vscode-icon:hover {
+            color: var(--vscode-text);
+        }
+
+        .vscode-icon.active {
+            color: var(--vscode-text);
+            border-left: 2px solid var(--vscode-accent);
+        }
+
+        /* VSCode Explorer */
+        .explorer-sidebar {
+            background-color: var(--vscode-sidebar);
+            width: 250px;
+            border-right: 1px solid #333;
+        }
+
+        .explorer-item {
+            padding: 6px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .explorer-item:hover {
+            background-color: #2a2d2e;
+        }
+
+        /* VSCode Tab */
+        .vscode-tab {
+            background-color: #2d2d2d;
+            padding: 8px 16px;
+            border-right: 1px solid #252526;
+            font-size: 0.9rem;
+        }
+
+        .vscode-tab.active {
+            background-color: var(--vscode-bg);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--vscode-sidebar);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #424242;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4f4f4f;
+        }
+
+        /* Additional VS Code-specific styles */
+        .title-bar {
+            background-color: var(--vscode-titlebar);
+            height: 30px;
+            -webkit-app-region: drag;
+        }
+
+        .explorer-section {
+            padding: 2px 0;
+        }
+
+        .explorer-section-header {
+            padding: 3px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #808080;
+        }
+
+        .explorer-section-header:hover {
+            color: var(--vscode-text);
+        }
+
+        .explorer-item {
+            padding: 3px 12px 3px 24px;
+            font-size: 13px;
+        }
+
+        .line-numbers {
+            color: #858585;
+            text-align: right;
+            padding-right: 12px;
+            user-select: none;
+        }
+
+        .markdown-content {
+            font-size: 14px;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .status-bar {
+            background-color: var(--vscode-statusbar);
+            height: 22px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        /* Add these new styles */
+        .gradient-text {
+            background: linear-gradient(45deg, #0d7acc, #569cd6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .code-block {
+            background: #1e1e1e;
+            border-radius: 6px;
+            padding: 16px;
+            margin: 16px 0;
+            border: 1px solid var(--vscode-border);
+        }
+
+        .skill-tag {
+            background: #323233;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            border: 1px solid var(--vscode-border);
+            transition: all 0.2s;
+        }
+
+        .skill-tag:hover {
+            background: var(--vscode-statusbar);
+        }
+
+        .animated-cursor {
+            border-right: 2px solid var(--vscode-accent);
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        .hover-highlight {
+            transition: all 0.2s;
+        }
+
+        .hover-highlight:hover {
+            background: #2a2d2e;
+            transform: translateX(4px);
+        }
+
+        .vscode-icon:hover {
+            color: var(--vscode-text);
+            transform: scale(1.1);
+        }
+
+        /* Syntax highlighting classes */
+        .token-keyword {
+            color: var(--vscode-blue);
+        }
+        
+        .token-string {
+            color: var(--vscode-orange);
+        }
+        
+        .token-variable {
+            color: var(--vscode-light-blue);
+        }
+        
+        .token-comment {
+            color: var(--vscode-green);
+        }
+
+        /* Update explorer styles */
+        .explorer-section-header {
+            padding: 3px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #808080;
+            cursor: pointer;
+        }
+
+        .explorer-item {
+            padding: 3px 12px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .explorer-item:hover {
+            background-color: var(--vscode-explorer-hover);
+        }
+
+        /* Update tab styles */
+        .vscode-tab {
+            background-color: var(--vscode-tab-inactive);
+            padding: 5px 10px;
+            font-size: 13px;
+            border-right: 1px solid var(--vscode-bg);
+        }
+
+        .vscode-tab.active {
+            background-color: var(--vscode-bg);
+        }
+
+        /* Line numbers */
+        .line-numbers {
+            color: #858585;
+            font-size: 13px;
+            font-family: Consolas, 'Courier New', monospace;
+            padding: 0 12px;
+            text-align: right;
+            user-select: none;
+        }
+
+        /* Editor content */
+        .editor-content {
+            font-family: Consolas, 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.4;
+            height: calc(100vh - 30px);
+            overflow-y: auto;
+        }
+
+        /* Add creative animations */
+        @keyframes cursor-blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        @keyframes slide-in {
+            from { transform: translateX(-20px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        /* Interactive elements */
+        .code-section {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .typing-effect {
+            display: inline-block;
+            overflow: hidden;
+            white-space: nowrap;
+            animation: 
+                typing 3.5s steps(40, end),
+                cursor-blink .75s step-end infinite;
+            border-right: 2px solid var(--vscode-accent);
+        }
+
+        .project-card {
+            background: #2a2d2e;
+            border: 1px solid var(--vscode-border);
+            border-radius: 4px;
+            padding: 16px;
+            margin: 8px 0;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border-color: var(--vscode-accent);
+        }
+
+        .skill-badge {
+            background: #333;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .skill-badge:hover {
+            background: var(--vscode-accent);
+            transform: scale(1.05);
+        }
+
+        /* Enhanced animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(13, 122, 204, 0.2); }
+            50% { box-shadow: 0 0 20px rgba(13, 122, 204, 0.4); }
+        }
+
+        @keyframes gradientBg {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Enhanced project cards */
+        .project-card {
+            background: linear-gradient(145deg, #2a2d2e, #252729);
+            border: 1px solid var(--vscode-border);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 12px 0;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, #007acc, #4dc4ff, #007acc);
+            background-size: 200% auto;
+            animation: gradientBg 3s linear infinite;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            border-color: var(--vscode-accent);
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Enhanced skill badges */
+        .skill-badge {
+            background: linear-gradient(135deg, #333639, #2a2d2e);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .skill-badge:hover {
+            background: var(--vscode-accent);
+            transform: translateY(-2px);
+            animation: float 2s ease infinite;
+        }
+
+        .skill-badge small {
+            position: relative;
+            padding-left: 8px;
+            font-size: 11px;
+        }
+
+        .skill-badge small::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 4px;
+            height: 4px;
+            background: currentColor;
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+
+        /* Enhanced code sections */
+        .code-section {
+            background: rgba(40, 44, 52, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 16px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .code-section:hover {
+            border-color: var(--vscode-accent);
+            animation: glow 2s ease infinite;
+        }
+
+        /* Enhanced typing effect */
+        .typing-effect {
+            background: linear-gradient(120deg, #007acc, #4dc4ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 600;
+        }
+
+        /* Section headers */
+        .section-header {
+            font-size: 1.5em;
+            margin: 24px 0 16px;
+            color: var(--vscode-accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-header::before {
+            content: '#';
+            font-size: 0.8em;
+            color: #4dc4ff;
+        }
+
+        /* Social links */
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #2a2d2e, #252729);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-link:hover {
+            background: var(--vscode-accent);
+            transform: translateX(5px);
+        }
+
+        .social-link i {
+            font-size: 18px;
+        }
+
+        /* Progress bars for skills */
+        .skill-progress {
+            width: 100%;
+            height: 4px;
+            background: #1e1e1e;
+            border-radius: 2px;
+            margin-top: 4px;
+            overflow: hidden;
+        }
+
+        .skill-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #007acc, #4dc4ff);
+            transition: width 1s ease;
+            animation: gradientBg 3s linear infinite;
+            background-size: 200% auto;
+        }
+
+        /* Glassmorphism effects */
+        .glass-effect {
+            background: rgba(42, 45, 46, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+
+        /* Tag styles */
+        .tag {
+            padding: 4px 8px;
+            background: rgba(106, 153, 85, 0.2);
+            color: #6a9955;
+            border-radius: 4px;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            background: rgba(106, 153, 85, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Terminal effects */
+        .terminal-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 15px;
+            background: var(--vscode-accent);
+            animation: blink 1s infinite;
+            vertical-align: middle;
+            margin-left: 2px;
+        }
+
+        .terminal-line {
+            font-family: 'Consolas', monospace;
+            padding: 2px 0;
+        }
+
+        .terminal-prompt {
+            color: #569cd6;
+            margin-right: 8px;
+        }
+
+        /* File tree improvements */
+        .file-tree-item {
+            display: flex;
+            align-items: center;
+            padding: 4px 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 3px;
+        }
+
+        .file-tree-item:hover {
+            background: var(--vscode-explorer-hover);
+        }
+
+        .file-tree-item.active {
+            background: var(--vscode-explorer-hover);
+        }
+
+        .file-icon {
+            margin-right: 8px;
+            color: #519aba;
+        }
+
+        /* Code block enhancements */
+        .code-block {
+            font-family: 'Consolas', monospace;
+            background: #1e1e1e;
+            padding: 16px;
+            border-radius: 4px;
+            margin: 12px 0;
+            position: relative;
+        }
+
+        .code-block::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 25px;
+            background: #2d2d2d;
+            border-radius: 4px 4px 0 0;
+        }
+
+        /* Syntax highlighting improvements */
+        .syntax-keyword { color: #569cd6; }
+        .syntax-string { color: #ce9178; }
+        .syntax-comment { color: #6a9955; }
+        .syntax-function { color: #dcdcaa; }
+        .syntax-variable { color: #9cdcfe; }
+        .syntax-number { color: #b5cea8; }
+        .syntax-operator { color: #d4d4d4; }
+
+        /* Activity bar improvements */
+        .activity-bar-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #858585;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .activity-bar-icon:hover {
+            color: #ffffff;
+        }
+
+        .activity-bar-icon.active {
+            color: #ffffff;
+        }
+
+        .activity-bar-icon.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--vscode-accent);
+        }
+
+        /* Tab improvements */
+        .editor-tab {
+            height: 35px;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            background: var(--vscode-tab-inactive);
+            border-right: 1px solid var(--vscode-bg);
+            font-size: 13px;
+            cursor: pointer;
+            position: relative;
+            user-select: none;
+        }
+
+        .editor-tab.active {
+            background: var(--vscode-bg);
+        }
+
+        .editor-tab.active::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--vscode-accent);
+        }
+
+        /* Breadcrumb navigation */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            padding: 4px 8px;
+            background: var(--vscode-bg);
+            border-bottom: 1px solid var(--vscode-border);
+            font-size: 13px;
+        }
+
+        .breadcrumb-item {
+            display: flex;
+            align-items: center;
+            color: #cccccc;
+        }
+
+        .breadcrumb-item:not(:last-child)::after {
+            content: '/';
+            margin: 0 8px;
+            color: #666;
+        }
+
+        /* Minimap */
+        .minimap {
+            width: 60px;
+            background: var(--vscode-bg);
+            border-left: 1px solid var(--vscode-border);
+            opacity: 0.6;
+        }
+
+        .minimap:hover {
+            opacity: 1;
+        }
+
+        /* Scrollbar improvements */
+        ::-webkit-scrollbar {
+            width: 14px;
+            height: 14px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--vscode-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #424242;
+            border: 3px solid var(--vscode-bg);
+            border-radius: 7px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #525252;
+        }
+
+        /* Hover card */
+        .hover-card {
+            position: absolute;
+            background: #252526;
+            border: 1px solid var(--vscode-border);
+            border-radius: 4px;
+            padding: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            max-width: 300px;
+            display: none;
+        }
+
+        .hoverable:hover + .hover-card {
+            display: block;
+        }
+
+        /* Status bar improvements */
+        .status-bar-item {
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            height: 22px;
+            font-size: 12px;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .status-bar-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Problems panel */
+        .problems-panel {
+            background: var(--vscode-bg);
+            border-top: 1px solid var(--vscode-border);
+            height: 200px;
+            overflow-y: auto;
+        }
+
+        .problem-item {
+            padding: 4px 8px;
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .problem-item:hover {
+            background: var(--vscode-explorer-hover);
+        }
+
+        /* Search improvements */
+        .search-input {
+            background: var(--vscode-bg);
+            border: 1px solid var(--vscode-border);
+            color: var(--vscode-text);
+            padding: 4px 8px;
+            font-size: 13px;
+            width: 100%;
+            outline: none;
+        }
+
+        .search-input:focus {
+            border-color: var(--vscode-accent);
+        }
+
+        /* Git decorations */
+        .git-modified { color: #1b80b2; }
+        .git-added { color: #487e02; }
+        .git-deleted { color: #f14c4c; }
+
+        /* Loading spinner */
+        .loading-spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--vscode-text);
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Command palette */
+        .command-palette {
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            background: var(--vscode-bg);
+            border: 1px solid var(--vscode-border);
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            display: none;
+        }
+
+        .command-palette.active {
+            display: block;
+        }
+
+        .command-input {
+            width: 100%;
+            padding: 8px;
+            background: transparent;
+            border: none;
+            color: var(--vscode-text);
+            font-size: 14px;
+            outline: none;
+        }
+
+        /* Project card improvements */
+        .project-card {
+            border: 1px solid var(--vscode-border);
+            border-radius: 4px;
+            padding: 16px;
+            margin: 8px 0;
+            background: var(--vscode-bg);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            border-color: var(--vscode-accent);
+        }
+
+        /* Skill tag improvements */
+        .skill-tag {
+            display: inline-block;
+            padding: 4px 8px;
+            margin: 4px;
+            background: var(--vscode-tab-inactive);
+            border-radius: 4px;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+
+        .skill-tag:hover {
+            background: var(--vscode-accent);
+            transform: scale(1.05);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease;
+        }
+
+        .slide-in {
+            animation: slideIn 0.3s ease;
+        }
+
+        /* Activity Bar */
+        .activity-bar-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--vscode-text-muted);
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .activity-bar-icon.active {
+            color: var(--vscode-text);
+        }
+
+        .activity-bar-icon.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--vscode-accent);
+        }
+
+        /* Explorer Sidebar */
+        .explorer-section-header {
+            padding: 3px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--vscode-text-muted);
+            cursor: pointer;
+        }
+
+        /* Editor Tabs */
+        .editor-tab {
+            height: 35px;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            background: var(--inactive-tab-bg);
+            border-right: 1px solid var(--editor-bg);
+            font-size: 13px;
+            cursor: pointer;
+            position: relative;
+            user-select: none;
+            color: #969696;
+        }
+
+        .editor-tab.active {
+            background: var(--editor-bg);
+            color: var(--vscode-text);
+        }
+    </style>
+    <style>
+    /* Improved syntax highlighting */
+    .syntax-keyword { color: var(--syntax-keyword); }
+    .syntax-string { color: var(--syntax-string); }
+    .syntax-comment { color: var(--syntax-comment); }
+    .syntax-function { color: var(--syntax-function); }
+    .syntax-variable { color: var(--syntax-variable); }
+    .syntax-number { color: var(--syntax-number); }
+    .syntax-operator { color: var(--syntax-operator); }
+    .syntax-property { color: var(--syntax-property); }
+    .syntax-class { color: var(--syntax-class); }
+    .syntax-constant { color: var(--syntax-constant); }
+    
+    /* Selection and active line colors */
+    ::selection {
+        background-color: #264f78;
+    }
+    
+    .active-line {
+        background-color: #282828;
+    }
+</style>
+<style>
+    /* Project card improvements */
+    .project-card {
+        background: #252526;
+        border: 1px solid var(--vscode-border);
+        border-radius: 4px;
+        padding: 16px;
+        margin: 8px 0;
+        transition: all 0.3s ease;
+    }
+
+    .project-card:hover {
+        border-color: var(--vscode-accent);
+    }
+
+    /* Skill tags */
+    .skill-tag {
+        background: #37373d;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.9em;
+        color: var(--vscode-text);
+        border: 1px solid var(--vscode-border);
+        transition: all 0.2s;
+    }
+
+    .skill-tag:hover {
+        background: var(--vscode-accent);
+    }
+</style>
+<style>
+/* File tree item active state */
+.file-tree-item.active {
+    background-color: var(--explorer-hover);
+}
+
+/* This ensures the file tree item has a nice hover effect */
+.file-tree-item {
+    padding: 4px 8px;
+    cursor: pointer;
+    transition: background-color 0.1s;
+    border-radius: 3px;
+}
+
+.file-tree-item:hover {
+    background-color: var(--explorer-hover);
+}
+</style>
+<style>
+    /* Enhanced code editor styles */
+    .code-section {
+        font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        line-height: 1.5;
+        padding: 12px 0;
+        position: relative;
+        white-space: pre-wrap;
+    }
+    
+    /* Enhanced terminal cursor */
+    .terminal-cursor {
+        width: 2px;
+        height: 18px;
+        background-color: var(--vscode-accent);
+        display: inline-block;
+        animation: blink 1s step-end infinite;
+    }
+    
+    /* Enhanced active line highlight */
+    .code-line {
+        display: block;
+        width: 100%;
+        transition: background-color 0.1s;
+    }
+    
+    .code-line:hover {
+        background-color: rgba(33, 33, 33, 0.5);
+    }
+    
+    /* Improved syntax highlighting with more contrast */
+    .syntax-keyword { color: var(--syntax-keyword); font-weight: 500; }
+    .syntax-string { color: var(--syntax-string); }
+    .syntax-comment { color: var(--syntax-comment); font-style: italic; }
+    .syntax-function { color: var(--syntax-function); }
+    .syntax-variable { color: var(--syntax-variable); }
+    .syntax-number { color: var(--syntax-number); }
+    .syntax-operator { color: var(--syntax-operator); }
+    .syntax-property { color: var(--syntax-property); }
+    .syntax-class { color: var(--syntax-class); }
+    .syntax-constant { color: var(--syntax-constant); }
+    
+    /* Indentation guide lines like in VS Code */
+    .indent-guide {
+        border-left: 1px solid rgba(255, 255, 255, 0.05);
+        position: absolute;
+        height: 100%;
+    }
+    
+    /* Nice fade in animation for content changes */
+    @keyframes fadeInContent {
+        from { opacity: 0.7; }
+        to { opacity: 1; }
+    }
+    
+    .fade-in {
+        animation: fadeInContent 0.2s ease-out;
+    }
+    
+    /* Line highlight for current line */
+    .current-line {
+        background-color: rgba(33, 33, 33, 0.8);
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 20px;
+    }
+    
+    /* Make the editor content look more polished */
+    .editor-content {
+        padding: 0 !important;
+    }
+    
+    .code-section {
+        padding: 12px 16px !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        border: none !important;
+        background-color: transparent !important;
+    }
+    
+    .line-numbers {
+        padding-top: 12px !important;
+        opacity: 0.5;
+    }
+</style>
+<style>
+    /* Enhanced folder icons */
+    .folder-icon {
+        color: #dcb67a !important;
+        margin-right: 8px;
+    }
+    
+    .file-icon {
+        margin-right: 8px;
+    }
+    
+    /* File tree enhancements */
+    .file-tree-item {
+        display: flex;
+        align-items: center;
+        padding: 4px 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+        border-radius: 3px;
+    }
+    
+    .file-tree-item:hover {
+        background-color: var(--explorer-hover);
+    }
+    
+    .file-tree-item.active {
+        background-color: var(--explorer-hover);
+    }
+    
+    /* Child items container for smooth animations */
+    .folder-children {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out;
+    }
+    
+    .folder-children.open {
+        max-height: 500px; /* Adjust as needed */
+    }
+    
+    /* Fix for the folder icon rotation */
+    .folder-icon-indicator {
+        transition: transform 0.2s ease;
+        display: inline-block;
+        width: 12px;
+        text-align: center;
+        margin-right: 4px;
+    }
+    
+    .folder-open .folder-icon-indicator {
+        transform: rotate(90deg);
+    }
+</style>
+</head>
+<body>
+    <!-- Main Container with fixed sidebars -->
+    <div class="flex h-screen">
+        <!-- Title Bar - Fixed at top -->
+        <div class="title-bar fixed top-0 left-0 right-0 h-[30px] bg-[var(--titlebar-bg)] flex items-center justify-between px-2 text-[#cccccc] text-xs z-50">
+            <div class="flex items-center">
+                <img src="https://code.visualstudio.com/assets/images/code-stable.png" alt="VS Code" class="h-[16px] mr-2">
+                <span>Portfolio - Visual Studio Code</span>
+            </div>
+            <div class="flex">
+                <button class="hover:bg-[#404040] px-4 py-1">─</button>
+                <button class="hover:bg-[#404040] px-4 py-1">□</button>
+                <button class="hover:bg-[#e81123] px-4 py-1">×</button>
+            </div>
+        </div>
+
+        <!-- Content area below title bar -->
+        <div class="flex w-full mt-[30px]">
+            <!-- Activity Bar - Fixed -->
+            <div class="fixed left-0 top-[30px] bottom-0 flex flex-col justify-between bg-[var(--activity-bar-bg)] w-[50px] z-40">
+                <div class="flex flex-col">
+                    <button class="vscode-icon active p-4">
+                        <i class="bi bi-files text-[20px]"></i>
+                    </button>
+                    <button class="vscode-icon p-4">
+                        <i class="bi bi-search text-[20px]"></i>
+                    </button>
+                    <button class="vscode-icon p-4">
+                        <i class="bi bi-git text-[20px]"></i>
+                    </button>
+                    <button class="vscode-icon p-4">
+                        <i class="bi bi-bug text-[20px]"></i>
+                    </button>
+                    <button class="vscode-icon p-4">
+                        <i class="bi bi-box text-[20px]"></i>
+                    </button>
+                </div>
+                <div class="flex flex-col">
+                    <button class="vscode-icon p-4">
+                        <i class="bi bi-person-circle text-[20px]"></i>
+                    </button>
+                    <button class="vscode-icon p-4">
+                        <i class="bi bi-gear text-[20px]"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Explorer Sidebar - Fixed -->
+            <div class="fixed left-[50px] top-[30px] bottom-0 w-[250px] bg-[var(--sidebar-bg)] overflow-y-auto border-r border-[var(--editor-bg)] z-30">
+                <div class="explorer-section">
+                    <div class="explorer-section-header">
+                        <span>EXPLORER</span>
+                    </div>
+                    <div class="explorer-section-header">
+                        <div class="flex items-center gap-1">
+                            <i class="bi bi-chevron-down text-[12px]"></i>
+                            <span>PORTFOLIO</span>
+                        </div>
+                    </div>
+                    <!-- Root files -->
+                    <div class="file-tree-item pl-4" data-is-file="true">
+                        <i class="bi bi-file-earmark-text text-[#519aba] file-icon"></i>
+                        <span>README.md</span>
+                    </div>
+                    <div class="file-tree-item pl-4" data-is-file="true">
+                        <i class="bi bi-file-earmark-code text-[#cbcb41] file-icon"></i>
+                        <span>package.json</span>
+                    </div>
+
+                    <!-- Source folder -->
+                    <div class="file-tree-item pl-4" data-is-folder="true">
+                        <i class="bi bi-folder-fill folder-icon"></i>
+                        <span>src</span>
+                    </div>
+                    <div class="file-tree-item pl-8" data-is-folder="true">
+                        <i class="bi bi-folder-fill folder-icon"></i>
+                        <span>components</span>
+                    </div>
+                    <div class="file-tree-item pl-12" data-is-file="true">
+                        <i class="bi bi-file-earmark-code text-[#e37933] file-icon"></i>
+                        <span>About.jsx</span>
+                    </div>
+                    <div class="file-tree-item pl-12" data-is-file="true">
+                        <i class="bi bi-file-earmark-code text-[#e37933] file-icon"></i>
+                        <span>Experience.jsx</span>
+                    </div>
+                    <div class="file-tree-item pl-12" data-is-file="true">
+                        <i class="bi bi-file-earmark-code text-[#e37933] file-icon"></i>
+                        <span>Education.jsx</span>
+                    </div>
+                    <div class="file-tree-item pl-12" data-is-file="true">
+                        <i class="bi bi-file-earmark-code text-[#e37933] file-icon"></i>
+                        <span>Projects.jsx</span>
+                    </div>
+                    <div class="file-tree-item pl-12" data-is-file="true">
+                        <i class="bi bi-file-earmark-code text-[#e37933] file-icon"></i>
+                        <span>Skills.jsx</span>
+                    </div>
+
+                    <!-- Data folder -->
+                    <div class="file-tree-item pl-8" data-is-folder="true">
+                        <i class="bi bi-folder-fill folder-icon"></i>
+                        <span>data</span>
+                    </div>
+                    <div class="file-tree-item pl-12" data-is-file="true">
+                        <i class="bi bi-file-earmark-code text-[#cbcb41] file-icon"></i>
+                        <span>experience.json</span>
+                    </div>
+                    <div class="file-tree-item pl-12" data-is-file="true">
+                        <i class="bi bi-file-earmark-code text-[#cbcb41] file-icon"></i>
+                        <span>education.json</span>
+                    </div>
+                    <div class="file-tree-item pl-12" data-is-file="true">
+                        <i class="bi bi-file-earmark-code text-[#cbcb41] file-icon"></i>
+                        <span>projects.json</span>
+                    </div>
+                    <div class="file-tree-item pl-12" data-is-file="true">
+                        <i class="bi bi-file-earmark-code text-[#cbcb41] file-icon"></i>
+                        <span>skills.json</span>
+                    </div>
+
+                    <!-- Styles folder -->
+                    <div class="file-tree-item pl-8" data-is-folder="true">
+                        <i class="bi bi-folder-fill folder-icon"></i>
+                        <span>styles</span>
+                    </div>
+                    <div class="file-tree-item pl-12" data-is-file="true">
+                        <i class="bi bi-file-earmark-code text-[#519aba] file-icon"></i>
+                        <span>main.css</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="ml-[300px] flex-1 bg-[var(--editor-bg)] min-h-screen">
+                <!-- Tabs -->
+                <div class="flex bg-[#252526] border-b border-[#1e1e1e]">
+                    <!-- tabs will be inserted by JavaScript -->
+                </div>
+
+                <!-- Breadcrumbs -->
+                <div class="breadcrumb">
+                    <!-- breadcrumbs will be inserted by JavaScript -->
+                </div>
+
+                <!-- Editor Content -->
+                <div class="flex h-[calc(100vh-85px)]">
+                    <!-- Line Numbers -->
+                    <div class="line-numbers py-4 select-none min-w-[40px]">
+                        <!-- line numbers will be inserted by JavaScript -->
+                    </div>
+
+                    <!-- Code Content -->
+                    <div class="editor-content py-4 px-0 flex-1 overflow-y-auto">
+                        <!-- code content will be inserted by JavaScript -->
+                    </div>
+
+                    <!-- Minimap -->
+                    <div class="minimap hidden md:block"></div>
+                </div>
+            </div>
+
+            <!-- Status Bar -->
+            <div class="fixed bottom-0 left-0 right-0 h-[22px] bg-[var(--status-bar-bg)] text-white flex items-center justify-between px-2 text-xs">
+                <div class="flex items-center gap-2">
+                    <i class="bi bi-git"></i>
+                    <span>main</span>
+                    <span class="px-2">📝</span>
+                    <span>0 problems</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span>UTF-8</span>
+                    <span>LF</span>
+                    <span>JavaScript</span>
+                    <span>Port: 3000</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // File content data - Enhanced with more files
+        const fileContents = {
+            'About.jsx': {
+                language: 'jsx',
+                content: `import React from 'react';
+import '../styles/main.css';
+
+const About = () => {
+    return (
+        <div className="about-section">
+            <h1>Yassine Ait Mensour</h1>
+            <p className="role">Full Stack Developer</p>
+            <p className="location">📍 Morocco</p>
+            <p className="bio">Passionate developer with expertise in building modern web applications using React, Laravel, and other cutting-edge technologies.</p>
+        </div>
+    );
+};
+
+export default About;`
+            },
+            'Experience.jsx': {
+                language: 'jsx',
+                content: `import React from 'react';
+import experienceData from '../data/experience.json';
+
+const Experience = () => {
+    return (
+        <div className="experience-section">
+            <h2>Work Experience</h2>
+            {experienceData.experiences.map((exp, index) => (
+                <div key={index} className="experience-card">
+                    <h3>{exp.position} @ {exp.company}</h3>
+     zz               <p className="period">{exp.period}</p>
+                    <p className="location">{exp.location}</p>
+                    <ul>
+                        {exp.responsibilities.map((resp, idx) => (
+                            <li key={idx}>{resp}</li>
+                        ))}
+                    </ul>
+                </div>
+            ))}
+        </div>
+    );
+};
+
+export default Experience;`
+            },
+            'Projects.jsx': {
+                language: 'jsx',
+                content: `import React from 'react';
+import projectsData from '../data/projects.json';
+
+const Projects = () => {
+    return (
+        <div className="projects-section">
+            <h2>Featured Projects</h2>
+            <div className="projects-grid">
+                {projectsData.projects.map((project, index) => (
+                    <div key={index} className="project-card">
+                        <h3>{project.name}</h3>
+                        <p>{project.description}</p>
+                        <div className="tech-stack">
+                            {project.technologies.map((tech, idx) => (
+                                <span key={idx} className="tech-tag">{tech}</span>
+                            ))}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+};
+
+export default Projects;`
+            },
+            'Skills.jsx': {
+                language: 'jsx',
+                content: `import React from 'react';
+import skillsData from '../data/skills.json';
+
+const Skills = () => {
+    return (
+        <div className="skills-section">
+            <h2>Technical Skills</h2>
+            
+            <div className="skill-category">
+                <h3>Frontend Development</h3>
+                <div className="skills-grid">
+                    {skillsData.technicalSkills.frontendDevelopment.map((skill, index) => (
+                        <div key={index} className="skill-item">
+                            <span>{skill}</span>
+                            <div className="skill-progress">
+                                <div className="skill-progress-bar" style={{ width: \`\${Math.random() * 40 + 60}%\` }}></div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+            
+            <div className="skill-category">
+                <h3>Backend Development</h3>
+                <div className="skills-grid">
+                    {skillsData.technicalSkills.backendDevelopment.map((skill, index) => (
+                        <div key={index} className="skill-item">
+                            <span>{skill}</span>
+                            <div className="skill-progress">
+                                <div className="skill-progress-bar" style={{ width: \`\${Math.random() * 40 + 60}%\` }}></div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default Skills;`
+            },
+            'Education.jsx': {
+                language: 'jsx',
+                content: `import React from 'react';
+import educationData from '../data/education.json';
+
+const Education = () => {
+    return (
+        <div className="education-section">
+            <h2>Education</h2>
+            {educationData.education.map((edu, index) => (
+                <div key={index} className="education-card">
+                    <h3>{edu.degree}</h3>
+                    <p className="institution">{edu.institution}</p>
+                    <p className="period">{edu.period}</p>
+                    <p className="location">{edu.location}</p>
+                </div>
+            ))}
+        </div>
+    );
+};
+
+export default Education;`
+            },
+            'experience.json': {
+                language: 'json',
+                content: `{
+    "experiences": [
+        {
+            "position": "Full Stack Developer Intern",
+            "company": "Proface SARL",
+            "location": "Marrakech",
+            "period": "01/07/2021 - 01/09/2021",
+            "responsibilities": [
+                "Backend Development and Database Management with Laravel and MySQL",
+                "Admin and Client Interface Development using HTML/CSS",
+                "Order Management and Reservation System Implementation",
+                "Route Protection and Security Implementation",
+                "End-to-end Project Management"
+            ]
+        }
+    ]
+}`
+            },
+            'education.json': {
+                language: 'json',
+                content: `{
+    "education": [
+        {
+            "period": "09/10/2024 - Present",
+            "institution": "YouCode, Fondation OCP / UM6P",
+            "location": "Nador",
+            "degree": "Full-Stack Development"
+        },
+        {
+            "period": "05/10/2021 - 24/07/2023",
+            "institution": "BTS Ouarzazate",
+            "location": "Morocco",
+            "degree": "Higher Technician in Information Systems Development"
+        },
+        {
+            "period": "09/10/2020 - 12/07/1",
+            "institution": "Lycee Boumaln Dades",
+            "location": "Boumalne Dades",
+            "degree": "Baccalaureate in Mathematical Sciences A"
+        }
+    ]
+}`
+            },
+            'projects.json': {
+                language: 'json',
+                content: `{
+    "projects": [
+        {
+            "name": "MoneyMind",
+            "description": "Budget management application with automated income tracking, expense monitoring, and savings goals. Features AI-powered suggestions and advanced expense categorization.",
+            "technologies": ["Laravel", "MySQL", "Tailwind CSS", "HTML", "CSS", "Azure", "Jira"]
+        },
+        {
+            "name": "VeilleHub",
+            "description": "Platform enabling students to propose and track technical presentations, while providing teachers with tools for subject validation, calendar management, and participation analysis.",
+            "technologies": ["PHP", "MySQL", "JavaScript", "Tailwind CSS", "HTML", "CSS", "Jira"]
+        }
+    ]
+}`
+            },
+            'skills.json': {
+                language: 'json',
+                content: `{
+    "technicalSkills": {
+        "frontendDevelopment": ["HTML", "CSS", "JavaScript", "React.js", "Tailwind CSS"],
+        "backendDevelopment": ["PHP", "Laravel", "MySQL"],
+        "toolsAndTechnologies": ["Git", "GitHub", "Figma", "UML", "Jira", "WordPress"]
+    },
+    "softSkills": [
+        "Agile Methodology",
+        "Team Collaboration",
+        "Creativity",
+        "Adaptability",
+        "Communication",
+        "Time Management"
+    ]
+}`
+            },
+            'README.md': {
+                language: 'markdown',
+                content: `# VS Code Portfolio
+
+A portfolio website styled as a VS Code editor, showcasing my skills, projects, and experience as a developer.
+
+## Features
+
+- VS Code-like UI with Dark+ theme
+- Interactive file browser
+- Syntax highlighting
+- Multiple views for different sections
+- Mobile responsive design
+
+## Technologies Used
+
+- HTML5
+- CSS3
+- JavaScript
+- TailwindCSS
+
+## Setup
+
+1. Clone the repository
+2. Open index.html in your browser
+3. Explore the portfolio!
+
+## Contact
+
+Feel free to reach out at contact@yassineatik.dev`
+            },
+            'main.css': {
+                language: 'css',
+                content: `/* Main CSS file for the portfolio */
+
+.about-section {
+    padding: 20px;
+}
+
+.about-section h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 8px;
+}
+
+.about-section .role {
+    font-size: 1.2rem;
+    color: #4dc4ff;
+    margin-bottom: 8px;
+}
+
+.about-section .location {
+    color: #dcdcaa;
+    margin-bottom: 16px;
+}
+
+.about-section .bio {
+    line-height: 1.6;
+    max-width: 600px;
+}
+
+/* Experience section styles */
+.experience-section {
+    padding: 20px;
+}
+
+.experience-card {
+    margin-bottom: 24px;
+    padding: 16px;
+    background: rgba(38, 38, 38, 0.5);
+    border-radius: 4px;
+    border-left: 2px solid #007acc;
+}
+
+/* Skills section styles */
+.skills-section {
+    padding: 20px;
+}
+
+.skill-category {
+    margin-bottom: 24px;
+}
+
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 16px;
+}
+
+/* Project section styles */
+.projects-section {
+    padding: 20px;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 24px;
+    margin-top: 20px;
+}
+
+.tech-tag {
+    display: inline-block;
+    background: #333;
+    color: #4dc4ff;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    margin-right: 6px;
+    margin-top: 6px;
+}
+
+/* Education section styles */
+.education-section {
+    padding: 20px;
+}
+
+.education-card {
+    margin-bottom: 24px;
+    padding: 16px;
+    background: rgba(38, 38, 38, 0.5);
+    border-radius: 4px;
+    border-left: 2px solid #4dc4ff;
+}`
+            },
+            'package.json': {
+                language: 'json',
+                content: `{
+    "name": "vscode-portfolio",
+    "version": "1.0.0",
+    "description": "A VS Code-themed portfolio website",
+    "author": "Yassine Ait Mensour",
+    "license": "MIT",
+    "scripts": {
+        "start": "serve .",
+        "build": "echo 'No build step required'"
+    },
+    "devDependencies": {
+        "serve": "^14.0.0"
+    }
+}`
+            }
+        };
+
+        // Function to update editor content
+        function updateEditorContent(fileName) {
+            const fileData = fileContents[fileName];
+            if (!fileData) return;
+
+            // Update tab
+            const tabsContainer = document.querySelector('.flex.bg-\\[\\#252526\\]');
+            tabsContainer.innerHTML = `
+                <div class="editor-tab active flex items-center gap-2">
+                    <i class="bi bi-file-earmark-code ${getFileIcon(fileName)}"></i>
+                    <span>${fileName}</span>
+                    <button class="ml-2 text-[#808080] hover:text-white">×</button>
+                </div>
+            `;
+
+            // Update breadcrumbs
+            const breadcrumbs = document.querySelector('.breadcrumb');
+            
+            // Determine which folder the file belongs to based on its extension
+            let folder = 'components';
+            if (fileName.endsWith('.json')) {
+                folder = 'data';
+            } else if (fileName.endsWith('.css')) {
+                folder = 'styles';
+            } else if (fileName === 'README.md' || fileName === 'package.json') {
+                folder = '';
+            }
+            
+            breadcrumbs.innerHTML = `
+                <div class="breadcrumb-item"><span>portfolio</span></div>
+                ${folder ? `<div class="breadcrumb-item"><span>src</span></div>` : ''}
+                ${folder ? `<div class="breadcrumb-item"><span>${folder}</span></div>` : ''}
+                <div class="breadcrumb-item"><span>${fileName}</span></div>
+            `;
+
+            // Update line numbers
+            const lines = fileData.content.split('\n').length;
+            const lineNumbers = document.querySelector('.line-numbers');
+            lineNumbers.innerHTML = Array.from({ length: lines }, (_, i) => i + 1).join('<br>');
+
+            // Update content with syntax highlighting
+            const editorContent = document.querySelector('.editor-content');
+            
+            // Add the animated cursor effect to make it look more interactive
+            editorContent.innerHTML = `
+                <div class="code-section relative mb-6 font-mono">
+                    ${syntaxHighlight(fileData.content, fileData.language)}
+                    <div class="terminal-cursor absolute" style="top: 4px; left: ${Math.random() * 50 + 200}px;"></div>
+                </div>
+            `;
+            
+            // Animate the appearance with a subtle fade-in
+            editorContent.classList.add('fade-in');
+            setTimeout(() => {
+                editorContent.classList.remove('fade-in');
+            }, 300);
+
+            // Add a random current line highlight to simulate editing
+            const randomLine = Math.floor(Math.random() * lines) + 1;
+            const lineHeight = 20; // approximate height of a line
+            const yPosition = (randomLine - 1) * lineHeight + 12;
+
+            const currentLine = document.createElement('div');
+            currentLine.className = 'current-line';
+            currentLine.style.top = `${yPosition}px`;
+            document.querySelector('.code-section').appendChild(currentLine);
+
+            // Also highlight the corresponding line number
+            const lineNumberElements = lineNumbers.innerHTML.split('<br>');
+            if (lineNumberElements[randomLine-1]) {
+                lineNumberElements[randomLine-1] = `<span style="color: white;">${randomLine}</span>`;
+                lineNumbers.innerHTML = lineNumberElements.join('<br>');
+            }
+        }
+
+        // Function to get file icon color class
+        function getFileIcon(fileName) {
+            const ext = fileName.split('.').pop().toLowerCase();
+            switch (ext) {
+                case 'json': return 'text-[#cbcb41]';
+                case 'md': return 'text-[#519aba]';
+                case 'jsx': return 'text-[#e37933]';
+                case 'css': return 'text-[#519aba]';
+                default: return 'text-[#519aba]';
+            }
+        }
+
+        // Update the syntaxHighlight function for better HTML rendering
+
+        function syntaxHighlight(content, language) {
+            // Convert HTML entities
+            let processed = content
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+            
+            // Process content based on language
+            if (language === 'json') {
+                processed = processed
+                    .replace(/"([^"]+)":/g, '<span class="syntax-property">"$1"</span>:')
+                    .replace(/"([^"]+)"/g, '<span class="syntax-string">"$1"</span>')
+                    .replace(/\b(true|false|null)\b/g, '<span class="syntax-keyword">$1</span>')
+                    .replace(/\b(\d+)\b/g, '<span class="syntax-number">$1</span>');
+            } else if (language === 'jsx') {
+                // First handle JSX tags
+                processed = processed
+                    .replace(/(&lt;\/?)([\w\-]+)/g, '$1<span class="syntax-keyword">$2</span>')
+                    // Handle JSX attributes
+                    .replace(/\s([\w\-]+)=/g, ' <span class="syntax-variable">$1</span>=')
+                    // Handle JSX braces
+                    .replace(/\{/g, '<span class="syntax-operator">{</span>')
+                    .replace(/\}/g, '<span class="syntax-operator">}</span>')
+                    // Keywords
+                    .replace(/\b(import|export|from|const|let|var|function|return|if|else|for|while|class|extends|default)\b/g, '<span class="syntax-keyword">$1</span>')
+                    // Strings
+                    .replace(/"([^"]*)"/g, '<span class="syntax-string">"$1"</span>')
+                    .replace(/'([^']*)'/g, '<span class="syntax-string">\'$1\'</span>')
+                    // Functions
+                    .replace(/\b([A-Z][A-Za-z0-9_]+)\b/g, '<span class="syntax-class">$1</span>')
+                    .replace(/\b(useState|useEffect|useContext|useRef|useMemo|useCallback)\b/g, '<span class="syntax-function">$1</span>')
+                    .replace(/\b([a-zA-Z0-9_]+)(\s*\()/g, '<span class="syntax-function">$1</span>$2')
+                    // Numbers
+                    .replace(/\b([0-9]+)\b/g, '<span class="syntax-number">$1</span>');
+            } else if (language === 'css') {
+                processed = processed
+                    .replace(/([.#][a-zA-Z0-9_\-]+)/g, '<span class="syntax-class">$1</span>')
+                    .replace(/([\w\-]+)(\s*:)/g, '<span class="syntax-property">$1</span>$2')
+                    .replace(/(:\s*)([\w\-]+)/g, '$1<span class="syntax-variable">$2</span>')
+                    .replace(/"([^"]*)"/g, '<span class="syntax-string">"$1"</span>')
+                    .replace(/'([^']*)'/g, '<span class="syntax-string">\'$1\'</span>')
+                    .replace(/(\d+)(px|em|rem|%|vh|vw)/g, '<span class="syntax-number">$1$2</span>')
+                    .replace(/\/\*([\s\S]*?)\*\//g, '<span class="syntax-comment">/*$1*/</span>');
+            } else if (language === 'markdown') {
+                processed = processed
+                    .replace(/^# (.*$)/gm, '<span class="syntax-keyword"># </span><span class="syntax-class">$1</span>')
+                    .replace(/^## (.*$)/gm, '<span class="syntax-keyword">## </span><span class="syntax-class">$1</span>')
+                    .replace(/^### (.*$)/gm, '<span class="syntax-keyword">### </span><span class="syntax-class">$1</span>')
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                    .replace(/`([^`]+)`/g, '<span class="syntax-string">`$1`</span>')
+                    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '[<span class="syntax-variable">$1</span>](<span class="syntax-string">$2</span>)');
+            }
+            
+            // Add proper indentation and line breaks
+            return processed.split('\n').map(line => {
+                // Count leading spaces for indentation
+                const indent = (line.match(/^\s*/) || [''])[0].length;
+                const indentSpan = `<span style="margin-left:${indent * 0.5}em;"></span>`;
+                return indentSpan + line;
+            }).join('<br>');
+        }
+
+        // Add click event listeners to all file tree items
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.file-tree-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    // Get the file name from the span
+                    const fileName = this.querySelector('span').textContent.trim();
+                    
+                    // Update active state
+                    document.querySelectorAll('.file-tree-item').forEach(el => {
+                        el.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // Update editor content if we have content for this file
+                    if (fileContents[fileName]) {
+                        updateEditorContent(fileName);
+                    }
+                });
+            });
+            
+            // Set default content
+            updateEditorContent('About.jsx');
+        });
+    </script>
+    <script>
+    // File content data is already correctly defined in your code
+
+    // Enhanced function to update editor content
+    function updateEditorContent(fileName) {
+        const fileData = fileContents[fileName];
+        if (!fileData) return;
+
+        // Update tab with the active file 
+        const tabsContainer = document.querySelector('.flex.bg-\\[\\#252526\\]');
+        tabsContainer.innerHTML = `
+            <div class="editor-tab active flex items-center gap-2">
+                <i class="bi bi-file-earmark-code ${getFileIcon(fileName)}"></i>
+                <span>${fileName}</span>
+                <button class="ml-2 text-[#808080] hover:text-white">×</button>
+            </div>
+        `;
+
+        // Update breadcrumbs properly based on file location
+        const breadcrumbs = document.querySelector('.breadcrumb');
+        let folder = 'components';
+        if (fileName.endsWith('.json')) {
+            folder = 'data';
+        } else if (fileName.endsWith('.css')) {
+            folder = 'styles';
+        } else if (fileName === 'README.md' || fileName === 'package.json') {
+            folder = '';
+        }
+        
+        breadcrumbs.innerHTML = `
+            <div class="breadcrumb-item"><span>portfolio</span></div>
+            ${folder ? `<div class="breadcrumb-item"><span>src</span></div>` : ''}
+            ${folder ? `<div class="breadcrumb-item"><span>${folder}</span></div>` : ''}
+            <div class="breadcrumb-item"><span>${fileName}</span></div>
+        `;
+
+        // Update line numbers
+        const lines = fileData.content.split('\n').length;
+        const lineNumbers = document.querySelector('.line-numbers');
+        lineNumbers.innerHTML = Array.from({ length: lines }, (_, i) => i + 1).join('<br>');
+
+        // Update content with syntax highlighting
+        const editorContent = document.querySelector('.editor-content');
+        
+        editorContent.innerHTML = `
+            <div class="code-section relative mb-6 font-mono">
+                ${syntaxHighlight(fileData.content, fileData.language)}
+                <div class="terminal-cursor absolute" style="top: 4px; left: ${Math.random() * 50 + 200}px;"></div>
+            </div>
+        `;
+        
+        // Animation and highlighting
+        editorContent.classList.add('fade-in');
+        setTimeout(() => {
+            editorContent.classList.remove('fade-in');
+        }, 300);
+
+        // Add active line effect
+        const randomLine = Math.floor(Math.random() * lines) + 1;
+        const lineHeight = 20; 
+        const yPosition = (randomLine - 1) * lineHeight + 12;
+
+        const currentLine = document.createElement('div');
+        currentLine.className = 'current-line';
+        currentLine.style.top = `${yPosition}px`;
+        document.querySelector('.code-section').appendChild(currentLine);
+
+        // Highlight corresponding line number
+        const lineNumberElements = lineNumbers.innerHTML.split('<br>');
+        if (lineNumberElements[randomLine-1]) {
+            lineNumberElements[randomLine-1] = `<span style="color: white;">${randomLine}</span>`;
+            lineNumbers.innerHTML = lineNumberElements.join('<br>');
+        }
+        
+        // Update page title to include file name
+        document.title = `${fileName} - VSCode Portfolio`;
+    }
+
+    // Enhanced event listener setup for the sidebar
+    document.addEventListener('DOMContentLoaded', function() {
+        // Handle file item clicks
+        document.querySelectorAll('.file-tree-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                // Stop event from bubbling to parent folders
+                e.stopPropagation();
+                
+                const isFolder = this.querySelector('.bi-folder-fill');
+                const fileName = this.querySelector('span').textContent.trim();
+                
+                if (isFolder) {
+                    // Toggle folder open/closed
+                    const childLevel = parseInt(this.className.match(/pl-(\d+)/)[1]) + 4;
+                    const childSelector = `.file-tree-item.pl-${childLevel}`;
+                    const childItems = document.querySelectorAll(childSelector);
+                    
+                    // Get the folder icon
+                    const folderIcon = this.querySelector('i');
+                    
+                    // Check if this folder has any direct children
+                    let hasVisibleChildren = false;
+                    
+                    childItems.forEach(child => {
+                        // Check if this child belongs to the clicked folder
+                        const prevSibling = getPreviousSiblingWithSmallerPadding(child, childLevel);
+                        if (prevSibling === this) {
+                            if (child.style.display === 'none' || child.style.display === '') {
+                                child.style.display = 'flex';
+                                hasVisibleChildren = true;
+                                
+                                // If it's a folder that was previously collapsed, make sure its children stay hidden
+                                if (child.querySelector('.bi-folder-fill')) {
+                                    folderIcon.classList.remove('bi-folder-fill');
+                                    folderIcon.classList.add('bi-folder2-open');
+                                }
+                            } else {
+                                child.style.display = 'none';
+                                
+                                // Hide all descendants too
+                                const descendantLevel = parseInt(child.className.match(/pl-(\d+)/)[1]);
+                                const descendants = document.querySelectorAll(`.file-tree-item[class*="pl-"]:not(.pl-${descendantLevel})`);
+                                
+                                descendants.forEach(desc => {
+                                    const descLevel = parseInt(desc.className.match(/pl-(\d+)/)[1]);
+                                    if (descLevel > descendantLevel) {
+                                        desc.style.display = 'none';
+                                    }
+                                });
+                            }
+                        }
+                    });
+                    
+                    // Toggle folder icon
+                    if (hasVisibleChildren) {
+                        folderIcon.classList.remove('bi-folder-fill');
+                        folderIcon.classList.add('bi-folder2-open');
+                    } else {
+                        folderIcon.classList.remove('bi-folder2-open');
+                        folderIcon.classList.add('bi-folder-fill');
+                    }
+                } else {
+                    // It's a file, update active state
+                    document.querySelectorAll('.file-tree-item').forEach(el => {
+                        el.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // Update editor content if we have content for this file
+                    if (fileContents[fileName]) {
+                        updateEditorContent(fileName);
+                    }
+                }
+            });
+        });
+        
+        // Helper function to find previous sibling with smaller or equal padding
+        function getPreviousSiblingWithSmallerPadding(element, paddingLevel) {
+            let prev = element.previousElementSibling;
+            
+            while (prev) {
+                const prevPaddingMatch = prev.className.match(/pl-(\d+)/);
+                if (prevPaddingMatch) {
+                    const prevPadding = parseInt(prevPaddingMatch[1]);
+                    if (prevPadding < paddingLevel) {
+                        return prev;
+                    }
+                }
+                prev = prev.previousElementSibling;
+            }
+            
+            return null;
+        }
+        
+        // Set default content
+        updateEditorContent('About.jsx');
+        
+        // Set the first JSX file as active in the sidebar
+        const firstJsxFile = document.querySelector('.file-tree-item:has(span:contains("About.jsx"))');
+        if (firstJsxFile) {
+            firstJsxFile.classList.add('active');
+        }
+    });
+</script>
+<script>
+// Simplified event handling for files only
+document.addEventListener('DOMContentLoaded', function() {
+    // Get all items with a file icon (not folders)
+    const fileItems = document.querySelectorAll('.file-tree-item:not([data-is-folder="true"])');
+    
+    fileItems.forEach(item => {
+        item.addEventListener('click', function() {
+            const fileName = this.querySelector('span').textContent.trim();
+            
+            // Update active state
+            document.querySelectorAll('.file-tree-item').forEach(el => {
+                el.classList.remove('active');
+            });
+            this.classList.add('active');
+            
+            // Update editor content
+            if (fileContents[fileName]) {
+                updateEditorContent(fileName);
+            }
+        });
+    });
+    
+    // Set default content
+    updateEditorContent('About.jsx');
+    
+    // Highlight the default file in the sidebar
+    const aboutFile = document.querySelector('.file-tree-item:has(span:contains("About.jsx"))');
+    if (aboutFile) {
+        aboutFile.classList.add('active');
+    }
+});
+</script>
+</body>
+</html>
