@@ -124,18 +124,112 @@
                     <div class="breadcrumb-item"><span>components</span></div>
                     <div class="breadcrumb-item"><span>About.jsx</span></div>
                 </div><!-- Editor Content -->
-                <div class="editor-content py-4 px-6">
-                    <!-- Code Preview Section -->
-                    <div class="code-content mb-8 bg-[#1e1e1e] rounded-lg overflow-hidden">
-                        <div class="bg-[#2d2d2d] px-4 py-2 flex items-center gap-2">
-                            <div class="flex space-x-2">
-                                <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
-                                <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
-                                <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
-                            </div>
-                            <span class="text-[#858585] text-sm">About.jsx</span>
+                <div class="editor-content py-4 px-6 relative">
+                    <!-- Minimap -->
+                    <div class="minimap fixed right-0 top-[110px] bottom-[22px] w-[60px] bg-[#1e1e1e] opacity-50 hover:opacity-100 transition-opacity overflow-hidden z-10">
+                        <div class="minimap-content text-[2px] leading-[2px] text-[#569cd6]">
+                            // Minimap content will be populated by JS
                         </div>
-                        <pre class="p-4 text-sm font-mono leading-relaxed">
+                        <div class="minimap-slider absolute right-0 w-[2px] bg-[#454545] hover:bg-[#007acc]" style="top: 0%; height: 20%;"></div>
+                    </div>
+
+                    <!-- Problems Panel -->
+                    <div class="problems-panel hidden fixed bottom-[22px] left-0 right-0 h-[200px] bg-[#1e1e1e] border-t border-[#333]">
+                        <div class="panel-header bg-[#252526] px-4 py-2 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <i class="bi bi-exclamation-circle text-[#cc8800]"></i>
+                                <span>Problems</span>
+                                <span class="problems-count text-xs px-2 py-1 rounded-full bg-[#333]">0</span>
+                            </div>
+                            <button class="close-panel text-[#858585] hover:text-white">×</button>
+                        </div>
+                        <div class="panel-content p-4">
+                            <div class="no-problems text-[#858585]">No problems detected</div>
+                        </div>
+                    </div>
+
+                    <!-- Output Console -->
+                    <div class="output-console hidden fixed bottom-[22px] left-0 right-0 h-[200px] bg-[#1e1e1e] border-t border-[#333]">
+                        <div class="panel-header bg-[#252526] px-4 py-2 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <i class="bi bi-terminal"></i>
+                                <span>Output</span>
+                            </div>
+                            <button class="close-panel text-[#858585] hover:text-white">×</button>
+                        </div>
+                        <div class="panel-content p-4 font-mono text-sm">
+                            <div class="output-line">[Info] Portfolio server started on port 3000</div>
+                            <div class="output-line">[Info] Watching for file changes...</div>
+                        </div>
+                    </div>
+
+                    <!-- Git Panel -->
+                    <div class="git-panel hidden fixed bottom-[22px] left-0 right-0 h-[200px] bg-[#1e1e1e] border-t border-[#333]">
+                        <div class="panel-header bg-[#252526] px-4 py-2 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <i class="bi bi-git"></i>
+                                <span>Git</span>
+                            </div>
+                            <button class="close-panel text-[#858585] hover:text-white">×</button>
+                        </div>
+                        <div class="panel-content p-4">
+                            <div class="git-branch flex items-center gap-2 mb-4">
+                                <i class="bi bi-git text-[#569cd6]"></i>
+                                <span>main</span>
+                            </div>
+                            <div class="git-changes">
+                                <div class="text-[#858585] mb-2">Changes</div>
+                                <div class="git-file flex items-center gap-2 text-sm">
+                                    <i class="bi bi-file-diff text-[#4dc4ff]"></i>
+                                    <span>about.html</span>
+                                    <span class="text-[#858585]">(M)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Intellisense Tooltip -->
+                    <div class="intellisense-tooltip hidden absolute bg-[#252526] border border-[#454545] rounded shadow-lg p-2 max-w-md z-50">
+                        <div class="flex items-start gap-2">
+                            <i class="bi bi-code-square text-[#4dc4ff]"></i>
+                            <div>
+                                <div class="font-semibold"></div>
+                                <div class="text-sm text-[#858585]"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Code Preview Section -->
+                    <div class="code-content mb-8 bg-[#1e1e1e] rounded-lg overflow-hidden flex">
+                        <!-- Line Numbers -->
+                        <div class="line-numbers bg-[#1e1e1e] p-4 text-[#858585] text-right pr-4 select-none border-r border-[#333]">
+                            <div>1</div>
+                            <div>2</div>
+                            <div>3</div>
+                            <div>4</div>
+                            <div>5</div>
+                            <div>6</div>
+                            <div>7</div>
+                            <div>8</div>
+                            <div>9</div>
+                            <div>10</div>
+                            <div>11</div>
+                            <div>12</div>
+                            <div>13</div>
+                            <div>14</div>
+                            <div>15</div>
+                        </div>
+                        
+                        <div class="flex-1">
+                            <div class="bg-[#2d2d2d] px-4 py-2 flex items-center gap-2">
+                                <div class="flex space-x-2">
+                                    <div class="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
+                                    <div class="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
+                                    <div class="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+                                </div>
+                                <span class="text-[#858585] text-sm">About.jsx</span>
+                            </div>
+                            <pre class="p-4 text-sm font-mono leading-relaxed">
 <span class="syntax-keyword">import</span> <span class="syntax-variable">React</span> <span class="syntax-keyword">from</span> <span class="syntax-string">'react'</span>;
 <span class="syntax-keyword">import</span> <span class="syntax-string">'../styles/About.css'</span>;
 
@@ -151,7 +245,25 @@
 };
 
 <span class="syntax-keyword">export</span> <span class="syntax-keyword">default</span> About;</pre>
+                        </div>
                     </div>
+                    
+                    <style>
+                        .line-numbers {
+                            font-family: 'Consolas', 'Courier New', monospace;
+                            font-size: 0.9rem;
+                            line-height: 1.5;
+                        }
+                        
+                        .line-numbers div {
+                            opacity: 0.5;
+                        }
+                        
+                        .line-numbers div:hover {
+                            opacity: 1;
+                            color: #fff;
+                        }
+                    </style>
 
                     <!-- Profile Section -->
                     <div class="about-section fade-in bg-[#2d2d2d] rounded-lg p-8 shadow-xl">
