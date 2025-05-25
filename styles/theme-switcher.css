@@ -1,0 +1,273 @@
+/* Theme Switcher Styles */
+
+/* Theme Menu */
+.theme-menu {
+    position: absolute;
+    top: 40px;
+    right: 10px;
+    width: 300px;
+    background-color: var(--editor-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.theme-menu.hidden {
+    display: none;
+}
+
+.theme-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    background-color: var(--titlebar-bg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.theme-menu-header h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.theme-menu-close {
+    background: none;
+    border: none;
+    color: #ccc;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0 5px;
+}
+
+.theme-menu-close:hover {
+    color: white;
+}
+
+.theme-menu-options {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.theme-option {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+}
+
+.theme-option:hover {
+    background-color: var(--explorer-hover);
+}
+
+.theme-option.active {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.theme-preview {
+    width: 24px;
+    height: 24px;
+    border-radius: 3px;
+    margin-right: 12px;
+}
+
+.theme-name {
+    font-size: 13px;
+}
+
+/* Theme Previews */
+.dark-preview {
+    background-color: #1e1e1e;
+    border: 1px solid #444;
+}
+
+.light-preview {
+    background-color: #ffffff;
+    border: 1px solid #d4d4d4;
+}
+
+.monokai-preview {
+    background-color: #272822;
+    border: 1px solid #49483e;
+}
+
+.dracula-preview {
+    background-color: #282a36;
+    border: 1px solid #44475a;
+}
+
+.github-preview {
+    background-color: #ffffff;
+    border: 1px solid #e8eaed;
+}
+
+.nord-preview {
+    background-color: #2e3440;
+    border: 1px solid #3b4252;
+}
+
+.synthwave-preview {
+    background: linear-gradient(to right, #241b2f, #46336c);
+    border: 1px solid #ff7edb;
+}
+
+/* Theme Overlay */
+.theme-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+}
+
+/* Theme Definitions */
+:root.theme-dark {
+    --editor-bg: #1e1e1e;
+    --titlebar-bg: #3c3c3c;
+    --activity-bar-bg: #333333;
+    --explorer-bg: #252526;
+    --border-color: #474747;
+    --explorer-hover: rgba(255, 255, 255, 0.1);
+    --vscode-text: #cccccc;
+    --vscode-accent: #007acc;
+    --vscode-accent-light: #4dc4ff;
+    --scrollbar-bg: #1e1e1e;
+    --scrollbar-thumb: #424242;
+    --scrollbar-hover: #4f4f4f;
+    
+    --syntax-keyword: #569cd6;
+    --syntax-function: #dcdcaa;
+    --syntax-string: #ce9178;
+    --syntax-number: #b5cea8;
+    --syntax-comment: #6a9955;
+}
+
+:root.theme-light {
+    --editor-bg: #ffffff;
+    --titlebar-bg: #dddddd;
+    --activity-bar-bg: #f3f3f3;
+    --explorer-bg: #f3f3f3;
+    --border-color: #e0e0e0;
+    --explorer-hover: rgba(0, 0, 0, 0.05);
+    --vscode-text: #333333;
+    --vscode-accent: #0078d7;
+    --vscode-accent-light: #005ba1;
+    --scrollbar-bg: #f3f3f3;
+    --scrollbar-thumb: #c1c1c1;
+    --scrollbar-hover: #a1a1a1;
+    
+    --syntax-keyword: #0000ff;
+    --syntax-function: #795e26;
+    --syntax-string: #a31515;
+    --syntax-number: #098658;
+    --syntax-comment: #008000;
+}
+
+:root.theme-monokai {
+    --editor-bg: #272822;
+    --titlebar-bg: #414339;
+    --activity-bar-bg: #272822;
+    --explorer-bg: #1e1f1c;
+    --border-color: #414339;
+    --explorer-hover: rgba(255, 255, 255, 0.1);
+    --vscode-text: #f8f8f2;
+    --vscode-accent: #a6e22e;
+    --vscode-accent-light: #e6db74;
+    --scrollbar-bg: #272822;
+    --scrollbar-thumb: #414339;
+    --scrollbar-hover: #5a5d56;
+    
+    --syntax-keyword: #f92672;
+    --syntax-function: #a6e22e;
+    --syntax-string: #e6db74;
+    --syntax-number: #ae81ff;
+    --syntax-comment: #75715e;
+}
+
+:root.theme-dracula {
+    --editor-bg: #282a36;
+    --titlebar-bg: #44475a;
+    --activity-bar-bg: #282a36;
+    --explorer-bg: #21222c;
+    --border-color: #44475a;
+    --explorer-hover: rgba(255, 255, 255, 0.1);
+    --vscode-text: #f8f8f2;
+    --vscode-accent: #bd93f9;
+    --vscode-accent-light: #ff79c6;
+    --scrollbar-bg: #282a36;
+    --scrollbar-thumb: #44475a;
+    --scrollbar-hover: #6272a4;
+    
+    --syntax-keyword: #ff79c6;
+    --syntax-function: #50fa7b;
+    --syntax-string: #f1fa8c;
+    --syntax-number: #bd93f9;
+    --syntax-comment: #6272a4;
+}
+
+:root.theme-github {
+    --editor-bg: #ffffff;
+    --titlebar-bg: #f6f8fa;
+    --activity-bar-bg: #f6f8fa;
+    --explorer-bg: #f6f8fa;
+    --border-color: #e1e4e8;
+    --explorer-hover: rgba(0, 0, 0, 0.05);
+    --vscode-text: #24292e;
+    --vscode-accent: #0366d6;
+    --vscode-accent-light: #2188ff;
+    --scrollbar-bg: #f6f8fa;
+    --scrollbar-thumb: #d1d5da;
+    --scrollbar-hover: #b1b5ba;
+    
+    --syntax-keyword: #d73a49;
+    --syntax-function: #6f42c1;
+    --syntax-string: #032f62;
+    --syntax-number: #005cc5;
+    --syntax-comment: #6a737d;
+}
+
+:root.theme-nord {
+    --editor-bg: #2e3440;
+    --titlebar-bg: #3b4252;
+    --activity-bar-bg: #2e3440;
+    --explorer-bg: #2e3440;
+    --border-color: #434c5e;
+    --explorer-hover: rgba(255, 255, 255, 0.1);
+    --vscode-text: #d8dee9;
+    --vscode-accent: #88c0d0;
+    --vscode-accent-light: #8fbcbb;
+    --scrollbar-bg: #2e3440;
+    --scrollbar-thumb: #3b4252;
+    --scrollbar-hover: #4c566a;
+    
+    --syntax-keyword: #81a1c1;
+    --syntax-function: #88c0d0;
+    --syntax-string: #a3be8c;
+    --syntax-number: #b48ead;
+    --syntax-comment: #4c566a;
+}
+
+:root.theme-synthwave {
+    --editor-bg: #241b2f;
+    --titlebar-bg: #34294f;
+    --activity-bar-bg: #241b2f;
+    --explorer-bg: #262335;
+    --border-color: #495495;
+    --explorer-hover: rgba(255, 255, 255, 0.1);
+    --vscode-text: #f92aad;
+    --vscode-accent: #ff8b39;
+    --vscode-accent-light: #fc28a8;
+    --scrollbar-bg: #241b2f;
+    --scrollbar-thumb: #495495;
+    --scrollbar-hover: #2a2139;
+    
+    --syntax-keyword: #f97e72;
+    --syntax-function: #36f9f6;
+    --syntax-string: #ff8b39;
+    --syntax-number: #ff9b50;
+    --syntax-comment: #848bbd;
+}

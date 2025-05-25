@@ -1,0 +1,162 @@
+/* Interactive Skills CSS */
+
+/* Code Snippets */
+.code-snippet {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-width: 600px;
+    background-color: var(--editor-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 12px;
+    margin-top: 8px;
+    z-index: 10;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.skill-item {
+    position: relative;
+}
+
+.code-snippet.hidden {
+    display: none;
+}
+
+.code-snippet pre {
+    margin: 0;
+    padding: 10px;
+    background-color: #1e1e1e;
+    border-radius: 3px;
+    overflow-x: auto;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+/* Syntax highlighting */
+.language-html .keyword,
+.language-html .tag {
+    color: #569cd6;
+}
+
+.language-html .attr-name {
+    color: #9cdcfe;
+}
+
+.language-html .attr-value {
+    color: #ce9178;
+}
+
+.language-css .property {
+    color: #9cdcfe;
+}
+
+.language-css .selector {
+    color: #d7ba7d;
+}
+
+.language-css .value {
+    color: #ce9178;
+}
+
+.language-javascript .keyword {
+    color: #569cd6;
+}
+
+.language-javascript .function {
+    color: #dcdcaa;
+}
+
+.language-javascript .string {
+    color: #ce9178;
+}
+
+.language-javascript .comment {
+    color: #6a9955;
+}
+
+.snippet-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: none;
+    border: none;
+    color: #cccccc;
+    font-size: 18px;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.snippet-close:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+/* Enhanced skill tags */
+.skill-tag {
+    position: relative;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    overflow: hidden;
+}
+
+.skill-tag::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 0;
+    background-color: var(--vscode-accent);
+    transition: width 0.3s ease;
+}
+
+.skill-tag:hover::before {
+    width: 100%;
+}
+
+.skill-tag:hover {
+    background-color: rgba(0, 122, 204, 0.3);
+}
+
+/* Skill chart */
+.skill-chart-container {
+    width: 100%;
+    height: 300px;
+    margin: 24px 0;
+    background-color: rgba(255, 255, 255, 0.03);
+    border-radius: 4px;
+    padding: 16px;
+    border-left: 3px solid var(--vscode-accent);
+}
+
+.skill-distribution {
+    animation: fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 3D rotation effect on skill cards */
+.skill-category {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transform-style: preserve-3d;
+    perspective: 1000px;
+}
+
+.skill-category:hover {
+    transform: translateY(-5px) rotateX(5deg);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}

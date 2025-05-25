@@ -1,0 +1,198 @@
+/* VS Code Command Palette Styling */
+
+/* Command Palette Container */
+.command-palette {
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 600px;
+    max-width: 90%;
+    background-color: var(--editor-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    max-height: 500px;
+}
+
+.command-palette.active {
+    opacity: 1;
+}
+
+.command-palette.hidden {
+    display: none;
+}
+
+/* Command Input */
+.command-palette-header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.command-icon {
+    margin-right: 6px;
+    color: var(--vscode-accent);
+}
+
+#command-input {
+    flex: 1;
+    background-color: transparent;
+    border: none;
+    color: var(--vscode-text);
+    font-size: 14px;
+    outline: none;
+    font-family: 'Consolas', 'Monaco', monospace;
+}
+
+/* Command Results */
+.command-results {
+    overflow-y: auto;
+    max-height: 420px;
+}
+
+.command-category {
+    padding: 6px 0;
+}
+
+.command-category-title {
+    padding: 4px 10px;
+    font-size: 11px;
+    text-transform: uppercase;
+    color: #888;
+}
+
+.command-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 10px;
+    cursor: pointer;
+    transition: background-color 0.1s ease;
+}
+
+.command-item:hover {
+    background-color: var(--explorer-hover);
+}
+
+.command-item i {
+    margin-right: 8px;
+    font-size: 16px;
+    color: var(--vscode-accent-light);
+}
+
+/* Command Overlay */
+.command-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+/* Terminal Panel */
+.terminal-panel {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    background-color: var(--editor-bg);
+    border-top: 1px solid var(--border-color);
+    z-index: 900;
+    display: flex;
+    flex-direction: column;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.terminal-panel.active {
+    transform: translateY(0);
+}
+
+.terminal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 10px;
+    background-color: var(--titlebar-bg);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.terminal-title {
+    font-size: 12px;
+}
+
+.terminal-actions {
+    display: flex;
+}
+
+.terminal-action {
+    background: none;
+    border: none;
+    color: #ccc;
+    cursor: pointer;
+    padding: 2px 8px;
+    margin-left: 4px;
+}
+
+.terminal-action:hover {
+    color: white;
+}
+
+.terminal-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 14px;
+}
+
+.terminal-line {
+    margin-bottom: 4px;
+    display: flex;
+}
+
+.terminal-prompt {
+    color: var(--vscode-accent);
+    margin-right: 6px;
+}
+
+.blinking-cursor {
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    from, to { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Status Message */
+.status-message {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background-color: var(--titlebar-bg);
+    color: #ccc;
+    padding: 8px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    z-index: 950;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    border-left: 3px solid var(--vscode-accent);
+}
+
+.status-message.active {
+    opacity: 1;
+    transform: translateY(0);
+}
