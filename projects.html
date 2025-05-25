@@ -130,10 +130,11 @@
                     <div class="breadcrumb-item"><span>Projects.jsx</span></div>
                 </div>
 
-                <!-- Editor Content -->                <div class="editor-content py-4 px-6">
+                <!-- Editor Content -->                
+                <div class="editor-content py-4 px-6 overflow-y-auto" style="height: calc(100vh - 110px);">
                     <div class="projects-section">
-                        <h2 class="text-xl font-bold mb-4">Featured Projects</h2>
-                        <div class="projects-grid grid grid-cols-1 md:grid-cols-2 gap-6 mt-5">
+                        <h2 class="text-xl font-bold mb-4 text-[#4dc4ff]">Featured Projects</h2>
+                        <div class="projects-grid grid grid-cols-1 md:grid-cols-2 gap-8 mt-5">
                             <div class="project-card bg-[#2a2d2e] p-5 rounded border-l-4 border-[#007acc] shadow-md transition-all duration-300">
                                 <div class="flex justify-between items-start mb-3">
                                     <h3 class="text-lg font-bold">MoneyMind</h3>
@@ -175,12 +176,65 @@
                                     <span class="tech-tag bg-[rgba(0,122,204,0.2)] text-[#4dc4ff] px-2 py-1 rounded-full text-xs mr-2 mb-2 border border-[rgba(77,196,255,0.3)]">Tailwind CSS</span>
                                     <span class="tech-tag bg-[rgba(0,122,204,0.2)] text-[#4dc4ff] px-2 py-1 rounded-full text-xs mr-2 mb-2 border border-[rgba(77,196,255,0.3)]">HTML</span>
                                     <span class="tech-tag bg-[rgba(0,122,204,0.2)] text-[#4dc4ff] px-2 py-1 rounded-full text-xs mr-2 mb-2 border border-[rgba(77,196,255,0.3)]">CSS</span>
-                                    <span class="tech-tag bg-[rgba(0,122,204,0.2)] text-[#4dc4ff] px-2 py-1 rounded-full text-xs mr-2 mb-2 border border-[rgba(77,196,255,0.3)]">Jira</span>
+                                    <span class="tech-tag bg-[rgba(0,122,204,0.2)] text-[#4dc4ff] px-2 py-1 rounded-full text-xs mr-2 mb-2 border border-[rgba(77,196,255,0.3)]">Jira</span>                                </div>
+                            </div>
+
+                            <div class="project-card bg-[#2a2d2e] p-5 rounded border-l-4 border-[#007acc] shadow-md transition-all duration-300">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3 class="text-lg font-bold">SkillBuddy</h3>
+                                    <div class="flex gap-2">
+                                        <a href="#" class="text-[#cccccc] hover:text-white transition-colors">
+                                            <i class="bi bi-github"></i>
+                                        </a>
+                                        <a href="#" class="text-[#cccccc] hover:text-white transition-colors">
+                                            <i class="bi bi-box-arrow-up-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <p class="mb-4 text-sm text-[#cccccc]">An interactive soft skills assessment platform featuring quizzes and evaluations to help users identify and develop their professional soft skills. Provides personalized feedback and improvement suggestions.</p>
+                                <div class="tech-stack flex flex-wrap">
+                                    <span class="tech-tag bg-[rgba(0,122,204,0.2)] text-[#4dc4ff] px-2 py-1 rounded-full text-xs mr-2 mb-2 border border-[rgba(77,196,255,0.3)]">Laravel</span>
+                                    <span class="tech-tag bg-[rgba(0,122,204,0.2)] text-[#4dc4ff] px-2 py-1 rounded-full text-xs mr-2 mb-2 border border-[rgba(77,196,255,0.3)]">MySQL</span>
+                                    <span class="tech-tag bg-[rgba(0,122,204,0.2)] text-[#4dc4ff] px-2 py-1 rounded-full text-xs mr-2 mb-2 border border-[rgba(77,196,255,0.3)]">Tailwind CSS</span>
+                                    <span class="tech-tag bg-[rgba(0,122,204,0.2)] text-[#4dc4ff] px-2 py-1 rounded-full text-xs mr-2 mb-2 border border-[rgba(77,196,255,0.3)]">HTML</span>
+                                    <span class="tech-tag bg-[rgba(0,122,204,0.2)] text-[#4dc4ff] px-2 py-1 rounded-full text-xs mr-2 mb-2 border border-[rgba(77,196,255,0.3)]">CSS</span>
+                                </div>                            </div>
+
+                            <div class="project-card bg-[#2a2d2e] p-5 rounded border-l-4 border-[#007acc] shadow-md transition-all duration-300">
+                                <div class="flex justify-between items-start mb-3">
+                                    <h3 class="text-lg font-bold">Goal Tracker</h3>
+                                    <div class="flex gap-2">
+                                        <a href="https://github.com/your-username/Goal-Tracker-Project" class="text-[#cccccc] hover:text-white transition-colors">
+                                            <i class="bi bi-github"></i>
+                                        </a>
+                                        <a href="#" class="text-[#cccccc] hover:text-white transition-colors">
+                                            <i class="bi bi-box-arrow-up-right"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <p class="mb-4 text-sm text-[#cccccc]">A web-based fitness goal-tracking application enabling users to define, track and achieve their sports goals. Features progress tracking, training planning and results visualization.</p>
+                                <div class="tech-stack flex flex-wrap">
+                                    <span class="tech-tag bg-[rgba(0,122,204,0.2)] text-[#4dc4ff] px-2 py-1 rounded-full text-xs mr-2 mb-2 border border-[rgba(77,196,255,0.3)]">Laravel</span>
+                                    <span class="tech-tag bg-[rgba(0,122,204,0.2)] text-[#4dc4ff] px-2 py-1 rounded-full text-xs mr-2 mb-2 border border-[rgba(77,196,255,0.3)]">MySQL</span>
+                                    <span class="tech-tag bg-[rgba(0,122,204,0.2)] text-[#4dc4ff] px-2 py-1 rounded-full text-xs mr-2 mb-2 border border-[rgba(77,196,255,0.3)]">Tailwind CSS</span>
+                                    <span class="tech-tag bg-[rgba(0,122,204,0.2)] text-[#4dc4ff] px-2 py-1 rounded-full text-xs mr-2 mb-2 border border-[rgba(77,196,255,0.3)]">HTML</span>
+                                    <span class="tech-tag bg-[rgba(0,122,204,0.2)] text-[#4dc4ff] px-2 py-1 rounded-full text-xs mr-2 mb-2 border border-[rgba(77,196,255,0.3)]">CSS</span>                                    <span class="tech-tag bg-[rgba(0,122,204,0.2)] text-[#4dc4ff] px-2 py-1 rounded-full text-xs mr-2 mb-2 border border-[rgba(77,196,255,0.3)]">JavaScript</span>
                                 </div>
                             </div>
                         </div>
+                        
+                        <!-- See More Projects Button -->
+                        <div class="flex justify-center items-center w-full mt-8">
+                            <a href="#" 
+                               class="group relative px-8 py-3 bg-[#2a2d2e] hover:bg-[#3a3d3e] text-[#cccccc] rounded-lg transition-all duration-300 flex items-center gap-2 border border-[#404040] hover:border-[#007acc]">
+                                <span>See More Projects</span>
+                                <i class="bi bi-arrow-right-circle transition-transform group-hover:translate-x-1"></i>
+                                <div class="absolute inset-0 bg-gradient-to-r from-transparent via-[rgba(0,122,204,0.1)] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                            </a>
+                        </div>
                     </div>
                 </div>
+            </div>
             </div>
 
             <!-- Status Bar -->
