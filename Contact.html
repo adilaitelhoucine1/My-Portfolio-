@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>package.json - VSCode Portfolio</title>
+    <title>contact.json - VSCode Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
     <link rel="stylesheet" href="styles/colors.css">
@@ -72,10 +72,9 @@
                     <div class="file-tree-item pl-4" data-is-file="true">
                         <i class="bi bi-file-earmark-text text-[#519aba] file-icon"></i>
                         <a href="readme.html"><span>README.md</span></a>
-                    </div>
-                    <div class="file-tree-item pl-4 active" data-is-file="true">
+                    </div>                    <div class="file-tree-item pl-4 active" data-is-file="true">
                         <i class="bi bi-file-earmark-code text-[#cbcb41] file-icon"></i>
-                        <a href="package.html"><span>package.json</span></a>
+                        <a href="Contact.html"><span>Contact.json</span></a>
                     </div>
 
                     <!-- Source folder -->
@@ -113,37 +112,50 @@
             <!-- Main Content Area -->
             <div class="ml-[300px] flex-1 bg-[var(--editor-bg)] min-h-screen">
                 <!-- Tabs -->
-                <div class="flex bg-[#252526] border-b border-[#1e1e1e]">
-                    <div class="editor-tab active flex items-center gap-2">
+                <div class="flex bg-[#252526] border-b border-[#1e1e1e]">                    <div class="editor-tab active flex items-center gap-2">
                         <i class="bi bi-file-earmark-code text-[#cbcb41]"></i>
-                        <span>package.json</span>
+                        <span>contact.json</span>
                         <button class="ml-2 text-[#808080] hover:text-white">×</button>
                     </div>
-                </div>
-
-                <!-- Breadcrumbs -->
+                </div>                <!-- Breadcrumbs -->
                 <div class="breadcrumb">
                     <div class="breadcrumb-item"><span>portfolio</span></div>
-                    <div class="breadcrumb-item"><span>package.json</span></div>
-                </div>
-
-                <!-- Editor Content -->
+                    <div class="breadcrumb-item"><span>contact.json</span></div>
+                </div>                <!-- Editor Content -->
                 <div class="editor-content py-4 px-6">
                     <div class="code-section font-mono">
                         <pre class="text-white">
 <span class="syntax-operator">{</span>
-    <span class="syntax-property">"name"</span>: <span class="syntax-string">"vscode-portfolio"</span>,
-    <span class="syntax-property">"version"</span>: <span class="syntax-string">"1.0.0"</span>,
-    <span class="syntax-property">"description"</span>: <span class="syntax-string">"A VS Code-themed portfolio website"</span>,
-    <span class="syntax-property">"author"</span>: <span class="syntax-string">"Adil AIT EL HOUCINE"</span>,
-    <span class="syntax-property">"license"</span>: <span class="syntax-string">"MIT"</span>,
-    <span class="syntax-property">"scripts"</span>: <span class="syntax-operator">{</span>
-        <span class="syntax-property">"start"</span>: <span class="syntax-string">"serve ."</span>,
-        <span class="syntax-property">"build"</span>: <span class="syntax-string">"echo 'No build step required'"</span>
+    <span class="syntax-property">"personal"</span>: <span class="syntax-operator">{</span>
+        <span class="syntax-property">"name"</span>: <span class="syntax-string">"Adil AIT EL HOUCINE"</span>,
+        <span class="syntax-property">"title"</span>: <span class="syntax-string">"Full Stack Developer"</span>,
+        <span class="syntax-property">"location"</span>: <span class="syntax-string">"Morocco"</span>
     <span class="syntax-operator">}</span>,
-    <span class="syntax-property">"devDependencies"</span>: <span class="syntax-operator">{</span>
-        <span class="syntax-property">"serve"</span>: <span class="syntax-string">"^14.0.0"</span>
-    <span class="syntax-operator">}</span>
+    <span class="syntax-property">"contact"</span>: <span class="syntax-operator">{</span>
+        <span class="syntax-property">"email"</span>: <span class="syntax-string">"contact@adilaitelhoucine.dev"</span>,
+        <span class="syntax-property">"phone"</span>: <span class="syntax-string">"Available upon request"</span>,
+        <span class="syntax-property">"response_time"</span>: <span class="syntax-string">"Within 24-48 hours"</span>
+    <span class="syntax-operator">}</span>,
+    <span class="syntax-property">"social_media"</span>: <span class="syntax-operator">{</span>
+        <span class="syntax-property">"linkedin"</span>: <span class="syntax-operator">{</span>
+            <span class="syntax-property">"url"</span>: <span class="syntax-string">"https://linkedin.com/in/adilaitelhoucine"</span>,
+            <span class="syntax-property">"username"</span>: <span class="syntax-string">"adilaitelhoucine"</span>
+        <span class="syntax-operator">}</span>,
+        <span class="syntax-property">"github"</span>: <span class="syntax-operator">{</span>
+            <span class="syntax-property">"url"</span>: <span class="syntax-string">"https://github.com/adilaitelhoucine"</span>,
+            <span class="syntax-property">"username"</span>: <span class="syntax-string">"adilaitelhoucine"</span>
+        <span class="syntax-operator">}</span>
+    <span class="syntax-operator">}</span>,
+    <span class="syntax-property">"availability"</span>: <span class="syntax-operator">{</span>
+        <span class="syntax-property">"status"</span>: <span class="syntax-string">"Open to opportunities"</span>,
+        <span class="syntax-property">"preferred_contact"</span>: <span class="syntax-string">"email"</span>,
+        <span class="syntax-property">"timezone"</span>: <span class="syntax-string">"GMT+1 (Morocco)"</span>
+    <span class="syntax-operator">}</span>,
+    <span class="syntax-property">"specializations"</span>: <span class="syntax-operator">[</span>
+        <span class="syntax-string">"Full Stack Development"</span>,
+        <span class="syntax-string">"Web Development"</span>,
+        <span class="syntax-string">"Software Engineering"</span>
+    <span class="syntax-operator">]</span>
 <span class="syntax-operator">}</span>
                         </pre>
                     </div>

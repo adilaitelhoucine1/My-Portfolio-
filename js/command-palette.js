@@ -10,10 +10,9 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <div class="command-results">
                 <div class="command-category">
-                    <div class="command-category-title">Commands</div>
-                    <div class="command-item" data-command="home">
+                    <div class="command-category-title">Commands</div>                    <div class="command-item" data-command="about">
                         <i class="bi bi-house-door"></i>
-                        <span>Go to Home</span>
+                        <span>Go to About</span>
                     </div>
                     <div class="command-item" data-command="experience">
                         <i class="bi bi-briefcase"></i>
@@ -26,10 +25,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="command-item" data-command="projects">
                         <i class="bi bi-code-square"></i>
                         <span>View Projects</span>
-                    </div>
-                    <div class="command-item" data-command="skills">
+                    </div>                    <div class="command-item" data-command="skills">
                         <i class="bi bi-stars"></i>
                         <span>View Skills</span>
+                    </div>
+                    <div class="command-item" data-command="contact">
+                        <i class="bi bi-envelope"></i>
+                        <span>View Contact</span>
                     </div>
                     <div class="command-item" data-command="readme">
                         <i class="bi bi-file-text"></i>
@@ -42,10 +44,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="command-item" data-command="toggle-theme">
                         <i class="bi bi-palette"></i>
                         <span>Toggle Light/Dark Theme</span>
-                    </div>
-                    <div class="command-item" data-command="toggle-terminal">
+                    </div>                    <div class="command-item" data-command="toggle-terminal">
                         <i class="bi bi-terminal"></i>
                         <span>Toggle Terminal</span>
+                    </div>
+                    <div class="command-item" data-command="search">
+                        <i class="bi bi-search"></i>
+                        <span>Search Portfolio</span>
                     </div>
                 </div>
             </div>
@@ -129,14 +134,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Execute commands
-    function executeCommand(command) {
-        // Navigation commands
+    function executeCommand(command) {        // Navigation commands
         const navigationCommands = {
-            'home': 'index.html',
+            'about': 'about.html',
             'experience': 'experience.html',
             'education': 'education.html',
             'projects': 'projects.html',
             'skills': 'skills.html',
+            'contact': 'contact.html',
             'readme': 'readme.html',
             'package': 'package.html'
         };
@@ -145,8 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location.href = navigationCommands[command];
             return;
         }
-        
-        // Other commands
+          // Other commands
         switch(command) {
             case 'toggle-theme':
                 // Will implement theme toggling later
@@ -155,6 +159,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 
             case 'toggle-terminal':
                 toggleTerminal();
+                break;
+                
+            case 'search':
+                // Dispatch event for global search
+                const searchEvent = new CustomEvent('command-executed', {
+                    detail: { command: 'search' }
+                });
+                document.dispatchEvent(searchEvent);
                 break;
                 
             default:
