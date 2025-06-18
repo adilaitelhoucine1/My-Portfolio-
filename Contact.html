@@ -5,9 +5,389 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>contact.json - VSCode Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="styles/colors.css">
-    <link rel="stylesheet" href="styles/editor-features.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">    <link rel="stylesheet" href="styles/colors.css">
+    <link rel="stylesheet" href="styles/editor-features.css">    <style>
+        /* Enhanced features styling */
+        .line-numbers {
+            background: #1e1e1e;
+            border-right: 1px solid #333;
+            color: #858585;
+            font-size: 14px;
+            line-height: 1.5;
+            padding: 4px 8px;
+            text-align: right;
+            user-select: none;
+            min-width: 50px;
+        }
+        .code-with-lines {
+            display: flex;
+            background: #1e1e1e;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #3c3c3c;
+            border: none;
+            color: #cccccc;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+        .copy-btn:hover {
+            background: #404040;
+            color: white;
+        }
+        .copy-btn.copied {
+            background: #007acc;
+            color: white;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4dc4ff;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .tooltip {
+            position: relative;
+            cursor: help;
+        }
+        .tooltip:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #2d2d30;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            z-index: 1000;
+            border: 1px solid #3c3c3c;
+        }
+        .contact-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+        }
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #3c3c3c;
+            width: 90%;
+            max-width: 500px;
+        }        /* VS Code specific features */
+        .minimap {
+            position: fixed;
+            right: 20px;
+            top: 100px;
+            width: 120px;
+            height: 300px;
+            background: #1e1e1e;
+            border: 1px solid #3c3c3c;
+            border-radius: 4px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            overflow: hidden;
+            z-index: 100;
+        }
+        .minimap.show {
+            opacity: 0.8;
+        }
+        .minimap-content {
+            padding: 8px;
+            font-size: 6px;
+            line-height: 1;
+            color: #666;
+            font-family: monospace;
+        }
+        .intellisense-popup {
+            position: absolute;
+            background: #252526;
+            border: 1px solid #464647;
+            border-radius: 4px;
+            padding: 8px;
+            color: white;
+            font-size: 12px;
+            z-index: 1001;
+            display: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .status-bar-extra {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .syntax-error {
+            position: relative;
+        }
+        .syntax-error::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 2px,
+                #f14c4c 2px,
+                #f14c4c 4px
+            );
+        }
+        .bracket-match {
+            background: rgba(77, 196, 255, 0.2);
+            border-radius: 2px;
+        }
+        .current-line {
+            background: rgba(255, 255, 255, 0.03);
+            position: relative;
+        }
+        .current-line::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #007acc;
+        }
+        .git-decoration {
+            color: #ffd700;
+            font-size: 10px;
+            margin-left: 4px;
+        }
+        .breadcrumb {
+            background: #2d2d30;
+            padding: 4px 12px;
+            font-size: 12px;
+            border-bottom: 1px solid #3c3c3c;
+        }
+        .problem-indicator {
+            color: #f14c4c;
+            font-size: 10px;
+            margin-left: 4px;
+        }
+        
+        /* New Inventive Features */
+        .code-lens {
+            position: absolute;
+            right: 20px;
+            font-size: 10px;
+            color: #858585;
+            background: rgba(37, 37, 38, 0.9);
+            padding: 2px 6px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .code-lens:hover {
+            color: #4dc4ff;
+            background: rgba(37, 37, 38, 1);
+        }
+        
+        .terminal-panel {
+            position: fixed;
+            bottom: 22px;
+            left: 300px;
+            right: 0;
+            height: 0;
+            background: #1e1e1e;
+            border-top: 1px solid #3c3c3c;
+            transition: height 0.3s ease;
+            z-index: 50;
+            overflow: hidden;
+        }
+        .terminal-panel.show {
+            height: 200px;
+        }
+        .terminal-header {
+            background: #2d2d30;
+            padding: 8px 12px;
+            font-size: 12px;
+            border-bottom: 1px solid #3c3c3c;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .terminal-content {
+            padding: 12px;
+            font-family: 'Cascadia Code', 'Courier New', monospace;
+            font-size: 14px;
+            color: #cccccc;
+            height: calc(100% - 40px);
+            overflow-y: auto;
+        }
+        
+        .inlay-hints {
+            font-size: 10px;
+            color: #858585;
+            font-style: italic;
+            margin-left: 4px;
+        }
+        
+        .error-squiggle {
+            position: relative;
+        }
+        .error-squiggle::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: url("data:image/svg+xml,%3csvg width='6' height='3' viewBox='0 0 6 3' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='m0 3 l3 -3 l3 3' stroke='%23f14c4c' fill='none' stroke-width='1'/%3e%3c/svg%3e") repeat-x;
+        }
+        
+        .peek-definition {
+            position: absolute;
+            background: #1e1e1e;
+            border: 1px solid #007acc;
+            border-radius: 4px;
+            padding: 12px;
+            max-width: 400px;
+            z-index: 1002;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        }
+        
+        .autocomplete-popup {
+            position: absolute;
+            background: #252526;
+            border: 1px solid #464647;
+            border-radius: 4px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1003;
+            display: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .autocomplete-item {
+            padding: 6px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+        }
+        .autocomplete-item:hover {
+            background: #2a2d2e;
+        }
+        .autocomplete-item.selected {
+            background: #094771;
+        }
+        
+        .folding-range {
+            position: relative;
+        }
+        .folding-range::before {
+            content: '⊟';
+            position: absolute;
+            left: -30px;
+            color: #858585;
+            cursor: pointer;
+            font-size: 10px;
+        }
+        .folding-range.collapsed::before {
+            content: '⊞';
+        }
+        .folding-range.collapsed + * {
+            display: none;
+        }
+        
+        .live-preview {
+            position: fixed;
+            top: 60px;
+            right: 150px;
+            width: 300px;
+            height: 200px;
+            background: white;
+            border: 1px solid #3c3c3c;
+            border-radius: 4px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 99;
+            overflow: hidden;
+        }
+        .live-preview.show {
+            opacity: 1;
+        }
+        .live-preview iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .gutter-decorations {
+            position: absolute;
+            left: 15px;
+            width: 15px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .breakpoint {
+            width: 8px;
+            height: 8px;
+            background: #f14c4c;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .bookmark {
+            color: #007acc;
+            font-size: 10px;
+        }
+        
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        .typing-effect {
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 2s steps(40, end);
+        }
+        
+        .zen-mode {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #1e1e1e;
+            z-index: 9999;
+            display: none;
+            padding: 60px;
+        }
+        .zen-mode.active {
+            display: block;
+        }
+    </style>
 </head>
 <body class="bg-[var(--editor-bg)] text-[var(--vscode-text)] font-sans m-0 overflow-hidden">
     <!-- Main Container with fixed sidebars -->
@@ -110,77 +490,826 @@
             </div>
 
             <!-- Main Content Area -->
-            <div class="ml-[300px] flex-1 bg-[var(--editor-bg)] min-h-screen">
-                <!-- Tabs -->
+            <div class="ml-[300px] flex-1 bg-[var(--editor-bg)] min-h-screen">                <!-- Tabs -->
                 <div class="flex bg-[#252526] border-b border-[#1e1e1e]">                    <div class="editor-tab active flex items-center gap-2">
                         <i class="bi bi-file-earmark-code text-[#cbcb41]"></i>
                         <span>contact.json</span>
+                        <span class="status-indicator tooltip" data-tooltip="Live - Updated June 18, 2025"></span>
                         <button class="ml-2 text-[#808080] hover:text-white">×</button>
+                    </div>                    <!-- New features buttons -->
+                    <div class="flex items-center ml-auto gap-2 px-4">
+                        <button id="formatBtn" class="text-[#569cd6] hover:text-white transition-colors text-xs" title="Format Document">
+                            <i class="bi bi-code"></i> Format
+                        </button>
+                        <button id="miniMapBtn" class="text-[#ffd700] hover:text-white transition-colors text-xs" title="Toggle Minimap">
+                            <i class="bi bi-map"></i> Minimap
+                        </button>
+                        <button id="terminalBtn" class="text-[#4dc4ff] hover:text-white transition-colors text-xs" title="Toggle Terminal">
+                            <i class="bi bi-terminal"></i> Terminal
+                        </button>
+                        <button id="livePreviewBtn" class="text-[#00ff88] hover:text-white transition-colors text-xs" title="Live Preview">
+                            <i class="bi bi-eye"></i> Preview
+                        </button>
+                        <button id="zenModeBtn" class="text-[#ff6b6b] hover:text-white transition-colors text-xs" title="Zen Mode">
+                            <i class="bi bi-fullscreen"></i> Zen
+                        </button>
+                        <button id="contactFormBtn" class="text-[#ce9178] hover:text-white transition-colors text-xs" title="Send Message">
+                            <i class="bi bi-envelope-plus"></i> Send Message
+                        </button>
+                        <button id="settingsBtn" class="text-[#cccccc] hover:text-white transition-colors text-xs" title="Settings">
+                            <i class="bi bi-gear"></i>
+                        </button>
                     </div>
                 </div>                <!-- Breadcrumbs -->
                 <div class="breadcrumb">
-                    <div class="breadcrumb-item"><span>portfolio</span></div>
-                    <div class="breadcrumb-item"><span>contact.json</span></div>
-                </div>                <!-- Editor Content -->
-                <div class="editor-content py-4 px-6">
-                    <div class="code-section font-mono">
-                        <pre class="text-white">
-<span class="syntax-operator">{</span>
-    <span class="syntax-property">"personal"</span>: <span class="syntax-operator">{</span>
-        <span class="syntax-property">"name"</span>: <span class="syntax-string">"Adil AIT EL HOUCINE"</span>,
-        <span class="syntax-property">"title"</span>: <span class="syntax-string">"Full Stack Developer"</span>,
-        <span class="syntax-property">"location"</span>: <span class="syntax-string">"Morocco"</span>
-    <span class="syntax-operator">}</span>,    <span class="syntax-property">"contact"</span>: <span class="syntax-operator">{</span>
-        <span class="syntax-property">"email"</span>: <span class="syntax-string">"<a href="mailto:contact@adilaitelhoucine.dev" class="text-[#ce9178] hover:text-[#4dc4ff] hover:underline transition-colors">contact@adilaitelhoucine.dev</a>"</span>,
-        <span class="syntax-property">"phone"</span>: <span class="syntax-string">"Available upon request"</span>,
-        <span class="syntax-property">"response_time"</span>: <span class="syntax-string">"Within 24-48 hours"</span>
+                    <div class="breadcrumb-item">
+                        <i class="bi bi-folder text-[#cccccc] text-xs mr-1"></i>
+                        <span>portfolio</span>
+                        <i class="bi bi-chevron-right text-xs mx-2"></i>
+                    </div>
+                    <div class="breadcrumb-item">
+                        <i class="bi bi-file-earmark-code text-[#cbcb41] text-xs mr-1"></i>
+                        <span>contact.json</span>
+                        <span class="git-decoration">M</span>
+                    </div>
+                </div><!-- Editor Content -->
+                <div class="editor-content py-4 px-6 relative">
+                    <button class="copy-btn" id="copyBtn">
+                        <i class="bi bi-clipboard"></i> Copy
+                    </button>
+                    
+                    <div class="code-with-lines">
+                        <!-- Line Numbers -->
+                        <div class="line-numbers">
+                            <div>1</div>
+                            <div>2</div>
+                            <div>3</div>
+                            <div>4</div>
+                            <div>5</div>
+                            <div>6</div>
+                            <div>7</div>
+                            <div>8</div>
+                            <div>9</div>
+                            <div>10</div>
+                            <div>11</div>
+                            <div>12</div>
+                            <div>13</div>
+                            <div>14</div>
+                            <div>15</div>
+                            <div>16</div>
+                            <div>17</div>
+                            <div>18</div>
+                            <div>19</div>
+                            <div>20</div>
+                            <div>21</div>
+                            <div>22</div>
+                            <div>23</div>
+                            <div>24</div>
+                            <div>25</div>
+                            <div>26</div>
+                            <div>27</div>
+                            <div>28</div>
+                            <div>29</div>
+                            <div>30</div>
+                            <div>31</div>
+                            <div>32</div>
+                            <div>33</div>
+                            <div>34</div>
+                        </div>
+                          <!-- Code Content -->
+                        <div class="code-section font-mono flex-1 p-4 relative">
+                            <!-- Code Lens Decorations -->
+                            <div class="code-lens" style="top: 20px;" onclick="showPeekDefinition()">2 references</div>
+                            <div class="code-lens" style="top: 140px;" onclick="showUsages()">Used in 3 files</div>
+                            
+                            <!-- Gutter Decorations -->
+                            <div class="gutter-decorations" style="top: 80px;">
+                                <div class="breakpoint" onclick="toggleBreakpoint()"></div>
+                            </div>
+                            <div class="gutter-decorations" style="top: 180px;">
+                                <div class="bookmark">🔖</div>
+                            </div>
+                            
+                            <pre class="text-white">
+<span class="syntax-operator folding-range" onclick="toggleFold(this)">{</span>
+    <span class="syntax-property tooltip" data-tooltip="Personal information section">"personal"</span>: <span class="syntax-operator">{</span>
+        <span class="syntax-property">"name"</span>: <span class="syntax-string">"Adil AIT EL HOUCINE"</span><span class="inlay-hints">: string</span>,
+        <span class="syntax-property">"title"</span>: <span class="syntax-string error-squiggle" onmouseenter="showErrorTooltip(this)">"Full Stack Developer"</span><span class="inlay-hints">: JobTitle</span>,
+        <span class="syntax-property">"location"</span>: <span class="syntax-string tooltip" data-tooltip="GMT+1 Timezone">"Morocco"</span><span class="inlay-hints">: Country</span>
+    <span class="syntax-operator">}</span>,    <span class="syntax-property tooltip" data-tooltip="Contact methods and availability">"contact"</span>: <span class="syntax-operator">{</span>
+        <span class="syntax-property">"email"</span>: <span class="syntax-string">"<a href="mailto:contact@adilaitelhoucine.dev" class="text-[#ce9178] hover:text-[#4dc4ff] hover:underline transition-colors tooltip" data-tooltip="Click to send email" onmouseenter="showAutocomplete(this)">contact@adilaitelhoucine.dev</a>"</span>,
+        <span class="syntax-property">"phone"</span>: <span class="syntax-string tooltip" data-tooltip="Contact via email for phone number">"Available upon request"</span>,
+        <span class="syntax-property">"response_time"</span>: <span class="syntax-string tooltip" data-tooltip="Typical response timeframe">"Within 24-48 hours"</span><span class="inlay-hints">: Duration</span>
     <span class="syntax-operator">}</span>,
    
-    <span class="syntax-property">"social_media"</span>: <span class="syntax-operator">{</span>
+    <span class="syntax-property tooltip" data-tooltip="Professional social media profiles">"social_media"</span>: <span class="syntax-operator">{</span>
         <span class="syntax-property">"linkedin"</span>: <span class="syntax-operator">{</span>
-            <span class="syntax-property">"url"</span>: <span class="syntax-string">"<a href="https://www.linkedin.com/in/adil-ait-el-houcine/" target="_blank" class="text-[#ce9178] hover:text-[#4dc4ff] hover:underline transition-colors">https://linkedin.com/in/adilaitelhoucine</a>"</span>,
-            <span class="syntax-property">"username"</span>: <span class="syntax-string">"adilaitelhoucine"</span>
+            <span class="syntax-property">"url"</span>: <span class="syntax-string">"<a href="https://www.linkedin.com/in/adil-ait-el-houcine/" target="_blank" class="text-[#ce9178] hover:text-[#4dc4ff] hover:underline transition-colors tooltip" data-tooltip="View LinkedIn profile">https://linkedin.com/in/adilaitelhoucine</a>"</span>,
+            <span class="syntax-property">"username"</span>: <span class="syntax-string">"adilaitelhoucine"</span><span class="inlay-hints">: LinkedInHandle</span>
         <span class="syntax-operator">}</span>,
         <span class="syntax-property">"github"</span>: <span class="syntax-operator">{</span>
-            <span class="syntax-property">"url"</span>: <span class="syntax-string">"<a href="https://github.com/adilaitelhoucine1" target="_blank" class="text-[#ce9178] hover:text-[#4dc4ff] hover:underline transition-colors">https://github.com/adilaitelhoucine</a>"</span>,
-            <span class="syntax-property">"username"</span>: <span class="syntax-string">"adilaitelhoucine"</span>
+            <span class="syntax-property">"url"</span>: <span class="syntax-string">"<a href="https://github.com/adilaitelhoucine1" target="_blank" class="text-[#ce9178] hover:text-[#4dc4ff] hover:underline transition-colors tooltip" data-tooltip="View GitHub repositories">https://github.com/adilaitelhoucine</a>"</span>,
+            <span class="syntax-property">"username"</span>: <span class="syntax-string">"adilaitelhoucine"</span><span class="inlay-hints">: GitHubHandle</span>
         <span class="syntax-operator">}</span>
     <span class="syntax-operator">}</span>,
-    <span class="syntax-property">"availability"</span>: <span class="syntax-operator">{</span>
-        <span class="syntax-property">"status"</span>: <span class="syntax-string">"Open to opportunities"</span>,
+    <span class="syntax-property tooltip" data-tooltip="Current work status and preferences">"availability"</span>: <span class="syntax-operator">{</span>
+        <span class="syntax-property">"status"</span>: <span class="syntax-string tooltip typing-effect" data-tooltip="Actively seeking new opportunities">"Open to opportunities"</span>,
         <span class="syntax-property">"preferred_contact"</span>: <span class="syntax-string">"email"</span>,
-        <span class="syntax-property">"timezone"</span>: <span class="syntax-string">"GMT+1 (Morocco)"</span>
+        <span class="syntax-property">"timezone"</span>: <span class="syntax-string">"GMT+1 (Morocco)"</span><span class="inlay-hints">: TimeZone</span>
     <span class="syntax-operator">}</span>,
-    <span class="syntax-property">"specializations"</span>: <span class="syntax-operator">[</span>
+    <span class="syntax-property tooltip" data-tooltip="Areas of expertise">"specializations"</span>: <span class="syntax-operator">[</span>
         <span class="syntax-string">"Full Stack Development"</span>,
         <span class="syntax-string">"Web Development"</span>,
         <span class="syntax-string">"Software Engineering"</span>
-    <span class="syntax-operator">]</span>
+    <span class="syntax-operator">]</span><span class="inlay-hints">: Skills[]</span>
 <span class="syntax-operator">}</span>
-                        </pre>
+                            </pre>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Status Bar -->
+            </div>            <!-- Status Bar -->
             <div class="fixed bottom-0 left-0 right-0 h-[22px] bg-[var(--status-bar-bg)] text-white flex items-center justify-between px-2 text-xs">
-                <div class="flex items-center gap-2">
-                    <i class="bi bi-git"></i>
-                    <span>main</span>
-                    <span class="px-2">📝</span>
-                    <span>0 problems</span>
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-1">
+                        <i class="bi bi-git text-[#f14c4c]"></i>
+                        <span>main</span>
+                        <span class="text-[#ffd700]">*</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <i class="bi bi-exclamation-triangle text-[#ffd700]"></i>
+                        <span>0</span>
+                        <i class="bi bi-x-circle text-[#f14c4c] ml-2"></i>
+                        <span>0</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <i class="bi bi-check-circle text-[#4dc4ff]"></i>
+                        <span>JSON Formatter</span>
+                    </div>
                 </div>
-                <div class="flex items-center gap-3">
-                    <span>UTF-8</span>
-                    <span>LF</span>
-                    <span>JSON</span>
-                    <span>Port: 3000</span>
+                <div class="flex items-center gap-4">
+                    <span class="tooltip" data-tooltip="Current cursor position">Ln 9, Col 20</span>
+                    <span class="tooltip" data-tooltip="Character encoding">UTF-8</span>
+                    <span class="tooltip" data-tooltip="End of line sequence">CRLF</span>
+                    <span class="tooltip" data-tooltip="Language mode">JSON</span>
+                    <span class="tooltip" data-tooltip="Indentation">Spaces: 4</span>
+                    <div class="flex items-center gap-1">
+                        <i class="bi bi-wifi text-[#4dc4ff]"></i>
+                        <span>Live Server</span>
+                    </div>
+                </div>        </div>
+    </div>
+
+    <!-- VS Code Minimap -->
+    <div id="minimap" class="minimap">
+        <div class="minimap-content">
+{<br>  "personal": {<br>    "name": "Adil...<br>    "title": "Full...<br>    "location": "...<br>  },<br>  "contact": {<br>    "email": "...<br>    "phone": "...<br>    "response...<br>  },<br>  "social_media":<br>    "linkedin": {<br>      "url": "...<br>      "username":<br>    },<br>    "github": {<br>      "url": "...<br>      "username":<br>    }<br>  },<br>  "availability":<br>    "status": "...<br>    "preferred...<br>    "timezone": "...<br>  },<br>  "specializations"<br>    "Full Stack...<br>    "Web Develop...<br>    "Software...<br>  ]<br>}
+        </div>
+    </div>    <!-- IntelliSense Popup -->
+    <div id="intellisensePopup" class="intellisense-popup">
+        <div class="flex items-center gap-2 mb-2">
+            <i class="bi bi-lightbulb text-[#ffd700]"></i>
+            <span class="font-bold">Quick Fix</span>
+        </div>
+        <div class="text-[#cccccc]">
+            💡 Add missing property "website"<br>
+            🔧 Format document<br>
+            📝 Generate interface
+        </div>
+    </div>
+
+    <!-- Peek Definition Window -->
+    <div id="peekDefinition" class="peek-definition">
+        <div class="flex items-center gap-2 mb-2 text-[#4dc4ff]">
+            <i class="bi bi-code-square"></i>
+            <span class="font-bold">Peek Definition</span>
+        </div>
+        <div class="text-[#cccccc] font-mono text-sm">
+            interface ContactInfo {<br>
+            &nbsp;&nbsp;personal: PersonalInfo;<br>
+            &nbsp;&nbsp;contact: ContactMethods;<br>
+            &nbsp;&nbsp;social_media: SocialLinks;<br>
+            }
+        </div>
+    </div>
+
+    <!-- Autocomplete Popup -->
+    <div id="autocompletePopup" class="autocomplete-popup">
+        <div class="autocomplete-item selected">
+            <i class="bi bi-globe text-[#4dc4ff]"></i>
+            <span>website</span>
+            <span class="text-[#858585] ml-auto">string</span>
+        </div>
+        <div class="autocomplete-item">
+            <i class="bi bi-telephone text-[#ce9178]"></i>
+            <span>whatsapp</span>
+            <span class="text-[#858585] ml-auto">string</span>
+        </div>
+        <div class="autocomplete-item">
+            <i class="bi bi-calendar text-[#569cd6]"></i>
+            <span>last_updated</span>
+            <span class="text-[#858585] ml-auto">Date</span>
+        </div>
+    </div>    <!-- Terminal Panel -->
+    <div id="terminalPanel" class="terminal-panel">
+        <div class="terminal-header">
+            <div class="flex items-center gap-2">
+                <i class="bi bi-terminal text-[#4dc4ff]"></i>
+                <span>Portfolio Terminal</span>
+                <span class="text-[#858585]">bash</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <button onclick="clearTerminal()" class="text-[#858585] hover:text-white text-xs">Clear</button>
+                <button onclick="closeTerminal()" class="text-[#858585] hover:text-white">×</button>
+            </div>
+        </div>
+        <div class="terminal-content" id="terminalContent">
+            <div id="terminalOutput">
+                <div class="text-[#4dc4ff]">Portfolio Terminal v1.0.0</div>
+                <div class="text-[#00ff88]">Type 'help' for available commands</div>
+                <br>
+            </div>
+            <div class="flex items-center">
+                <span class="text-[#4dc4ff]">portfolio@contact:~$ </span>
+                <input type="text" id="terminalInput" class="bg-transparent border-none outline-none text-white flex-1 ml-2" autocomplete="off" placeholder="Type command here...">
+            </div>
+        </div>
+    </div><!-- Live Preview Panel -->
+    <div id="livePreview" class="live-preview">
+        <div style="padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; height: 100%; overflow-y: auto; font-family: 'Segoe UI', sans-serif;">
+            <div style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 20px; border-radius: 15px; border: 1px solid rgba(255,255,255,0.2);">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="width: 60px; height: 60px; background: #4dc4ff; border-radius: 50%; margin: 0 auto 10px; display: flex; align-items: center; justify-content: center; font-size: 24px;">👨‍💻</div>
+                    <h2 style="margin: 0; font-size: 18px; font-weight: bold;">Adil AIT EL HOUCINE</h2>
+                    <p style="margin: 5px 0; opacity: 0.9; font-size: 14px;">Full Stack Developer</p>
+                    <p style="margin: 0; opacity: 0.8; font-size: 12px;">📍 Morocco (GMT+1)</p>
+                </div>
+                  <div style="margin-bottom: 15px;">
+                    <h3 style="font-size: 14px; margin: 0 0 8px 0; opacity: 0.9;">📧 Contact</h3>
+                    <div style="background: rgba(255,255,255,0.1); padding: 8px; border-radius: 8px; font-size: 12px;">
+                        <div><a href="mailto:contact@adilaitelhoucine.dev" style="color: white; text-decoration: none; cursor: pointer;" onmouseover="this.style.color='#4dc4ff'" onmouseout="this.style.color='white'">✉️ contact@adilaitelhoucine.dev</a></div>
+                        <div style="margin-top: 4px;">📱 Available upon request</div>
+                        <div style="margin-top: 4px;">⏱️ Response: 24-48 hours</div>
+                    </div>
+                </div>
+                  <div style="margin-bottom: 15px;">
+                    <h3 style="font-size: 14px; margin: 0 0 8px 0; opacity: 0.9;">🌐 Social Media</h3>
+                    <div style="display: flex; gap: 8px;">
+                        <a href="https://www.linkedin.com/in/adil-ait-el-houcine/" target="_blank" style="background: #0077b5; padding: 6px 10px; border-radius: 6px; font-size: 11px; flex: 1; text-align: center; text-decoration: none; color: white; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#005885'" onmouseout="this.style.background='#0077b5'">
+                            💼 LinkedIn
+                        </a>
+                        <a href="https://github.com/adilaitelhoucine1" target="_blank" style="background: #333; padding: 6px 10px; border-radius: 6px; font-size: 11px; flex: 1; text-align: center; text-decoration: none; color: white; cursor: pointer; transition: all 0.2s;" onmouseover="this.style.background='#24292e'" onmouseout="this.style.background='#333'">
+                            🐙 GitHub
+                        </a>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 15px;">
+                    <h3 style="font-size: 14px; margin: 0 0 8px 0; opacity: 0.9;">💼 Availability</h3>
+                    <div style="background: rgba(0,255,136,0.2); padding: 8px; border-radius: 8px; border: 1px solid rgba(0,255,136,0.3);">
+                        <div style="font-size: 12px;">🟢 Open to opportunities</div>
+                        <div style="font-size: 11px; margin-top: 4px; opacity: 0.8;">Preferred contact: Email</div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 style="font-size: 14px; margin: 0 0 8px 0; opacity: 0.9;">🚀 Specializations</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                        <span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 10px;">Full Stack Development</span>
+                        <span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 10px;">Web Development</span>
+                        <span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 12px; font-size: 10px;">Software Engineering</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
+    <!-- Zen Mode -->
+    <div id="zenMode" class="zen-mode">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-2xl text-white">Contact Information - Zen Mode</h2>
+            <button onclick="exitZenMode()" class="text-white hover:text-[#4dc4ff] text-xl">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+        <div class="text-white font-mono text-lg leading-relaxed">
+            <div class="typing-effect">
+                {<br>
+                &nbsp;&nbsp;"name": "Adil AIT EL HOUCINE",<br>
+                &nbsp;&nbsp;"email": "contact@adilaitelhoucine.dev",<br>
+                &nbsp;&nbsp;"status": "Available for opportunities"<br>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Form Modal -->
+    <div id="contactModal" class="contact-modal">
+        <div class="modal-content">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-white">Send Message</h3>
+                <button id="closeModal" class="text-[#808080] hover:text-white text-xl">&times;</button>
+            </div>
+            <form id="contactForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm text-[#cccccc] mb-1">Name</label>
+                    <input type="text" id="senderName" class="w-full p-2 bg-[#3c3c3c] text-white border border-[#555] rounded" required>
+                </div>
+                <div>
+                    <label class="block text-sm text-[#cccccc] mb-1">Email</label>
+                    <input type="email" id="senderEmail" class="w-full p-2 bg-[#3c3c3c] text-white border border-[#555] rounded" required>
+                </div>
+                <div>
+                    <label class="block text-sm text-[#cccccc] mb-1">Subject</label>
+                    <input type="text" id="subject" class="w-full p-2 bg-[#3c3c3c] text-white border border-[#555] rounded" required>
+                </div>
+                <div>
+                    <label class="block text-sm text-[#cccccc] mb-1">Message</label>
+                    <textarea id="message" rows="4" class="w-full p-2 bg-[#3c3c3c] text-white border border-[#555] rounded" required></textarea>
+                </div>
+                <div class="flex gap-2">
+                    <button type="submit" class="px-4 py-2 bg-[#007acc] text-white rounded hover:bg-[#005a9e] transition-colors">
+                        <i class="bi bi-send"></i> Send Message
+                    </button>
+                    <button type="button" id="cancelBtn" class="px-4 py-2 bg-[#3c3c3c] text-white rounded hover:bg-[#404040] transition-colors">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>    <script>
+        // Enhanced features JavaScript
+        
+        // Copy to clipboard functionality
+        document.getElementById('copyBtn').addEventListener('click', function() {
+            const codeContent = `{
+    "personal": {
+        "name": "Adil AIT EL HOUCINE",
+        "title": "Full Stack Developer",
+        "location": "Morocco"
+    },
+    "contact": {
+        "email": "contact@adilaitelhoucine.dev",
+        "phone": "Available upon request",
+        "response_time": "Within 24-48 hours"
+    },
+    "social_media": {
+        "linkedin": {
+            "url": "https://linkedin.com/in/adilaitelhoucine",
+            "username": "adilaitelhoucine"
+        },
+        "github": {
+            "url": "https://github.com/adilaitelhoucine",
+            "username": "adilaitelhoucine"
+        }
+    },
+    "availability": {
+        "status": "Open to opportunities",
+        "preferred_contact": "email",
+        "timezone": "GMT+1 (Morocco)"
+    },
+    "specializations": [
+        "Full Stack Development",
+        "Web Development",
+        "Software Engineering"
+    ]
+}`;
+            
+            navigator.clipboard.writeText(codeContent).then(() => {
+                const btn = this;
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="bi bi-check"></i> Copied!';
+                btn.classList.add('copied');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.classList.remove('copied');
+                }, 2000);            });
+        });
+
+        // VS Code Features
+        
+        // Format Document
+        document.getElementById('formatBtn').addEventListener('click', function() {
+            const btn = this;
+            btn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Formatting...';
+            btn.style.color = '#ffd700';
+            
+            setTimeout(() => {
+                btn.innerHTML = '<i class="bi bi-check"></i> Formatted!';
+                btn.style.color = '#4dc4ff';
+                
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="bi bi-code"></i> Format';
+                    btn.style.color = '#569cd6';
+                }, 1500);
+            }, 1000);
+        });
+
+        // Minimap Toggle
+        document.getElementById('miniMapBtn').addEventListener('click', function() {
+            const minimap = document.getElementById('minimap');
+            const btn = this;
+            
+            if (minimap.classList.contains('show')) {
+                minimap.classList.remove('show');
+                btn.innerHTML = '<i class="bi bi-map"></i> Minimap';
+                btn.style.color = '#ffd700';
+            } else {
+                minimap.classList.add('show');
+                btn.innerHTML = '<i class="bi bi-map-fill"></i> Hide Map';
+                btn.style.color = '#4dc4ff';
+            }
+        });        // Settings Button with IntelliSense
+        document.getElementById('settingsBtn').addEventListener('click', function() {
+            const intellisense = document.getElementById('intellisensePopup');
+            intellisense.style.display = intellisense.style.display === 'block' ? 'none' : 'block';
+            intellisense.style.top = '150px';
+            intellisense.style.left = '350px';
+            
+            if (intellisense.style.display === 'block') {
+                setTimeout(() => {
+                    intellisense.style.display = 'none';
+                }, 3000);
+            }
+        });        // Terminal Toggle
+        document.getElementById('terminalBtn').addEventListener('click', function() {
+            const terminal = document.getElementById('terminalPanel');
+            const btn = this;
+            
+            if (terminal.classList.contains('show')) {
+                terminal.classList.remove('show');
+                btn.innerHTML = '<i class="bi bi-terminal"></i> Terminal';
+                btn.style.color = '#4dc4ff';
+            } else {
+                terminal.classList.add('show');
+                btn.innerHTML = '<i class="bi bi-terminal-fill"></i> Hide Terminal';
+                btn.style.color = '#00ff88';
+                
+                // Focus on terminal input
+                setTimeout(() => {
+                    document.getElementById('terminalInput').focus();
+                }, 100);
+            }
+        });
+
+        // Interactive Terminal System
+        const terminalInput = document.getElementById('terminalInput');
+        const terminalOutput = document.getElementById('terminalOutput');
+        let commandHistory = [];
+        let historyIndex = -1;
+
+        // Terminal commands
+        const terminalCommands = {
+            'help': () => `<div class="text-[#ffd700]">Available commands:</div>
+<div class="text-[#cccccc]">  help           - Show this help message</div>
+<div class="text-[#cccccc]">  contact        - Show contact information</div>
+<div class="text-[#cccccc]">  social         - Show social media links</div>
+<div class="text-[#cccccc]">  skills         - Show technical skills</div>
+<div class="text-[#cccccc]">  status         - Show availability status</div>
+<div class="text-[#cccccc]">  email          - Open email client</div>
+<div class="text-[#cccccc]">  linkedin       - Open LinkedIn profile</div>
+<div class="text-[#cccccc]">  github         - Open GitHub profile</div>
+<div class="text-[#cccccc]">  clear          - Clear terminal</div>
+<div class="text-[#cccccc]">  whoami         - Show developer info</div>
+<div class="text-[#cccccc]">  date           - Show current date</div>
+<div class="text-[#cccccc]">  hire           - Get hiring information</div>`,
+
+            'contact': () => `<div class="text-[#4dc4ff]">📧 Contact Information:</div>
+<div class="text-[#00ff88]">  Email: contact@adilaitelhoucine.dev</div>
+<div class="text-[#00ff88]">  Location: Morocco (GMT+1)</div>
+<div class="text-[#00ff88]">  Response Time: 24-48 hours</div>
+<div class="text-[#ffd700]">  Status: Available for opportunities</div>`,
+
+            'social': () => `<div class="text-[#4dc4ff]">🌐 Social Media Links:</div>
+<div class="text-[#00ff88]">  LinkedIn: https://linkedin.com/in/adilaitelhoucine</div>
+<div class="text-[#00ff88]">  GitHub: https://github.com/adilaitelhoucine</div>
+<div class="text-[#ffd700]">  Portfolio: Currently viewing!</div>`,
+
+            'skills': () => `<div class="text-[#4dc4ff]">🚀 Technical Skills:</div>
+<div class="text-[#00ff88]">  • Full Stack Development</div>
+<div class="text-[#00ff88]">  • Web Development</div>
+<div class="text-[#00ff88]">  • Software Engineering</div>
+<div class="text-[#ffd700]">  • JavaScript, React, Node.js</div>
+<div class="text-[#ffd700]">  • HTML, CSS, Python</div>`,
+
+            'status': () => `<div class="text-[#00ff88]">🟢 Status: AVAILABLE</div>
+<div class="text-[#cccccc]">  Currently open to new opportunities</div>
+<div class="text-[#cccccc]">  Preferred contact method: Email</div>
+<div class="text-[#ffd700]">  Last updated: June 18, 2025</div>`,
+
+            'whoami': () => `<div class="text-[#4dc4ff]">👨‍💻 Adil AIT EL HOUCINE</div>
+<div class="text-[#00ff88]">  Role: Full Stack Developer</div>
+<div class="text-[#00ff88]">  Location: Morocco</div>
+<div class="text-[#ffd700]">  Passion: Building amazing web applications</div>`,
+
+            'date': () => `<div class="text-[#cccccc]">${new Date().toString()}</div>`,
+
+            'hire': () => `<div class="text-[#4dc4ff]">💼 Ready to hire me?</div>
+<div class="text-[#00ff88]">  📧 Send an email: contact@adilaitelhoucine.dev</div>
+<div class="text-[#00ff88]">  💼 Connect on LinkedIn</div>
+<div class="text-[#ffd700]">  Let's build something amazing together!</div>`,
+
+            'email': () => {
+                window.open('mailto:contact@adilaitelhoucine.dev');
+                return `<div class="text-[#00ff88]">✓ Opening email client...</div>`;
+            },
+
+            'linkedin': () => {
+                window.open('https://linkedin.com/in/adilaitelhoucine', '_blank');
+                return `<div class="text-[#00ff88]">✓ Opening LinkedIn profile...</div>`;
+            },
+
+            'github': () => {
+                window.open('https://github.com/adilaitelhoucine', '_blank');
+                return `<div class="text-[#00ff88]">✓ Opening GitHub profile...</div>`;
+            },
+
+            'clear': () => {
+                terminalOutput.innerHTML = `
+                    <div class="text-[#4dc4ff]">Portfolio Terminal v1.0.0</div>
+                    <div class="text-[#00ff88]">Type 'help' for available commands</div>
+                    <br>
+                `;
+                return '';
+            }
+        };
+
+        // Handle terminal input
+        terminalInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const command = this.value.trim().toLowerCase();
+                
+                if (command) {
+                    // Add command to history
+                    commandHistory.unshift(command);
+                    historyIndex = -1;
+                    
+                    // Display command
+                    const commandLine = document.createElement('div');
+                    commandLine.innerHTML = `<span class="text-[#4dc4ff]">portfolio@contact:~$ </span><span class="text-[#cccccc]">${command}</span>`;
+                    terminalOutput.appendChild(commandLine);
+                    
+                    // Execute command
+                    let output = '';
+                    if (terminalCommands[command]) {
+                        output = terminalCommands[command]();
+                    } else {
+                        output = `<div class="text-[#f14c4c]">Command not found: ${command}</div>
+<div class="text-[#ffd700]">Type 'help' for available commands</div>`;
+                    }
+                    
+                    if (output) {
+                        const outputLine = document.createElement('div');
+                        outputLine.innerHTML = output;
+                        terminalOutput.appendChild(outputLine);
+                    }
+                    
+                    // Add spacing
+                    terminalOutput.appendChild(document.createElement('br'));
+                    
+                    // Clear input
+                    this.value = '';
+                    
+                    // Scroll to bottom
+                    const terminalContent = document.getElementById('terminalContent');
+                    terminalContent.scrollTop = terminalContent.scrollHeight;
+                }
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (historyIndex < commandHistory.length - 1) {
+                    historyIndex++;
+                    this.value = commandHistory[historyIndex];
+                }
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (historyIndex > 0) {
+                    historyIndex--;
+                    this.value = commandHistory[historyIndex];
+                } else if (historyIndex === 0) {
+                    historyIndex = -1;
+                    this.value = '';
+                }
+            }
+        });
+
+        function clearTerminal() {
+            terminalCommands.clear();
+        }
+
+        // Live Preview Toggle
+        document.getElementById('livePreviewBtn').addEventListener('click', function() {
+            const preview = document.getElementById('livePreview');
+            const btn = this;
+            
+            if (preview.classList.contains('show')) {
+                preview.classList.remove('show');
+                btn.innerHTML = '<i class="bi bi-eye"></i> Preview';
+                btn.style.color = '#00ff88';
+            } else {
+                preview.classList.add('show');
+                btn.innerHTML = '<i class="bi bi-eye-slash"></i> Hide Preview';
+                btn.style.color = '#4dc4ff';
+            }
+        });
+
+        // Zen Mode Toggle
+        document.getElementById('zenModeBtn').addEventListener('click', function() {
+            const zenMode = document.getElementById('zenMode');
+            zenMode.classList.add('active');
+        });
+
+        // New inventive functions
+        function exitZenMode() {
+            document.getElementById('zenMode').classList.remove('active');
+        }
+
+        function closeTerminal() {
+            const terminal = document.getElementById('terminalPanel');
+            const btn = document.getElementById('terminalBtn');
+            terminal.classList.remove('show');
+            btn.innerHTML = '<i class="bi bi-terminal"></i> Terminal';
+            btn.style.color = '#4dc4ff';
+        }
+
+        function showPeekDefinition() {
+            const peek = document.getElementById('peekDefinition');
+            peek.style.display = 'block';
+            peek.style.top = '200px';
+            peek.style.left = '400px';
+            
+            setTimeout(() => {
+                peek.style.display = 'none';
+            }, 4000);
+        }
+
+        function showUsages() {
+            const intellisense = document.getElementById('intellisensePopup');
+            intellisense.innerHTML = `
+                <div class="flex items-center gap-2 mb-2">
+                    <i class="bi bi-search text-[#4dc4ff]"></i>
+                    <span class="font-bold">References</span>
+                </div>
+                <div class="text-[#cccccc]">
+                    📄 index.html:42<br>
+                    📄 about.html:18<br>
+                    📄 portfolio.js:156
+                </div>
+            `;
+            intellisense.style.display = 'block';
+            intellisense.style.top = '180px';
+            intellisense.style.left = '450px';
+            
+            setTimeout(() => {
+                intellisense.style.display = 'none';
+            }, 3000);
+        }
+
+        function toggleBreakpoint() {
+            const breakpoint = event.target;
+            if (breakpoint.style.background === 'gray') {
+                breakpoint.style.background = '#f14c4c';
+            } else {
+                breakpoint.style.background = 'gray';
+            }
+        }
+
+        function showErrorTooltip(element) {
+            const intellisense = document.getElementById('intellisensePopup');
+            intellisense.innerHTML = `
+                <div class="flex items-center gap-2 mb-2">
+                    <i class="bi bi-exclamation-triangle text-[#f14c4c]"></i>
+                    <span class="font-bold">Type Error</span>
+                </div>
+                <div class="text-[#cccccc]">
+                    Property 'title' should be of type 'JobTitle'<br>
+                    Expected: enum JobTitle<br>
+                    Received: string
+                </div>
+            `;
+            intellisense.style.display = 'block';
+            intellisense.style.top = element.offsetTop + 30 + 'px';
+            intellisense.style.left = element.offsetLeft + 'px';
+            
+            setTimeout(() => {
+                intellisense.style.display = 'none';
+            }, 2500);
+        }
+
+        function showAutocomplete(element) {
+            const autocomplete = document.getElementById('autocompletePopup');
+            autocomplete.style.display = 'block';
+            autocomplete.style.top = element.offsetTop + 25 + 'px';
+            autocomplete.style.left = element.offsetLeft + 'px';
+            
+            setTimeout(() => {
+                autocomplete.style.display = 'none';
+            }, 2000);
+        }
+
+        function toggleFold(element) {
+            element.classList.toggle('collapsed');
+            const nextElement = element.parentElement.nextElementSibling;
+            if (nextElement) {
+                nextElement.style.display = nextElement.style.display === 'none' ? 'block' : 'none';
+            }
+        }
+
+        // Enhanced keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'p') {
+                e.preventDefault();
+                showPeekDefinition();
+            }
+            
+            if (e.ctrlKey && e.key === '`') {
+                e.preventDefault();
+                document.getElementById('terminalBtn').click();
+            }
+            
+            if (e.key === 'F11') {
+                e.preventDefault();
+                document.getElementById('zenModeBtn').click();
+            }
+            
+            if (e.key === 'Escape') {
+                // Close all popups
+                document.getElementById('intellisensePopup').style.display = 'none';
+                document.getElementById('peekDefinition').style.display = 'none';
+                document.getElementById('autocompletePopup').style.display = 'none';
+                exitZenMode();
+            }
+        });
+
+        // Simulate live coding effects
+        setInterval(() => {
+            const typingElements = document.querySelectorAll('.typing-effect');
+            typingElements.forEach(el => {
+                el.style.animation = 'none';
+                setTimeout(() => {
+                    el.style.animation = 'typing 2s steps(40, end)';
+                }, 100);
+            });
+        }, 10000);
+
+        // Contact form modal functionality
+        const modal = document.getElementById('contactModal');
+        const contactFormBtn = document.getElementById('contactFormBtn');
+        const closeModal = document.getElementById('closeModal');
+        const cancelBtn = document.getElementById('cancelBtn');
+        const contactForm = document.getElementById('contactForm');
+
+        contactFormBtn.addEventListener('click', () => {
+            modal.style.display = 'block';
+        });
+
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        cancelBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Handle form submission
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('senderName').value;
+            const email = document.getElementById('senderEmail').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+            
+            // Create mailto link with pre-filled data
+            const mailtoLink = `mailto:contact@adilaitelhoucine.dev?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`From: ${name} (${email})\n\nMessage:\n${message}`)}`;
+            
+            window.location.href = mailtoLink;
+            modal.style.display = 'none';
+            contactForm.reset();
+        });
+
+        // JSON validation animation
+        document.getElementById('validateBtn').addEventListener('click', function() {
+            const btn = this;
+            btn.innerHTML = '<i class="bi bi-check-circle-fill"></i> Validating...';
+            btn.style.color = '#ffa500';
+            
+            setTimeout(() => {
+                btn.innerHTML = '<i class="bi bi-check-circle-fill"></i> Valid JSON ✓';
+                btn.style.color = '#4dc4ff';
+                
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="bi bi-check-circle"></i> Valid JSON';
+                    btn.style.color = '#4dc4ff';
+                }, 1500);
+            }, 1000);
+        });
+
         // Simple folder toggle functionality
         document.querySelectorAll('.file-tree-item[data-is-folder="true"]').forEach(folder => {
             folder.addEventListener('click', function() {
@@ -204,10 +1333,76 @@
                     folderIcon.classList.add('bi-folder2-open');
                 } else {
                     folderIcon.classList.remove('bi-folder2-open');
-                    folderIcon.classList.add('bi-folder-fill');            }
+                    folderIcon.classList.add('bi-folder-fill');
+                }
             });
         });
-    </script>
+
+        // Auto-update timestamp
+        setInterval(() => {
+            const statusIndicator = document.querySelector('.status-indicator');
+            if (statusIndicator) {
+                const now = new Date();
+                const timeStr = now.toLocaleTimeString();
+                statusIndicator.setAttribute('data-tooltip', `Live - Last updated: ${timeStr}`);
+            }        }, 30000); // Update every 30 seconds
+
+        // Simulate VS Code cursor position updates
+        let cursorLine = 9;
+        let cursorCol = 20;
+        
+        setInterval(() => {
+            cursorLine = Math.floor(Math.random() * 26) + 1;
+            cursorCol = Math.floor(Math.random() * 50) + 1;
+            
+            const statusElements = document.querySelectorAll('.tooltip');
+            statusElements.forEach(el => {
+                if (el.textContent.includes('Ln')) {
+                    el.textContent = `Ln ${cursorLine}, Col ${cursorCol}`;
+                }
+            });
+        }, 3000);
+
+        // Bracket matching simulation
+        document.addEventListener('DOMContentLoaded', function() {
+            const brackets = document.querySelectorAll('.syntax-operator');
+            brackets.forEach((bracket, index) => {
+                bracket.addEventListener('mouseenter', function() {
+                    if (this.textContent === '{' || this.textContent === '}') {
+                        this.classList.add('bracket-match');
+                        setTimeout(() => {
+                            this.classList.remove('bracket-match');
+                        }, 1000);
+                    }
+                });
+            });
+        });
+
+        // VS Code typing simulation
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'p') {
+                e.preventDefault();
+                const intellisense = document.getElementById('intellisensePopup');
+                intellisense.style.display = 'block';
+                intellisense.style.top = '200px';
+                intellisense.style.left = '400px';
+                intellisense.innerHTML = `
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="bi bi-search text-[#4dc4ff]"></i>
+                        <span class="font-bold">Command Palette</span>
+                    </div>
+                    <div class="text-[#cccccc]">
+                        > Format Document<br>
+                        > Save File<br>
+                        > Toggle Minimap
+                    </div>
+                `;
+                setTimeout(() => {
+                    intellisense.style.display = 'none';
+                }, 2000);
+            }
+        });    </script>
     <script src="js/editor-features.js"></script>
+    <script src="js/universal-terminal.js"></script>
 </body>
 </html>
