@@ -23,12 +23,16 @@ class PortfolioTerminal {
         if (filename.includes('skills')) return 'skills';
         if (filename.includes('certifications')) return 'certifications';
         return 'home';
-    }
-
-    init() {
+    }    init() {
         this.createTerminalHTML();
         this.setupEventListeners();
         this.setupKeyboardShortcuts();
+        this.loadSavedTheme();
+    }
+
+    loadSavedTheme() {
+        const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
+        this.switchTheme(savedTheme);
     }
 
     createTerminalHTML() {
@@ -283,9 +287,7 @@ class PortfolioTerminal {
         // Scroll to bottom
         const terminalContent = document.getElementById('universalTerminalContent');
         terminalContent.scrollTop = terminalContent.scrollHeight;
-    }
-
-    getCommandOutput(command) {
+    }    getCommandOutput(command) {
         const commands = {
             'help': () => this.getHelpCommand(),
             'nav': () => this.getNavigationCommand(),
@@ -299,6 +301,7 @@ class PortfolioTerminal {
             'social': () => this.getSocialCommand(),
             'status': () => this.getStatusCommand(),
             'whoami': () => this.getWhoamiCommand(),
+            'theme': (args) => this.handleThemeCommand(args),
             'date': () => `<div class="text-[#cccccc]">${new Date().toString()}</div>`,
             'pwd': () => `<div class="text-[#cccccc]">/portfolio/${this.currentPage}</div>`,
             'ls': () => this.getLsCommand(),
@@ -353,6 +356,7 @@ class PortfolioTerminal {
 <div class="text-[#ffd700] font-bold">⚙️ UTILITY COMMANDS:</div>
 <div class="text-[#cccccc]">  <span class="text-[#00ff88]">help</span>            Show this help</div>
 <div class="text-[#cccccc]">  <span class="text-[#00ff88]">clear</span>           Clear terminal</div>
+<div class="text-[#cccccc]">  <span class="text-[#00ff88]">theme</span>           Switch themes (dark/light)</div>
 <div class="text-[#cccccc]">  <span class="text-[#00ff88]">date</span>            Show current date</div>
 <div class="text-[#cccccc]">  <span class="text-[#00ff88]">whoami</span>          Show developer info</div>
 <div class="text-[#cccccc]">  <span class="text-[#00ff88]">status</span>          Show availability</div>
@@ -360,6 +364,7 @@ class PortfolioTerminal {
 <div class="text-[#569cd6]">═══════════════════════════════════════════════════════════════</div>
 <div class="text-[#ffd700]">💡 TIP: Use ↑/↓ arrows to browse command history</div>
 <div class="text-[#ffd700]">💡 TIP: Press Ctrl+\` to toggle terminal on any page</div>
+<div class="text-[#ffd700]">💡 TIP: Type 'theme light' or 'theme dark' to switch themes</div>
 <div class="text-[#569cd6]">═══════════════════════════════════════════════════════════════</div>`;
     }
 
@@ -806,6 +811,167 @@ class PortfolioTerminal {
 <div class="text-[#569cd6]">═══════════════════════════════════════════════════════════════</div>
 <div class="text-[#00ff88] font-bold">🤝 Let's build something amazing together!</div>
 <div class="text-[#569cd6]">═══════════════════════════════════════════════════════════════</div>`;
+    }
+
+    handleThemeCommand(args) {
+        if (!args || args.length === 0) {
+            const currentTheme = document.body.getAttribute('data-theme') || 'dark';
+            return `<div class="text-[#569cd6]">═══════════════════════════════════════════════════════════════</div>
+<div class="text-[#4dc4ff] font-bold">🎨 THEME SWITCHER</div>
+<div class="text-[#569cd6]">═══════════════════════════════════════════════════════════════</div>
+<br>
+<div class="text-[#ffd700] font-bold">📋 CURRENT THEME:</div>
+<div class="text-[#cccccc]">  Active: <span class="text-[#00ff88]">${currentTheme.toUpperCase()}</span></div>
+<br>
+<div class="text-[#ffd700] font-bold">🎨 AVAILABLE THEMES:</div>
+<div class="text-[#cccccc]">  • <span class="text-[#00ff88]">dark</span>    - Professional dark mode (VS Code style)</div>
+<div class="text-[#cccccc]">  • <span class="text-[#4dc4ff]">light</span>   - Clean light mode (Modern & bright)</div>
+<br>
+<div class="text-[#ffd700] font-bold">🚀 USAGE:</div>
+<div class="text-[#cccccc]">  <span class="text-[#00ff88]">theme dark</span>     Switch to dark mode</div>
+<div class="text-[#cccccc]">  <span class="text-[#4dc4ff]">theme light</span>    Switch to light mode</div>
+<div class="text-[#cccccc]">  <span class="text-[#ffd700]">theme</span>          Show current theme info</div>
+<br>
+<div class="text-[#569cd6]">═══════════════════════════════════════════════════════════════</div>`;
+        }
+
+        const theme = args[0].toLowerCase();
+        
+        if (theme === 'dark' || theme === 'light') {
+            this.switchTheme(theme);
+            return `<div class="text-[#569cd6]">═══════════════════════════════════════════════════════════════</div>
+<div class="text-[#00ff88] font-bold">✓ THEME SWITCHED TO ${theme.toUpperCase()}</div>
+<div class="text-[#569cd6]">═══════════════════════════════════════════════════════════════</div>
+<br>
+<div class="text-[#cccccc]">  Theme: <span class="text-[#4dc4ff]">${theme.charAt(0).toUpperCase() + theme.slice(1)} Mode</span></div>
+<div class="text-[#cccccc]">  Status: <span class="text-[#00ff88]">Applied Successfully</span></div>
+<div class="text-[#cccccc]">  Scope: <span class="text-[#ffd700]">Entire Portfolio</span></div>
+<br>
+<div class="text-[#ffd700]">💡 Theme preference saved locally!</div>
+<div class="text-[#569cd6]">═══════════════════════════════════════════════════════════════</div>`;
+        } else {
+            return `<div class="text-[#f14c4c]">Invalid theme: ${theme}</div>
+<div class="text-[#ffd700]">Available themes: dark, light</div>
+<div class="text-[#cccccc]">Usage: theme [dark|light]</div>`;
+        }
+    }
+
+    switchTheme(theme) {
+        // Apply theme to body
+        document.body.setAttribute('data-theme', theme);
+        
+        // Save theme preference
+        localStorage.setItem('portfolio-theme', theme);
+        
+        // Apply theme-specific styles
+        if (theme === 'light') {
+            this.applyLightTheme();
+        } else {
+            this.applyDarkTheme();
+        }
+        
+        // Update terminal colors
+        this.updateTerminalTheme(theme);
+    }    applyLightTheme() {
+        // Create or update light theme CSS
+        let lightThemeStyle = document.getElementById('lightThemeStyle');
+        if (!lightThemeStyle) {
+            lightThemeStyle = document.createElement('style');
+            lightThemeStyle.id = 'lightThemeStyle';
+            document.head.appendChild(lightThemeStyle);
+        }
+        
+        lightThemeStyle.textContent = `
+            /* Additional dynamic light theme styles */
+            [data-theme="light"] .bg-\\[\\#1e1e1e\\] {
+                background: #ffffff !important;
+            }
+            
+            [data-theme="light"] .bg-\\[\\#252526\\] {
+                background: #f8f9fa !important;
+            }
+            
+            [data-theme="light"] .bg-\\[\\#2d2d30\\] {
+                background: #e9ecef !important;
+            }
+            
+            [data-theme="light"] .text-\\[\\#4dc4ff\\] {
+                color: #3182ce !important;
+            }
+            
+            [data-theme="light"] .text-\\[\\#00ff88\\] {
+                color: #38a169 !important;
+            }
+            
+            [data-theme="light"] .text-\\[\\#ffd700\\] {
+                color: #d69e2e !important;
+            }
+            
+            [data-theme="light"] .text-\\[\\#f14c4c\\] {
+                color: #e53e3e !important;
+            }
+            
+            [data-theme="light"] .text-\\[\\#569cd6\\] {
+                color: #6f42c1 !important;
+            }
+            
+            [data-theme="light"] .text-\\[\\#ce9178\\] {
+                color: #d73a49 !important;
+            }
+            
+            [data-theme="light"] .border-\\[\\#3c3c3c\\] {
+                border-color: #e2e8f0 !important;
+            }
+            
+            /* Override specific Tailwind classes */
+            [data-theme="light"] .bg-gray-900 {
+                background: #ffffff !important;
+            }
+            
+            [data-theme="light"] .bg-gray-800 {
+                background: #f8f9fa !important;
+            }
+            
+            [data-theme="light"] .bg-gray-700 {
+                background: #e9ecef !important;
+            }
+            
+            [data-theme="light"] .text-gray-100 {
+                color: #2d3748 !important;
+            }
+            
+            [data-theme="light"] .text-gray-300 {
+                color: #4a5568 !important;
+            }
+            
+            [data-theme="light"] .text-gray-400 {
+                color: #718096 !important;
+            }
+            
+            /* Ensure all elements transition smoothly */
+            [data-theme="light"] * {
+                transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+            }
+        `;
+        
+        // Update page title to show light mode
+        document.title = document.title.replace(' - VSCode Portfolio', ' - VSCode Portfolio (Light Mode)');
+    }    applyDarkTheme() {
+        // Remove light theme styles
+        const lightThemeStyle = document.getElementById('lightThemeStyle');
+        if (lightThemeStyle) {
+            lightThemeStyle.remove();
+        }
+        
+        // Update page title to show dark mode (default)
+        document.title = document.title.replace(' (Light Mode)', '');
+    }
+
+    updateTerminalTheme(theme) {
+        const terminal = document.getElementById('universalTerminal');
+        if (terminal) {
+            terminal.setAttribute('data-theme', theme);
+        }
     }
 }
 

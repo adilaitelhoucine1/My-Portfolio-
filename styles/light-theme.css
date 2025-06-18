@@ -1,0 +1,411 @@
+/* Universal Light Theme for Portfolio */
+/* This CSS provides comprehensive light theme support */
+
+:root {
+    /* Dark Theme Variables (Default) */
+    --bg-primary: #1e1e1e;
+    --bg-secondary: #252526;
+    --bg-tertiary: #2d2d30;
+    --text-primary: #cccccc;
+    --text-secondary: #969696;
+    --text-accent: #4dc4ff;
+    --border-color: #3c3c3c;
+    --accent-blue: #007acc;
+    --accent-green: #00ff88;
+    --accent-yellow: #ffd700;
+    --accent-red: #f14c4c;
+}
+
+/* Light Theme Variables */
+[data-theme="light"] {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-tertiary: #e9ecef;
+    --text-primary: #2d3748;
+    --text-secondary: #4a5568;
+    --text-accent: #3182ce;
+    --border-color: #e2e8f0;
+    --accent-blue: #3182ce;
+    --accent-green: #38a169;
+    --accent-yellow: #d69e2e;
+    --accent-red: #e53e3e;
+    
+    /* VS Code Light Theme Specific */
+    --sidebar-bg: #f3f3f3;
+    --activity-bar-bg: #2c2c2c;
+    --status-bar-bg: #007acc;
+    --tab-bg: #ececec;
+    --tab-active-bg: #ffffff;
+    --editor-bg: #ffffff;
+    --line-numbers-bg: #f5f5f5;
+    --minimap-bg: #f8f8f8;
+}
+
+/* Global Body Styles */
+[data-theme="light"] body {
+    background: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+    transition: all 0.3s ease;
+}
+
+/* VS Code Layout Components */
+[data-theme="light"] .bg-\[var\(--bg-color\)\] {
+    background: var(--bg-primary) !important;
+}
+
+[data-theme="light"] .bg-\[var\(--sidebar-bg\)\] {
+    background: var(--sidebar-bg) !important;
+}
+
+[data-theme="light"] .bg-\[var\(--activity-bar-bg\)\] {
+    background: var(--activity-bar-bg) !important;
+}
+
+[data-theme="light"] .bg-\[var\(--editor-bg\)\] {
+    background: var(--editor-bg) !important;
+}
+
+[data-theme="light"] .bg-\[var\(--tab-bg\)\] {
+    background: var(--tab-bg) !important;
+}
+
+[data-theme="light"] .bg-\[var\(--status-bar-bg\)\] {
+    background: var(--status-bar-bg) !important;
+}
+
+/* Text Colors */
+[data-theme="light"] .text-white {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .text-\[\#cccccc\] {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="light"] .text-\[\#808080\] {
+    color: #718096 !important;
+}
+
+[data-theme="light"] .text-\[\#4dc4ff\] {
+    color: var(--accent-blue) !important;
+}
+
+[data-theme="light"] .text-\[\#00ff88\] {
+    color: var(--accent-green) !important;
+}
+
+[data-theme="light"] .text-\[\#ffd700\] {
+    color: var(--accent-yellow) !important;
+}
+
+[data-theme="light"] .text-\[\#f14c4c\] {
+    color: var(--accent-red) !important;
+}
+
+[data-theme="light"] .text-\[\#569cd6\] {
+    color: #6f42c1 !important;
+}
+
+[data-theme="light"] .text-\[\#ce9178\] {
+    color: #d73a49 !important;
+}
+
+/* Background Colors */
+[data-theme="light"] .bg-\[\#1e1e1e\] {
+    background: var(--bg-primary) !important;
+}
+
+[data-theme="light"] .bg-\[\#252526\] {
+    background: var(--bg-secondary) !important;
+}
+
+[data-theme="light"] .bg-\[\#2d2d30\] {
+    background: var(--bg-tertiary) !important;
+}
+
+[data-theme="light"] .bg-\[\#3c3c3c\] {
+    background: var(--border-color) !important;
+}
+
+/* Borders */
+[data-theme="light"] .border-\[\#3c3c3c\] {
+    border-color: var(--border-color) !important;
+}
+
+[data-theme="light"] .border-\[\#555\] {
+    border-color: #cbd5e0 !important;
+}
+
+/* Code Syntax Highlighting */
+[data-theme="light"] .syntax-property {
+    color: #d73a49 !important;
+}
+
+[data-theme="light"] .syntax-string {
+    color: #032f62 !important;
+}
+
+[data-theme="light"] .syntax-operator {
+    color: #24292e !important;
+}
+
+[data-theme="light"] .syntax-keyword {
+    color: #d73a49 !important;
+}
+
+[data-theme="light"] .syntax-comment {
+    color: #6a737d !important;
+}
+
+[data-theme="light"] .syntax-number {
+    color: #005cc5 !important;
+}
+
+/* Terminal Specific */
+[data-theme="light"] .universal-terminal {
+    background: var(--bg-secondary) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+    box-shadow: 0 -4px 12px rgba(0,0,0,0.1) !important;
+}
+
+[data-theme="light"] .terminal-header {
+    background: var(--bg-tertiary) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .terminal-content {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="light"] #universalTerminalInput {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .terminal-toggle-btn {
+    background: var(--accent-blue) !important;
+    box-shadow: 0 4px 12px rgba(49, 130, 206, 0.3) !important;
+}
+
+[data-theme="light"] .terminal-toggle-btn:hover {
+    background: #2c5aa0 !important;
+}
+
+/* Code Editor */
+[data-theme="light"] .code-with-lines {
+    background: var(--bg-primary) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+[data-theme="light"] .line-numbers {
+    background: var(--line-numbers-bg) !important;
+    color: var(--text-secondary) !important;
+    border-color: var(--border-color) !important;
+}
+
+[data-theme="light"] .line-numbers div {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="light"] .current-line {
+    background: rgba(49, 130, 206, 0.1) !important;
+}
+
+[data-theme="light"] .current-line::before {
+    background: var(--accent-blue) !important;
+}
+
+/* Minimap */
+[data-theme="light"] .minimap {
+    background: var(--minimap-bg) !important;
+    border-color: var(--border-color) !important;
+}
+
+[data-theme="light"] .minimap-content {
+    color: var(--text-secondary) !important;
+}
+
+/* IntelliSense and Popups */
+[data-theme="light"] .intellisense-popup {
+    background: var(--bg-primary) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+}
+
+[data-theme="light"] .autocomplete-popup {
+    background: var(--bg-primary) !important;
+    border-color: var(--border-color) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+}
+
+[data-theme="light"] .autocomplete-item {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .autocomplete-item:hover {
+    background: var(--bg-secondary) !important;
+}
+
+[data-theme="light"] .autocomplete-item.selected {
+    background: rgba(49, 130, 206, 0.1) !important;
+}
+
+[data-theme="light"] .peek-definition {
+    background: var(--bg-primary) !important;
+    border-color: var(--accent-blue) !important;
+    color: var(--text-primary) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+}
+
+/* Live Preview */
+[data-theme="light"] .live-preview {
+    border-color: var(--border-color) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+}
+
+/* Breadcrumbs */
+[data-theme="light"] .breadcrumb {
+    background: var(--bg-tertiary) !important;
+    border-color: var(--border-color) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Tabs */
+[data-theme="light"] .tab {
+    background: var(--tab-bg) !important;
+    color: var(--text-secondary) !important;
+    border-color: var(--border-color) !important;
+}
+
+[data-theme="light"] .tab.active {
+    background: var(--tab-active-bg) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Buttons */
+[data-theme="light"] button {
+    transition: all 0.2s ease !important;
+}
+
+[data-theme="light"] button:hover {
+    background-color: var(--bg-secondary) !important;
+}
+
+/* Modals */
+[data-theme="light"] .modal-content {
+    background: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+[data-theme="light"] .contact-modal {
+    background: rgba(0,0,0,0.3) !important;
+}
+
+/* Form Elements */
+[data-theme="light"] input,
+[data-theme="light"] textarea,
+[data-theme="light"] select {
+    background: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-color) !important;
+}
+
+[data-theme="light"] input:focus,
+[data-theme="light"] textarea:focus,
+[data-theme="light"] select:focus {
+    border-color: var(--accent-blue) !important;
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1) !important;
+}
+
+/* Scrollbars */
+[data-theme="light"] ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+[data-theme="light"] ::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+/* Transitions */
+[data-theme="light"] * {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+}
+
+/* Special VS Code Elements */
+[data-theme="light"] .status-indicator {
+    color: var(--accent-green) !important;
+}
+
+[data-theme="light"] .error-indicator {
+    color: var(--accent-red) !important;
+}
+
+[data-theme="light"] .warning-indicator {
+    color: var(--accent-yellow) !important;
+}
+
+[data-theme="light"] .info-indicator {
+    color: var(--accent-blue) !important;
+}
+
+/* Zen Mode */
+[data-theme="light"] .zen-mode {
+    background: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Hover Effects */
+[data-theme="light"] .hover\:text-white:hover {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .hover\:text-\[\#4dc4ff\]:hover {
+    color: var(--accent-blue) !important;
+}
+
+[data-theme="light"] .hover\:bg-\[\#3c3c3c\]:hover {
+    background: var(--bg-secondary) !important;
+}
+
+/* File Explorer */
+[data-theme="light"] .file-explorer {
+    background: var(--sidebar-bg) !important;
+    color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .file-item {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .file-item:hover {
+    background: var(--bg-secondary) !important;
+}
+
+/* Code Lens */
+[data-theme="light"] .code-lens {
+    background: rgba(49, 130, 206, 0.1) !important;
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="light"] .code-lens:hover {
+    color: var(--accent-blue) !important;
+    background: rgba(49, 130, 206, 0.2) !important;
+}
+
+/* Ensure smooth theme transitions */
+[data-theme="light"] {
+    transition: all 0.3s ease;
+}
