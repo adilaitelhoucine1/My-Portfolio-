@@ -32,13 +32,19 @@
     
     /* VS Code Light Theme Specific */
     --sidebar-bg: #f3f3f3;
-    --activity-bar-bg: #2c2c2c;
+    --activity-bar-bg: #f3f3f3;
     --status-bar-bg: #007acc;
     --tab-bg: #ececec;
     --tab-active-bg: #ffffff;
     --editor-bg: #ffffff;
     --line-numbers-bg: #f5f5f5;
     --minimap-bg: #f8f8f8;
+    
+    /* Additional VS Code variables used in layout */
+    --bg-color: #ffffff;
+    --secondary-bg: #f8f9fa;
+    --text-color: #2d3748;
+    --header-bg: #edf2f7;
 }
 
 /* Global Body Styles */
@@ -54,11 +60,11 @@
 }
 
 [data-theme="light"] .bg-\[var\(--sidebar-bg\)\] {
-    background: var(--sidebar-bg) !important;
+    background: #f3f3f3 !important;
 }
 
 [data-theme="light"] .bg-\[var\(--activity-bar-bg\)\] {
-    background: var(--activity-bar-bg) !important;
+    background: #f3f3f3 !important;
 }
 
 [data-theme="light"] .bg-\[var\(--editor-bg\)\] {
@@ -71,6 +77,28 @@
 
 [data-theme="light"] .bg-\[var\(--status-bar-bg\)\] {
     background: var(--status-bar-bg) !important;
+}
+
+[data-theme="light"] .border-\[var\(--editor-bg\)\] {
+    border-color: var(--border-color) !important;
+}
+
+/* Force sidebar background override with higher specificity */
+[data-theme="light"] div.bg-\[var\(--sidebar-bg\)\] {
+    background-color: #f3f3f3 !important;
+}
+
+[data-theme="light"] div.bg-\[var\(--activity-bar-bg\)\] {
+    background-color: #f3f3f3 !important;
+}
+
+/* Additional specificity for fixed positioned elements */
+[data-theme="light"] .fixed.bg-\[var\(--sidebar-bg\)\] {
+    background-color: #f3f3f3 !important;
+}
+
+[data-theme="light"] .fixed.bg-\[var\(--activity-bar-bg\)\] {
+    background-color: #f3f3f3 !important;
 }
 
 /* Text Colors */
@@ -392,6 +420,63 @@
 
 [data-theme="light"] .file-item:hover {
     background: var(--bg-secondary) !important;
+}
+
+[data-theme="light"] .file-tree-item {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .file-tree-item:hover {
+    background: var(--bg-secondary) !important;
+}
+
+[data-theme="light"] .file-tree-item a {
+    color: var(--text-primary) !important;
+    text-decoration: none !important;
+}
+
+[data-theme="light"] .file-tree-item a:hover {
+    color: var(--accent-blue) !important;
+}
+
+[data-theme="light"] .file-tree-item span {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .explorer-section {
+    background: var(--sidebar-bg) !important;
+    color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .explorer-section-header {
+    color: var(--text-secondary) !important;
+    background: var(--sidebar-bg) !important;
+}
+
+[data-theme="light"] .explorer-section-header span {
+    color: var(--text-secondary) !important;
+    font-weight: 600 !important;
+}
+
+[data-theme="light"] .folder-icon {
+    color: var(--accent-blue) !important;
+}
+
+/* Activity Bar Icons */
+[data-theme="light"] .vscode-icon {
+    color: var(--text-secondary) !important;
+    background: var(--activity-bar-bg) !important;
+}
+
+[data-theme="light"] .vscode-icon:hover {
+    background: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .vscode-icon.active {
+    background: var(--bg-secondary) !important;
+    color: var(--accent-blue) !important;
+    border-left: 2px solid var(--accent-blue) !important;
 }
 
 /* Code Lens */

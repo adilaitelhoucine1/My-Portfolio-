@@ -873,15 +873,105 @@ class PortfolioTerminal {
         // Update terminal colors
         this.updateTerminalTheme(theme);
     }    applyLightTheme() {
+        // Set CSS custom properties on document root
+        const root = document.documentElement;
+        root.style.setProperty('--bg-color', '#ffffff');
+        root.style.setProperty('--sidebar-bg', '#f3f3f3');
+        root.style.setProperty('--activity-bar-bg', '#f3f3f3');
+        root.style.setProperty('--editor-bg', '#ffffff');
+        root.style.setProperty('--tab-bg', '#ececec');
+        root.style.setProperty('--tab-active-bg', '#ffffff');
+        root.style.setProperty('--status-bar-bg', '#007acc');
+        root.style.setProperty('--text-color', '#2d3748');
+        root.style.setProperty('--secondary-bg', '#f8f9fa');
+        root.style.setProperty('--border-color', '#e2e8f0');
+        
+        // Directly update sidebar and activity bar elements
+        this.updateSidebarElements('#f3f3f3', '#2d3748');
+        
         // Create or update light theme CSS
         let lightThemeStyle = document.getElementById('lightThemeStyle');
         if (!lightThemeStyle) {
             lightThemeStyle = document.createElement('style');
             lightThemeStyle.id = 'lightThemeStyle';
             document.head.appendChild(lightThemeStyle);
-        }
-        
-        lightThemeStyle.textContent = `
+        }        lightThemeStyle.textContent = `
+            /* Force sidebar and activity bar with maximum specificity */
+            [data-theme="light"] .bg-\\[var\\(--sidebar-bg\\)\\] !important,
+            [data-theme="light"] div.bg-\\[var\\(--sidebar-bg\\)\\] !important,
+            [data-theme="light"] .fixed.bg-\\[var\\(--sidebar-bg\\)\\] !important,
+            [data-theme="light"] .fixed.left-\\[50px\\] !important,
+            [data-theme="light"] div[class*="left-[50px]"] !important {
+                background-color: #f3f3f3 !important;
+                background: #f3f3f3 !important;
+            }
+            
+            [data-theme="light"] .bg-\\[var\\(--activity-bar-bg\\)\\] !important,
+            [data-theme="light"] div.bg-\\[var\\(--activity-bar-bg\\)\\] !important,
+            [data-theme="light"] .fixed.bg-\\[var\\(--activity-bar-bg\\)\\] !important,
+            [data-theme="light"] .fixed.left-0 !important {
+                background-color: #f3f3f3 !important;
+                background: #f3f3f3 !important;
+            }
+            
+            /* Force ALL explorer elements with maximum specificity */
+            [data-theme="light"] .explorer-section !important,
+            [data-theme="light"] div.explorer-section !important {
+                background-color: #f3f3f3 !important;
+                background: #f3f3f3 !important;
+                color: #2d3748 !important;
+            }
+            
+            [data-theme="light"] .explorer-section-header !important,
+            [data-theme="light"] div.explorer-section-header !important {
+                background-color: #f3f3f3 !important;
+                background: #f3f3f3 !important;
+                color: #4a5568 !important;
+            }
+            
+            [data-theme="light"] .explorer-section-header span !important,
+            [data-theme="light"] .explorer-section span !important {
+                color: #4a5568 !important;
+            }
+            
+            [data-theme="light"] .file-tree-item !important,
+            [data-theme="light"] div.file-tree-item !important {
+                color: #2d3748 !important;
+                background-color: transparent !important;
+            }
+            
+            [data-theme="light"] .file-tree-item span !important {
+                color: #2d3748 !important;
+            }
+            
+            [data-theme="light"] .file-tree-item a !important {
+                color: #2d3748 !important;
+                text-decoration: none !important;
+            }
+            
+            [data-theme="light"] .file-tree-item a span !important {
+                color: #2d3748 !important;
+            }
+            
+            [data-theme="light"] .file-tree-item:hover !important {
+                background-color: #e9ecef !important;
+            }
+            
+            [data-theme="light"] .vscode-icon !important {
+                color: #4a5568 !important;
+            }
+            
+            /* Force all text elements in sidebar area */
+            [data-theme="light"] .fixed.left-\\[50px\\] * !important,
+            [data-theme="light"] div[class*="left-[50px]"] * !important {
+                color: #2d3748 !important;
+            }
+            
+            [data-theme="light"] .fixed.left-\\[50px\\] a !important,
+            [data-theme="light"] div[class*="left-[50px]"] a !important {
+                color: #2d3748 !important;
+            }
+            
             /* Additional dynamic light theme styles */
             [data-theme="light"] .bg-\\[\\#1e1e1e\\] {
                 background: #ffffff !important;
@@ -923,6 +1013,14 @@ class PortfolioTerminal {
                 border-color: #e2e8f0 !important;
             }
             
+            [data-theme="light"] .text-white {
+                color: #2d3748 !important;
+            }
+            
+            [data-theme="light"] .text-\\[\\#cccccc\\] {
+                color: #4a5568 !important;
+            }
+            
             /* Override specific Tailwind classes */
             [data-theme="light"] .bg-gray-900 {
                 background: #ffffff !important;
@@ -956,12 +1054,165 @@ class PortfolioTerminal {
         
         // Update page title to show light mode
         document.title = document.title.replace(' - VSCode Portfolio', ' - VSCode Portfolio (Light Mode)');
-    }    applyDarkTheme() {
+    }    updateSidebarElements(bgColor, textColor) {
+        // Force update with timeout to ensure DOM is ready
+        setTimeout(() => {
+            // Find and directly update sidebar elements with more specific selectors
+            const sidebarSelectors = [
+                '.bg-\\[var\\(--sidebar-bg\\)\\]',
+                '[class*="bg-[var(--sidebar-bg)]"]',
+                '.fixed.left-\\[50px\\]'
+            ];
+            
+            sidebarSelectors.forEach(selector => {
+                try {
+                    const elements = document.querySelectorAll(selector);
+                    elements.forEach(el => {
+                        el.style.setProperty('background-color', bgColor, 'important');
+                        el.style.setProperty('color', textColor, 'important');
+                    });
+                } catch (e) {
+                    // Ignore selector errors
+                }
+            });
+            
+            const activityBarSelectors = [
+                '.bg-\\[var\\(--activity-bar-bg\\)\\]',
+                '[class*="bg-[var(--activity-bar-bg)]"]',
+                '.fixed.left-0'
+            ];
+            
+            activityBarSelectors.forEach(selector => {
+                try {
+                    const elements = document.querySelectorAll(selector);
+                    elements.forEach(el => {
+                        el.style.setProperty('background-color', bgColor, 'important');
+                    });
+                } catch (e) {
+                    // Ignore selector errors
+                }
+            });
+            
+            // Update ALL explorer-related elements with force
+            const explorerElements = [
+                '.explorer-section',
+                '.explorer-section-header',
+                '.file-tree-item',
+                '[class*="explorer"]',
+                '[class*="file-tree"]'
+            ];
+            
+            explorerElements.forEach(selector => {
+                const elements = document.querySelectorAll(selector);
+                elements.forEach(el => {
+                    el.style.setProperty('background-color', bgColor, 'important');
+                    el.style.setProperty('color', textColor, 'important');
+                });
+            });
+            
+            // Update ALL spans and links in the sidebar area
+            const sidebarArea = document.querySelector('.fixed.left-\\[50px\\]') || 
+                              document.querySelector('[class*="left-[50px]"]');
+            if (sidebarArea) {
+                const allSpans = sidebarArea.querySelectorAll('span');
+                const allLinks = sidebarArea.querySelectorAll('a');
+                
+                allSpans.forEach(span => {
+                    span.style.setProperty('color', textColor, 'important');
+                });
+                
+                allLinks.forEach(link => {
+                    link.style.setProperty('color', textColor, 'important');
+                });
+            }
+            
+            // Update VS Code icons
+            const vscodeIcons = document.querySelectorAll('.vscode-icon');
+            vscodeIcons.forEach(el => {
+                el.style.setProperty('color', textColor, 'important');
+            });
+            
+            // Force a style recalculation
+            document.body.offsetHeight;
+        }, 100);
+    }applyDarkTheme() {
+        // Reset CSS custom properties to dark theme values
+        const root = document.documentElement;
+        root.style.setProperty('--bg-color', '#1e1e1e');
+        root.style.setProperty('--sidebar-bg', '#252526');
+        root.style.setProperty('--activity-bar-bg', '#2c2c2c');
+        root.style.setProperty('--editor-bg', '#1e1e1e');
+        root.style.setProperty('--tab-bg', '#2d2d30');
+        root.style.setProperty('--tab-active-bg', '#1e1e1e');
+        root.style.setProperty('--status-bar-bg', '#007acc');
+        root.style.setProperty('--text-color', '#cccccc');
+        root.style.setProperty('--secondary-bg', '#252526');
+        root.style.setProperty('--border-color', '#3c3c3c');
+        
+        // Directly update sidebar and activity bar elements back to dark
+        this.updateSidebarElements('#252526', '#cccccc');
+        
         // Remove light theme styles
         const lightThemeStyle = document.getElementById('lightThemeStyle');
         if (lightThemeStyle) {
             lightThemeStyle.remove();
         }
+          // Reset inline styles on all explorer elements
+        const sidebarElements = document.querySelectorAll('.bg-\\[var\\(--sidebar-bg\\)\\]');
+        sidebarElements.forEach(el => {
+            el.style.backgroundColor = '';
+            el.style.color = '';
+        });
+        
+        const activityBarElements = document.querySelectorAll('.bg-\\[var\\(--activity-bar-bg\\)\\]');
+        activityBarElements.forEach(el => {
+            el.style.backgroundColor = '';
+            el.style.color = '';
+        });
+        
+        // Reset explorer section elements
+        const explorerSections = document.querySelectorAll('.explorer-section');
+        explorerSections.forEach(el => {
+            el.style.backgroundColor = '';
+            el.style.color = '';
+        });
+        
+        // Reset explorer section headers
+        const explorerHeaders = document.querySelectorAll('.explorer-section-header');
+        explorerHeaders.forEach(el => {
+            el.style.backgroundColor = '';
+            el.style.color = '';
+        });
+        
+        // Reset explorer header spans
+        const explorerHeaderSpans = document.querySelectorAll('.explorer-section-header span');
+        explorerHeaderSpans.forEach(el => {
+            el.style.color = '';
+        });
+        
+        // Reset file tree items
+        const fileTreeItems = document.querySelectorAll('.file-tree-item');
+        fileTreeItems.forEach(el => {
+            el.style.color = '';
+        });
+        
+        // Reset file tree item spans
+        const fileTreeSpans = document.querySelectorAll('.file-tree-item span');
+        fileTreeSpans.forEach(el => {
+            el.style.color = '';
+        });
+        
+        // Reset file tree item links
+        const fileTreeLinks = document.querySelectorAll('.file-tree-item a');
+        fileTreeLinks.forEach(el => {
+            el.style.color = '';
+        });
+        
+        // Reset VS Code icons
+        const vscodeIcons = document.querySelectorAll('.vscode-icon');
+        vscodeIcons.forEach(el => {
+            el.style.color = '';
+        });
         
         // Update page title to show dark mode (default)
         document.title = document.title.replace(' (Light Mode)', '');
