@@ -650,7 +650,8 @@
                         <i class="bi bi-wifi text-[#4dc4ff]"></i>
                         <span>Live Server</span>
                     </div>
-                </div>        </div>
+                </div>    
+                </div>
     </div>
 
     <!-- VS Code Minimap -->
@@ -1035,24 +1036,15 @@
             terminalCommands.clear();
         }        // Zen Mode Toggle
         document.getElementById('zenModeBtn').addEventListener('click', function() {
-            console.log('Zen Mode button clicked'); // Debug log
             const zenMode = document.getElementById('zenMode');
             if (zenMode) {
-                console.log('zenMode element found'); // Debug log
                 zenMode.classList.add('active');
-                console.log('active class added'); // Debug log
-            } else {
-                console.error('zenMode element not found'); // Debug log
             }
         });        // New inventive functions
         function exitZenMode() {
-            console.log('exitZenMode called'); // Debug log
             const zenMode = document.getElementById('zenMode');
             if (zenMode) {
                 zenMode.classList.remove('active');
-                console.log('active class removed'); // Debug log
-            } else {
-                console.error('zenMode element not found in exit function'); // Debug log
             }
         }function closeTerminal() {
             const terminal = document.getElementById('terminalPanel');
@@ -1111,7 +1103,7 @@
                 <div class="text-[#cccccc]">
                     Property 'title' should be of type 'JobTitle'<br>
                     Expected: enum JobTitle<br>
-                    Received: string
+                    Call me To fix it 
                 </div>
             `;
             intellisense.style.display = 'block';
