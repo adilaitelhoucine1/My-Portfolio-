@@ -503,18 +503,7 @@
                         <button class="ml-2 text-[#808080] hover:text-white">×</button>
                     </div>                    <!-- New features buttons -->
                     <div class="flex items-center ml-auto gap-2 px-4">
-                        <button id="formatBtn" class="text-[#569cd6] hover:text-white transition-colors text-xs" title="Format Document">
-                            <i class="bi bi-code"></i> Format
-                        </button>
-                        <button id="miniMapBtn" class="text-[#ffd700] hover:text-white transition-colors text-xs" title="Toggle Minimap">
-                            <i class="bi bi-map"></i> Minimap
-                        </button>
-                        <button id="terminalBtn" class="text-[#4dc4ff] hover:text-white transition-colors text-xs" title="Toggle Terminal">
-                            <i class="bi bi-terminal"></i> Terminal
-                        </button>
-                        <button id="livePreviewBtn" class="text-[#00ff88] hover:text-white transition-colors text-xs" title="Live Preview">
-                            <i class="bi bi-eye"></i> Preview
-                        </button>
+
                         <button id="zenModeBtn" class="text-[#ff6b6b] hover:text-white transition-colors text-xs" title="Zen Mode">
                             <i class="bi bi-fullscreen"></i> Zen
                         </button>
@@ -889,42 +878,9 @@
                     btn.innerHTML = originalText;
                     btn.classList.remove('copied');
                 }, 2000);            });
-        });
-
-        // VS Code Features
+        });        // VS Code Features
         
-        // Format Document
-        document.getElementById('formatBtn').addEventListener('click', function() {
-            const btn = this;
-            btn.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Formatting...';
-            btn.style.color = '#ffd700';
-            
-            setTimeout(() => {
-                btn.innerHTML = '<i class="bi bi-check"></i> Formatted!';
-                btn.style.color = '#4dc4ff';
-                
-                setTimeout(() => {
-                    btn.innerHTML = '<i class="bi bi-code"></i> Format';
-                    btn.style.color = '#569cd6';
-                }, 1500);
-            }, 1000);
-        });
-
-        // Minimap Toggle
-        document.getElementById('miniMapBtn').addEventListener('click', function() {
-            const minimap = document.getElementById('minimap');
-            const btn = this;
-            
-            if (minimap.classList.contains('show')) {
-                minimap.classList.remove('show');
-                btn.innerHTML = '<i class="bi bi-map"></i> Minimap';
-                btn.style.color = '#ffd700';
-            } else {
-                minimap.classList.add('show');
-                btn.innerHTML = '<i class="bi bi-map-fill"></i> Hide Map';
-                btn.style.color = '#4dc4ff';
-            }
-        });        // Settings Button with IntelliSense
+        // Settings Button with IntelliSense
         document.getElementById('settingsBtn').addEventListener('click', function() {
             const intellisense = document.getElementById('intellisensePopup');
             intellisense.style.display = intellisense.style.display === 'block' ? 'none' : 'block';
@@ -935,27 +891,7 @@
                 setTimeout(() => {
                     intellisense.style.display = 'none';
                 }, 3000);
-            }
-        });        // Terminal Toggle
-        document.getElementById('terminalBtn').addEventListener('click', function() {
-            const terminal = document.getElementById('terminalPanel');
-            const btn = this;
-            
-            if (terminal.classList.contains('show')) {
-                terminal.classList.remove('show');
-                btn.innerHTML = '<i class="bi bi-terminal"></i> Terminal';
-                btn.style.color = '#4dc4ff';
-            } else {
-                terminal.classList.add('show');
-                btn.innerHTML = '<i class="bi bi-terminal-fill"></i> Hide Terminal';
-                btn.style.color = '#00ff88';
-                
-                // Focus on terminal input
-                setTimeout(() => {
-                    document.getElementById('terminalInput').focus();
-                }, 100);
-            }
-        });
+            }        });
 
         // Interactive Terminal System
         const terminalInput = document.getElementById('terminalInput');
@@ -1095,45 +1031,32 @@
                     this.value = '';
                 }
             }
-        });
-
-        function clearTerminal() {
+        });        function clearTerminal() {
             terminalCommands.clear();
-        }
-
-        // Live Preview Toggle
-        document.getElementById('livePreviewBtn').addEventListener('click', function() {
-            const preview = document.getElementById('livePreview');
-            const btn = this;
-            
-            if (preview.classList.contains('show')) {
-                preview.classList.remove('show');
-                btn.innerHTML = '<i class="bi bi-eye"></i> Preview';
-                btn.style.color = '#00ff88';
-            } else {
-                preview.classList.add('show');
-                btn.innerHTML = '<i class="bi bi-eye-slash"></i> Hide Preview';
-                btn.style.color = '#4dc4ff';
-            }
-        });
-
-        // Zen Mode Toggle
+        }        // Zen Mode Toggle
         document.getElementById('zenModeBtn').addEventListener('click', function() {
+            console.log('Zen Mode button clicked'); // Debug log
             const zenMode = document.getElementById('zenMode');
-            zenMode.classList.add('active');
-        });
-
-        // New inventive functions
+            if (zenMode) {
+                console.log('zenMode element found'); // Debug log
+                zenMode.classList.add('active');
+                console.log('active class added'); // Debug log
+            } else {
+                console.error('zenMode element not found'); // Debug log
+            }
+        });        // New inventive functions
         function exitZenMode() {
-            document.getElementById('zenMode').classList.remove('active');
-        }
-
-        function closeTerminal() {
+            console.log('exitZenMode called'); // Debug log
+            const zenMode = document.getElementById('zenMode');
+            if (zenMode) {
+                zenMode.classList.remove('active');
+                console.log('active class removed'); // Debug log
+            } else {
+                console.error('zenMode element not found in exit function'); // Debug log
+            }
+        }function closeTerminal() {
             const terminal = document.getElementById('terminalPanel');
-            const btn = document.getElementById('terminalBtn');
             terminal.classList.remove('show');
-            btn.innerHTML = '<i class="bi bi-terminal"></i> Terminal';
-            btn.style.color = '#4dc4ff';
         }
 
         function showPeekDefinition() {
@@ -1225,10 +1148,19 @@
                 e.preventDefault();
                 showPeekDefinition();
             }
-            
-            if (e.ctrlKey && e.key === '`') {
+              if (e.ctrlKey && e.key === '`') {
                 e.preventDefault();
-                document.getElementById('terminalBtn').click();
+                // Toggle terminal panel directly
+                const terminal = document.getElementById('terminalPanel');
+                if (terminal.classList.contains('show')) {
+                    terminal.classList.remove('show');
+                } else {
+                    terminal.classList.add('show');
+                    // Focus on terminal input
+                    setTimeout(() => {
+                        document.getElementById('terminalInput').focus();
+                    }, 100);
+                }
             }
             
             if (e.key === 'F11') {
@@ -1294,25 +1226,7 @@
             const mailtoLink = `mailto:contact@adilaitelhoucine.dev?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`From: ${name} (${email})\n\nMessage:\n${message}`)}`;
             
             window.location.href = mailtoLink;
-            modal.style.display = 'none';
-            contactForm.reset();
-        });
-
-        // JSON validation animation
-        document.getElementById('validateBtn').addEventListener('click', function() {
-            const btn = this;
-            btn.innerHTML = '<i class="bi bi-check-circle-fill"></i> Validating...';
-            btn.style.color = '#ffa500';
-            
-            setTimeout(() => {
-                btn.innerHTML = '<i class="bi bi-check-circle-fill"></i> Valid JSON ✓';
-                btn.style.color = '#4dc4ff';
-                
-                setTimeout(() => {
-                    btn.innerHTML = '<i class="bi bi-check-circle"></i> Valid JSON';
-                    btn.style.color = '#4dc4ff';
-                }, 1500);
-            }, 1000);
+            modal.style.display = 'none';            contactForm.reset();
         });
 
         // Simple folder toggle functionality
