@@ -8,7 +8,45 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">    <link rel="stylesheet" href="styles/colors.css">
     <link rel="stylesheet" href="styles/editor-features.css">`n    <link rel="stylesheet" href="styles/light-theme.css">
     <link rel="stylesheet" href="styles/command-palette.css">
-    <link rel="stylesheet" href="styles/theme-switcher.css">
+    <link rel="stylesheet" href="styles/theme-switcher.css">    <style>
+        /* Fix for individual card hover effects */
+        .project-card {
+            isolation: isolate;
+            transition: all 0.3s ease;
+            transform: scale(1);
+        }
+        
+        /* Remove conflicting hover classes from HTML and use CSS only */
+        .project-card:hover {
+            transform: scale(1.02) !important;
+            background-color: #3a3d3e !important;
+            border-left-color: #4dc4ff !important;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3) !important;
+        }
+        
+        /* Reset other cards when one is hovered */
+        .projects-grid:hover .project-card:not(:hover) {
+            transform: scale(0.98);
+            opacity: 0.7;
+        }
+        
+        /* Ensure tech tags don't interfere with card hover */
+        .tech-tag {
+            pointer-events: none;
+        }
+        
+        /* Make sure links still work */
+        .project-card a {
+            pointer-events: auto;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* Prevent grid from affecting individual cards */
+        .projects-grid {
+            isolation: isolate;
+        }
+    </style>
 </head>
 <body class="bg-[var(--editor-bg)] text-[var(--vscode-text)] font-sans m-0 overflow-hidden">
     <!-- Main Container with fixed sidebars -->
@@ -148,13 +186,12 @@
                     </div>
 
                     <div class="projects-section ml-12">
-                        <h2 class="text-xl font-bold mb-4 text-[#4dc4ff]">Featured Projects</h2>
-                        <div class="projects-grid grid grid-cols-1 md:grid-cols-2 gap-8 mt-5">
-                            <div class="project-card bg-[#2a2d2e] p-5 rounded border-l-4 border-[#007acc] shadow-md transition-all duration-300">
+                        <h2 class="text-xl font-bold mb-4 text-[#4dc4ff]">Featured Projects</h2>                        <div class="projects-grid grid grid-cols-1 md:grid-cols-2 gap-8 mt-5">
+                            <div class="project-card bg-[#2a2d2e] p-5 rounded border-l-4 border-[#007acc] shadow-md">
                                 <div class="flex justify-between items-start mb-3">
                                     <h3 class="text-lg font-bold">MoneyMind</h3>
                                     <div class="flex gap-2">
-                                        <a href="https://github.com/adilaitelhoucine1/MoneyMind-Projet" class="text-[#cccccc] hover:text-white transition-colors">
+                                        <a href="https://github.com/adilaitelhoucine1/MoneyMind-Projet" target="_blank" class="text-[#cccccc] hover:text-white transition-colors">
                                             <i class="bi bi-github"></i>
                                         </a>
                                         <a href="#" class="text-[#cccccc] hover:text-white transition-colors">
@@ -170,13 +207,12 @@
                                     <span class="tech-tag bg-[rgba(0,122,204,0.2)] text-[#4dc4ff] px-2 py-1 rounded-full text-xs mr-2 mb-2 border border-[rgba(77,196,255,0.3)]">CSS</span>
                                     <span class="tech-tag bg-[#333] text-[#4dc4ff] px-2 py-1 rounded text-xs mr-2 mb-2">Azure</span>
                                     <span class="tech-tag bg-[#333] text-[#4dc4ff] px-2 py-1 rounded text-xs mr-2 mb-2">Jira</span>
-                                </div>                            </div>
-                            
-                            <div class="project-card bg-[#2a2d2e] p-5 rounded border-l-4 border-[#007acc] shadow-md transition-all duration-300">
+                                </div>                            </div>                            
+                            <div class="project-card bg-[#2a2d2e] p-5 rounded border-l-4 border-[#007acc] shadow-md">
                                 <div class="flex justify-between items-start mb-3">
                                     <h3 class="text-lg font-bold">VeilleHub</h3>
                                     <div class="flex gap-2">
-                                        <a href="https://github.com/adilaitelhoucine1/VeilleHub-Project" class="text-[#cccccc] hover:text-white transition-colors">
+                                        <a href="https://github.com/adilaitelhoucine1/VeilleHub-Project" target="_blank" class="text-[#cccccc] hover:text-white transition-colors">
                                             <i class="bi bi-github"></i>
                                         </a>
                                         <a href="#" class="text-[#cccccc] hover:text-white transition-colors">
@@ -193,13 +229,11 @@
                                     <span class="tech-tag bg-[rgba(0,122,204,0.2)] text-[#4dc4ff] px-2 py-1 rounded-full text-xs mr-2 mb-2 border border-[rgba(77,196,255,0.3)]">CSS</span>
                                     <span class="tech-tag bg-[rgba(0,122,204,0.2)] text-[#4dc4ff] px-2 py-1 rounded-full text-xs mr-2 mb-2 border border-[rgba(77,196,255,0.3)]">Jira</span>                                </div>
                             </div>
-
-
-  <div class="project-card bg-[#2a2d2e] p-5 rounded border-l-4 border-[#007acc] shadow-md transition-all duration-300">
+  <div class="project-card bg-[#2a2d2e] p-5 rounded border-l-4 border-[#007acc] shadow-md">
                                 <div class="flex justify-between items-start mb-3">
                                     <h3 class="text-lg font-bold">Goal Tracker</h3>
                                     <div class="flex gap-2">
-                                        <a href="https://github.com/your-username/Goal-Tracker-Project" class="text-[#cccccc] hover:text-white transition-colors">
+                                        <a href="https://github.com/your-username/Goal-Tracker-Project" target="_blank" class="text-[#cccccc] hover:text-white transition-colors">
                                             <i class="bi bi-github"></i>
                                         </a>
                                         <a href="#" class="text-[#cccccc] hover:text-white transition-colors">
@@ -215,13 +249,11 @@
                                     <span class="tech-tag bg-[rgba(0,122,204,0.2)] text-[#4dc4ff] px-2 py-1 rounded-full text-xs mr-2 mb-2 border border-[rgba(77,196,255,0.3)]">HTML</span>
                                     <span class="tech-tag bg-[rgba(0,122,204,0.2)] text-[#4dc4ff] px-2 py-1 rounded-full text-xs mr-2 mb-2 border border-[rgba(77,196,255,0.3)]">CSS</span>                                    <span class="tech-tag bg-[rgba(0,122,204,0.2)] text-[#4dc4ff] px-2 py-1 rounded-full text-xs mr-2 mb-2 border border-[rgba(77,196,255,0.3)]">JavaScript</span>
                                 </div>
-                            </div>  
-
-                            <div class="project-card bg-[#2a2d2e] p-5 rounded border-l-4 border-[#007acc] shadow-md transition-all duration-300">
+                            </div>                            <div class="project-card bg-[#2a2d2e] p-5 rounded border-l-4 border-[#007acc] shadow-md">
                                 <div class="flex justify-between items-start mb-3">
                                     <h3 class="text-lg font-bold">SkillBuddy</h3>
                                     <div class="flex gap-2">
-                                        <a href="https://github.com/adilaitelhoucine1/File-Rouge-Project" class="text-[#cccccc] hover:text-white transition-colors">
+                                        <a href="https://github.com/adilaitelhoucine1/File-Rouge-Project" target="_blank" class="text-[#cccccc] hover:text-white transition-colors">
                                             <i class="bi bi-github"></i>
                                         </a>
                                         <a href="#" class="text-[#cccccc] hover:text-white transition-colors">
@@ -252,21 +284,35 @@
                     </div>
                 </div>
             </div>
-            </div>
-
-            <!-- Status Bar -->
+            </div>            <!-- Status Bar -->
             <div class="fixed bottom-0 left-0 right-0 h-[22px] bg-[var(--status-bar-bg)] text-white flex items-center justify-between px-2 text-xs">
-                <div class="flex items-center gap-2">
-                    <i class="bi bi-git"></i>
-                    <span>main</span>
-                    <span class="px-2">📝</span>
-                    <span>0 problems</span>
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-1">
+                        <i class="bi bi-git text-[#f14c4c]"></i>
+                        <span>main</span>
+                        <span class="text-[#ffd700]">*</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <i class="bi bi-exclamation-triangle text-[#ffd700]"></i>
+                        <span>0</span>
+                        <i class="bi bi-x-circle text-[#f14c4c] ml-2"></i>
+                        <span>0</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <i class="bi bi-check-circle text-[#4dc4ff]"></i>
+                        <span>No Problems</span>
+                    </div>
                 </div>
-                <div class="flex items-center gap-3">
-                    <span>UTF-8</span>
-                    <span>LF</span>
-                    <span>JavaScript</span>
-                    <span>Port: 3000</span>
+                <div class="flex items-center gap-4">
+                    <span class="tooltip" data-tooltip="Current cursor position">Ln 125, Col 47</span>
+                    <span class="tooltip" data-tooltip="Character encoding">UTF-8</span>
+                    <span class="tooltip" data-tooltip="End of line sequence">CRLF</span>
+                    <span class="tooltip" data-tooltip="Language mode">JavaScript React</span>
+                    <span class="tooltip" data-tooltip="Indentation">Spaces: 4</span>
+                    <div class="flex items-center gap-1">
+                        <i class="bi bi-wifi text-[#4dc4ff]"></i>
+                        <span>Live Server</span>
+                    </div>
                 </div>
             </div>
         </div>

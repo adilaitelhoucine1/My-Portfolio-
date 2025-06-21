@@ -639,8 +639,7 @@
                         <i class="bi bi-check-circle text-[#4dc4ff]"></i>
                         <span>JSON Formatter</span>
                     </div>
-                </div>
-                <div class="flex items-center gap-4">
+                </div>                <div class="flex items-center gap-4">
                     <span class="tooltip" data-tooltip="Current cursor position">Ln 9, Col 20</span>
                     <span class="tooltip" data-tooltip="Character encoding">UTF-8</span>
                     <span class="tooltip" data-tooltip="End of line sequence">CRLF</span>
@@ -650,8 +649,9 @@
                         <i class="bi bi-wifi text-[#4dc4ff]"></i>
                         <span>Live Server</span>
                     </div>
-                </div>    
                 </div>
+            </div>
+        </div>
     </div>
 
     <!-- VS Code Minimap -->
@@ -1139,8 +1139,7 @@
             if (e.ctrlKey && e.key === 'p') {
                 e.preventDefault();
                 showPeekDefinition();
-            }
-              if (e.ctrlKey && e.key === '`') {
+            }            if (e.ctrlKey && e.key === '`') {
                 e.preventDefault();
                 // Toggle terminal panel directly
                 const terminal = document.getElementById('terminalPanel');
