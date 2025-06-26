@@ -86,7 +86,7 @@ development challenges.`,
   
 Use the file explorer or visit projects.html for more details!`,
               'contact': () => `Contact Information:
-  Email:    contact@adilaitelhoucine.dev
+  Email:    adilaitelhoucine1@gmail.com
   LinkedIn: https://linkedin.com/in/adilaitelhoucine
   GitHub:   https://github.com/adilaitelhoucine
   Location: Morocco

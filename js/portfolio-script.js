@@ -239,7 +239,7 @@ A portfolio website styled as a VS Code editor, showcasing my skills, projects, 
 
 ## Contact
 
-Feel free to reach out at contact@adilaitelhoucine.dev`
+Feel free to reach out at adilaitelhoucine1@gmail.com`
     },
     'main.css': {
         language: 'css',

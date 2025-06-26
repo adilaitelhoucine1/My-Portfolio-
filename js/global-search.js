@@ -114,7 +114,7 @@ function createSearchOverlay() {
         },        {
             title: "Contact Information",
             page: "contact.html",
-            content: "contact@adilaitelhoucine.dev LinkedIn GitHub Morocco email social media",
+            content: "adilaitelhoucine1@gmail.com LinkedIn GitHub Morocco email social media",
             category: "Contact"
         }
     ];

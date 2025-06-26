@@ -424,7 +424,7 @@ class PortfolioTerminal {
 <div class="text-[#569cd6]">═══════════════════════════════════════════════════════════════</div>
 <br>
 <div class="text-[#ffd700] font-bold">📨 EMAIL:</div>
-<div class="text-[#cccccc]">  Address: <span class="text-[#00ff88]">contact@adilaitelhoucine.dev</span></div>
+<div class="text-[#cccccc]">  Address: <span class="text-[#00ff88]">adilaitelhoucine1@gmail.com</span></div>
 <div class="text-[#cccccc]">  Type: <span class="text-[#4dc4ff]">Professional Email</span></div>
 <div class="text-[#cccccc]">  Action: <span class="text-[#ffd700]">Type 'email' to open email client</span></div>
 <br>
@@ -475,13 +475,13 @@ class PortfolioTerminal {
 <div class="text-[#ffd700]">💡 Connect with me on LinkedIn for professional networking!</div>
 <div class="text-[#569cd6]">═══════════════════════════════════════════════════════════════</div>`;
     }    handleEmailCommand() {
-        window.open('mailto:contact@adilaitelhoucine.dev');
+        window.open('mailto:adilaitelhoucine1@gmail.com');
         return `<div class="text-[#569cd6]">═══════════════════════════════════════════════════════════════</div>
 <div class="text-[#00ff88] font-bold">✓ EMAIL CLIENT LAUNCHED</div>
 <div class="text-[#569cd6]">═══════════════════════════════════════════════════════════════</div>
 <br>
 <div class="text-[#cccccc]">  Opening default email application...</div>
-<div class="text-[#cccccc]">  To: <span class="text-[#4dc4ff]">contact@adilaitelhoucine.dev</span></div>
+<div class="text-[#cccccc]">  To: <span class="text-[#4dc4ff]">adilaitelhoucine1@gmail.com</span></div>
 <div class="text-[#cccccc]">  Status: <span class="text-[#00ff88]">Ready to compose</span></div>
 <br>
 <div class="text-[#ffd700]">💡 If email client didn't open, please copy the address manually</div>`;
@@ -735,7 +735,7 @@ class PortfolioTerminal {
 <div class="text-[#cccccc]">  Start Date: <span class="text-[#ffd700]">Immediate to 2 weeks notice</span></div>
 <br>
 <div class="text-[#ffd700] font-bold">📞 CONTACT PREFERENCE:</div>
-<div class="text-[#cccccc]">  Primary: <span class="text-[#00ff88]">Email (contact@adilaitelhoucine.dev)</span></div>
+<div class="text-[#cccccc]">  Primary: <span class="text-[#00ff88]">Email (adilaitelhoucine1@gmail.com)</span></div>
 <div class="text-[#cccccc]">  Response: <span class="text-[#4dc4ff]">24-48 hours</span></div>
 <div class="text-[#cccccc]">  LinkedIn: <span class="text-[#ffd700]">Professional networking</span></div>
 <br>
@@ -787,7 +787,7 @@ class PortfolioTerminal {
 <div class="text-[#569cd6]">═══════════════════════════════════════════════════════════════</div>
 <br>
 <div class="text-[#ffd700] font-bold">📧 GET IN TOUCH:</div>
-<div class="text-[#cccccc]">  Email: <span class="text-[#00ff88]">contact@adilaitelhoucine.dev</span></div>
+<div class="text-[#cccccc]">  Email: <span class="text-[#00ff88]">adilaitelhoucine1@gmail.com</span></div>
 <div class="text-[#cccccc]">  LinkedIn: <span class="text-[#4dc4ff]">Professional networking</span></div>
 <div class="text-[#cccccc]">  Response: <span class="text-[#ffd700]">Quick turnaround (24-48 hours)</span></div>
 <br>
@@ -1135,7 +1135,7 @@ class PortfolioTerminal {
             // Force a style recalculation
             document.body.offsetHeight;
         }, 100);
-    }applyDarkTheme() {
+    }    applyDarkTheme() {
         // Reset CSS custom properties to dark theme values
         const root = document.documentElement;
         root.style.setProperty('--bg-color', '#1e1e1e');
@@ -1181,7 +1181,7 @@ class PortfolioTerminal {
         const explorerHeaders = document.querySelectorAll('.explorer-section-header');
         explorerHeaders.forEach(el => {
             el.style.backgroundColor = '';
-            el.style.color = '';
+            el.stylecolor = '';
         });
         
         // Reset explorer header spans
